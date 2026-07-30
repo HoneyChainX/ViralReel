@@ -1,0 +1,137 @@
+name: gate
+
+# The publish gate is the only real logic in this repo and the only thing
+# standing between a bad number and YouTube. This workflow exists to make sure
+# it keeps working — and specifically that nobody quietly adds a bypass.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: gate regression tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # ffprobe backs delivery QC (C9). Without it those checks skip, which
+      # would quietly hollow out the suite — so install it explicitly.
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffprobe -version | head -1
+
+      # A skipped C9 test looks identical to a passing one in the summary, so
+      # a skip in CI is treated as a failure — the suite must run in full here.
+      - name: Gate regression tests
+        run: |
+          set -o pipefail
+          python3 -m unittest discover tests -v 2>&1 | tee result.txt
+          if grep -qi 'skipped' result.txt; then
+            echo "::error::a test skipped in CI — the suite must run in full here"
+            exit 1
+          fi
+
+  static:
+    name: static checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Shell syntax
+        run: |
+          for f in scripts/*.sh; do bash -n "$f" && echo "ok $f"; done
+
+      - name: Python syntax
+        run: python3 -m py_compile scripts/gate.py tests/test_gate.py
+
+      - name: Makefile targets resolve
+        run: make help >/dev/null && echo "ok Makefile"
+
+      - name: Config and schema parse
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, sys
+          root = pathlib.Path('.')
+          skip = {'node_modules', '.git', 'vendor', '.venv'}
+          bad = []
+          for p in root.rglob('*.json'):
+              if skip & set(p.parts):
+                  continue
+              try:
+                  json.loads(p.read_text())
+              except Exception as e:
+                  bad.append(f"{p}: {e}")
+          if bad:
+              print("::error::invalid JSON\n" + "\n".join(bad)); sys.exit(1)
+          print("ok all JSON")
+          PY
+
+  secrets:
+    name: no secrets, no paid keys
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      # The repo must never contain a key, and the cost model depends on the
+      # paid generator keys staying empty (docs/04-stack.md). Templates are
+      # allowed to name them — they must just have no value after the '='.
+      - name: Assert no populated keys committed
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+          KEYS = ["ELEVENLABS_API_KEY", "FAL_KEY", "RUNWAY_API_KEY", "KLING_API_KEY",
+                  "XAI_API_KEY", "SUNO_API_KEY", "ATLASCLOUD_API_KEY", "HEYGEN_API_KEY",
+                  "OPENAI_API_KEY", "GEMINI_API_KEY", "YOUTUBE_CLIENT_SECRET",
+                  "YOUTUBE_REFRESH_TOKEN"]
+          # A value is a non-comment, non-empty token. Docs legitimately write
+          # `KEY=            # explanation`, which is an empty key, not a leak.
+          pat = re.compile(r"^(%s)=[ \t]*([^\s#]\S*)" % "|".join(KEYS), re.M)
+          PLACEHOLDERS = {"your-key", "your-api-key", "xxx", "changeme", "<key>", "..."}
+          bad = []
+          for p in pathlib.Path('.').rglob('*'):
+              if not p.is_file() or '.git' in p.parts or 'vendor' in p.parts:
+                  continue
+              try:
+                  text = p.read_text(errors='ignore')
+              except Exception:
+                  continue
+              for m in pat.finditer(text):
+                  if m.group(2).lower() in PLACEHOLDERS:
+                      continue
+                  bad.append(f"{p}: {m.group(1)} has a value")
+          if bad:
+              print("::error::a credential appears to be committed\n" + "\n".join(bad))
+              sys.exit(1)
+          print("ok no populated keys")
+          PY
+
+      - name: Assert compliance defaults intact
+        run: |
+          grep -q 'PRIVACY_STATUS=private' config/env.ytagent.template \
+            || { echo "::error::uploads must default to private (compliance C10)"; exit 1; }
+          grep -q 'ai_disclosure: true' config/channel.yaml \
+            || { echo "::error::AI disclosure must stay on (compliance C5)"; exit 1; }
+          grep -q 'hard_cap_per_day: 2' config/channel.yaml \
+            || { echo "::error::throughput cap changed — this is the mass-production risk"; exit 1; }
+          grep -q 'paid_generators_enabled: false' config/channel.yaml \
+            || { echo "::error::paid generators enabled — breaks the \$0 cost model"; exit 1; }
+          echo "ok compliance defaults intact"

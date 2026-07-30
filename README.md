@@ -85,6 +85,7 @@ No Higgsfield credits, no Veo, no Kling, no paid video models. Wiring:
 ```bash
 make setup      # clone OpenMontage + youtube-automation-agent, create .env
 make doctor     # verify every dependency and key
+make test       # gate regression suite — also runs in CI on every push
 make episode SLUG=airpods-159        # research → script → gate → render
 make publish SLUG=airpods-159        # only runs if the compliance gate passed
 ```
