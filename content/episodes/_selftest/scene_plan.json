@@ -1,0 +1,61 @@
+{
+  "_comment": "Gate self-test fixture. Shows the scene_plan shape motion-director produces. Every scene with shows_price:true must carry a citation, or gate check C3 fails.",
+  "slug": "_selftest",
+  "profile": "youtube_shorts",
+  "renderer": "remotion",
+  "scenes": [
+    {
+      "id": "s1",
+      "beat": "ARTIFACT",
+      "in": 0.0,
+      "out": 3.0,
+      "asset": "assets/2016-store.mp4",
+      "transform": { "crop": "9:16", "desaturate": 0.4, "push": 1.04 },
+      "text": [{ "content": "$999.99", "token": "past", "size": "hero" }],
+      "shows_price": true,
+      "citation": "Example Retailer, archived 2016-04-01"
+    },
+    {
+      "id": "s2",
+      "beat": "GAP",
+      "in": 3.0,
+      "out": 8.0,
+      "asset": "assets/2016-listing.png",
+      "transform": { "crop": "9:16", "push": 1.08 },
+      "text": [{ "content": "$189.00", "token": "present", "size": "hero" }],
+      "odometer": { "from": 999.99, "to": 189.0, "duration_ms": 800 },
+      "shows_price": true,
+      "citation": "Retailer A, 2026-07-30"
+    },
+    {
+      "id": "s3",
+      "beat": "EXCAVATION",
+      "in": 8.0,
+      "out": 26.0,
+      "asset": "assets/factory-line.mp4",
+      "transform": { "crop": "9:16", "desaturate": 0.4 },
+      "text": [{ "content": "Manufacturing scale", "token": "data", "size": "body" }],
+      "shows_price": false
+    },
+    {
+      "id": "s4",
+      "beat": "VERDICT",
+      "in": 26.0,
+      "out": 36.0,
+      "asset": "assets/product-shelf.jpg",
+      "transform": { "crop": "9:16", "push": 1.06 },
+      "stamp": { "word": "STILL CHEAP", "token": "present", "rotation_deg": 4 },
+      "shows_price": false
+    },
+    {
+      "id": "s5",
+      "beat": "HANDOFF",
+      "in": 36.0,
+      "out": 40.0,
+      "asset": "assets/product-shelf.jpg",
+      "transform": { "crop": "9:16" },
+      "text": [{ "content": "Cheapest it has ever been.", "token": "data", "size": "body" }],
+      "shows_price": false
+    }
+  ]
+}

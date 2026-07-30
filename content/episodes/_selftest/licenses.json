@@ -1,0 +1,30 @@
+[
+  {
+    "file": "assets/2016-store.mp4",
+    "source_url": "https://archive.org/details/example-2016-retail",
+    "license": "public-domain",
+    "attribution": "Example Collection / Archive.org, public domain",
+    "used_for": "artifact beat 0:00-0:03"
+  },
+  {
+    "file": "assets/2016-listing.png",
+    "source_url": "https://web.archive.org/web/20160401000000/https://example.com/product",
+    "license": "public-domain",
+    "attribution": "Archived retail listing via the Wayback Machine",
+    "used_for": "gap beat 0:03-0:08 — the original research artifact"
+  },
+  {
+    "file": "assets/factory-line.mp4",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Example_factory.webm",
+    "license": "CC-BY-4.0",
+    "attribution": "Example Author / Wikimedia Commons, CC BY 4.0",
+    "used_for": "excavation beat 0:08-0:26"
+  },
+  {
+    "file": "assets/product-shelf.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Example_shelf.jpg",
+    "license": "CC-BY-SA-4.0",
+    "attribution": "Example Photographer / Wikimedia Commons, CC BY-SA 4.0",
+    "used_for": "verdict + handoff beats 0:26-0:40"
+  }
+]

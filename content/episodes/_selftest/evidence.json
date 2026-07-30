@@ -1,0 +1,83 @@
+{
+  "_comment": "Gate self-test fixture. Structurally valid, deliberately fictional figures. Never publish this. Real episodes use verified sources per docs/05-compliance.md.",
+  "slug": "_selftest",
+  "object": "Example artifact (self-test only)",
+  "segment": "STILL CHEAP",
+  "spec_note": "Fixture — no real spec. Demonstrates the shape trend-archaeologist must produce.",
+  "claims": [
+    {
+      "id": "c1",
+      "text": "2016 price of the example artifact",
+      "value": 999.99,
+      "currency": "USD",
+      "year": 2016,
+      "estimated": false,
+      "inflation_adjusted_value": 1310.0,
+      "sources": [
+        {
+          "url": "https://web.archive.org/web/20160401000000/https://example.com/product",
+          "kind": "primary",
+          "publisher": "Example Retailer (archived listing)",
+          "snapshot_date": "2016-04-01",
+          "accessed": "2026-07-30",
+          "quote": "$999.99"
+        },
+        {
+          "url": "https://example.com/2016-review",
+          "kind": "secondary",
+          "publisher": "Example Review Site",
+          "accessed": "2026-07-30",
+          "quote": "at its $999.99 launch price"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "text": "2026 price of the equivalent tier",
+      "value": 189.0,
+      "currency": "USD",
+      "year": 2026,
+      "estimated": false,
+      "sources": [
+        {
+          "url": "https://example.com/retailer-a",
+          "kind": "primary",
+          "publisher": "Retailer A",
+          "accessed": "2026-07-30",
+          "quote": "$189.00"
+        },
+        {
+          "url": "https://example.com/retailer-b",
+          "kind": "secondary",
+          "publisher": "Retailer B",
+          "accessed": "2026-07-30",
+          "quote": "$192.00"
+        }
+      ]
+    }
+  ],
+  "primary_cause": {
+    "summary": "Manufacturing scale drove per-unit cost down across the category.",
+    "mechanism": "manufacturing-scale",
+    "sources": [
+      { "url": "https://example.com/industry-report", "kind": "primary", "accessed": "2026-07-30" }
+    ]
+  },
+  "secondary_causes": [
+    "Component oversupply",
+    "Shift to advertising-subsidised business models"
+  ],
+  "artifact": {
+    "kind": "wayback-screenshot",
+    "path": "assets/2016-listing.png",
+    "description": "Screenshot of the archived April 2016 retail listing, captured and cropped for this episode. Did not exist in retrievable form before now.",
+    "source_url": "https://web.archive.org/web/20160401000000/https://example.com/product"
+  },
+  "footage_candidates": [
+    { "url": "https://archive.org/details/example-2016-retail", "license": "public-domain", "note": "store interior, handheld", "has_motion": true },
+    { "url": "https://commons.wikimedia.org/wiki/File:Example.jpg", "license": "CC-BY-4.0", "note": "product on shelf", "has_motion": false },
+    { "url": "https://archive.org/details/example-2016-adbreak", "license": "public-domain", "note": "period advertising", "has_motion": true }
+  ],
+  "verdict": "STILL CHEAP",
+  "affiliate_eligible": true
+}

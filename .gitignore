@@ -1,0 +1,33 @@
+# vendors are cloned, never committed — upstream fixes flow in with a pull
+vendor/
+
+# renders
+out/
+*.mp4
+*.mov
+*.wav
+*.mp3
+
+# episode working assets (large, and licensed to their source, not to us).
+# licenses.json IS committed — it is the compliance record.
+content/episodes/*/assets/
+!content/episodes/*/licenses.json
+# the gate self-test fixture must survive a fresh clone so `make gate SLUG=_selftest` works
+!content/episodes/_selftest/assets/
+!content/episodes/_selftest/assets/*
+
+# secrets never live in this repo — only in the vendor .env files
+.env
+.env.*
+!config/env.*.template
+*.pem
+credentials.json
+token.json
+
+# python / node
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+
+.DS_Store
