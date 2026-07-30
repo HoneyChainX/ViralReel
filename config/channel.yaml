@@ -1,0 +1,74 @@
+# Price Archaeology — channel configuration
+# Only `strategy-lead` may edit this file. Values here are enforced by the
+# compliance gate (scripts/gate.py), not merely suggested.
+
+channel:
+  name: "Price Archaeology"
+  handle: "@PriceArchaeology"
+  tagline: "We dig up what things used to cost."
+  anchor_year: 2016        # rolling 10-year window; slide this, don't rewrite the format
+  current_year: 2026
+
+format:
+  aspect: "9:16"
+  width: 1080
+  height: 1920
+  duration_sec: { min: 25, target: 38, max: 50 }
+  script_words: { min: 95, max: 130 }
+  read_wpm: 150
+
+# Enforced by gate check C6. Raising this is a strategic decision that
+# increases Inauthentic Content Policy exposure — see docs/05-compliance.md.
+cadence:
+  launch_per_day: 1
+  hard_cap_per_day: 2
+
+# Enforced by strategy-lead. STILL CHEAP is the revenue engine; when the slate
+# drifts toward rage segments it becomes a revenue problem ~3 months later.
+segments:
+  the_dig:           { share: 0.40, affiliate: false, verdict_colors: ["RIPOFF", "FAIR"] }
+  still_cheap:       { share: 0.40, affiliate: true,  verdict_colors: ["STILL CHEAP"] }
+  extinct_prices:    { share: 0.10, affiliate: false, verdict_colors: ["EXTINCT"] }
+  time_capsule_cart: { share: 0.10, affiliate: false, verdict_colors: ["FAIR", "RIPOFF"] }
+
+brand:
+  colors:
+    past:    "#C8964B"   # every 2016 figure — never reassign
+    present: "#00E5FF"   # every 2026 figure — never reassign
+    alarm:   "#FF3B30"   # deltas > +100% only
+    ground:  "#0A0A0A"
+    data:    "#FFFFFF"
+  odometer_ms: 800
+  stamp_rotation_deg: 4
+  citation_opacity: 0.6
+
+voice:
+  provider: "elevenlabs"       # falls back to piper when key absent
+  voice_id: ""                 # set by voice-director after casting, then never changed
+  settings: { stability: 0.42, similarity_boost: 0.85, style: 0.15 }
+
+production:
+  pipeline: "documentary_montage"
+  renderer: "remotion"
+  profile: "youtube_shorts"
+  loudness_lufs: -14
+  true_peak_db: -1
+  burn_captions: true
+
+# Absent keys are a cost control, not an oversight. The pipeline cannot bill
+# what it cannot see. See docs/04-stack.md.
+sources:
+  allowed: ["archive.org", "commons.wikimedia.org", "web.archive.org", "pexels.com", "pixabay.com"]
+  licenses_allowed: ["public-domain", "CC0", "CC-BY-4.0", "CC-BY-SA-4.0", "pexels-license"]
+  paid_generators_enabled: false
+
+publishing:
+  privacy_status: "private"    # a human flips this public. Gate check C10.
+  ai_disclosure: true          # unconditional. Gate check C5.
+  category: "Education"
+
+compliance:
+  sources_per_claim: 2
+  primary_sources_required: 1
+  template_similarity_max: 0.70
+  require_original_artifact: true

@@ -1,0 +1,12 @@
+{
+  "_comment": "Gate self-test fixture. Shows the packaging shape seo-packager produces.",
+  "slug": "_selftest",
+  "title": "This cost $999.99 in 2016",
+  "description": "One line restating the finding.\n\nSources:\n- 2016: Example Retailer, archived 2016-04-01\n- 2026: Retailer A, accessed 2026-07-30\n\nFootage: see licenses.json attributions\n\nCorrections: https://github.com/HoneyChainX/ViralReel/blob/main/content/CORRECTIONS.md",
+  "tags": ["price history", "2016 vs 2026", "cost of living", "price archaeology"],
+  "pinned_comment": "The archived listing is here — check it yourself: https://web.archive.org/web/20160401000000/https://example.com/product",
+  "thumbnail_text": "$999 → $189",
+  "ai_disclosure": true,
+  "privacy_status": "private",
+  "category": "Education"
+}
