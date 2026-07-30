@@ -1,4 +1,4 @@
-.PHONY: help setup doctor episode gate publish clean-vendor
+.PHONY: help setup doctor test episode gate publish clean-vendor
 
 SHELL := /bin/bash
 ROOT  := $(shell pwd)
@@ -9,6 +9,7 @@ help:
 	@echo ""
 	@echo "  make setup                  clone vendors, install deps, template .env files"
 	@echo "  make doctor                 verify every dependency, key and cost control"
+	@echo "  make test                   gate regression suite (also runs in CI)"
 	@echo "  make episode SLUG=<slug>    research -> script -> assets -> render"
 	@echo "  make gate SLUG=<slug>       run the 10 compliance checks (required before publish)"
 	@echo "  make publish SLUG=<slug>    upload PRIVATE via youtube-automation-agent"
@@ -20,6 +21,12 @@ setup:
 
 doctor:
 	@bash scripts/doctor.sh
+
+# The gate is the only thing between a bad number and YouTube. These tests
+# assert every individual check on both a compliant and a seeded-violation
+# episode, and that no bypass flag has been added.
+test:
+	@python3 -m unittest discover tests -v
 
 # Orchestrates the studio agents. Each stage writes its artifact to
 # content/episodes/$(SLUG)/ and the next stage reads it from disk —

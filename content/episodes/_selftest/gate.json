@@ -1,7 +1,7 @@
 {
   "slug": "_selftest",
   "verdict": "FAIL",
-  "evaluated_at": "2026-07-30T21:09:20.185924+00:00",
+  "evaluated_at": "2026-07-30T21:25:09.490398+00:00",
   "checks": [
     {
       "id": "C1",
