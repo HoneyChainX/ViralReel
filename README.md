@@ -57,7 +57,7 @@ The agents are real, invocable Claude Code subagents in [`.claude/agents/`](.cla
 | Job | Tool | Cost |
 |---|---|---|
 | Research + writing + orchestration | Claude Code (this studio) | — |
-| Video production pipeline | [OpenMontage](https://github.com/calesthio/OpenMontage) — Documentary Montage | Free / OSS |
+| Video production pipeline | [OpenMontage](https://github.com/calesthio/OpenMontage) — `hybrid` pipeline | Free / OSS |
 | Archival footage & stills | Archive.org, Wikimedia Commons, Pexels | Free |
 | Price evidence | Wayback Machine, BLS CPI, FRED | Free |
 | Narration | ElevenLabs (**your existing subscription**) | Already paid |

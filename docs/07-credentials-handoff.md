@@ -112,15 +112,19 @@ A5. Configure the consent screen. Navigation: "APIs & Services" -> "OAuth consen
         OAuth flow at all; skipping this produces an access_denied error later that looks like a
         scope problem and isn't.
 
-    (e) Scopes / "Data access": use "Add or remove scopes" and add exactly these two, then
+    (e) Scopes / "Data access": use "Add or remove scopes" and add exactly these FOUR, then
         Update and Save:
             https://www.googleapis.com/auth/youtube.upload
+            https://www.googleapis.com/auth/youtube
             https://www.googleapis.com/auth/youtube.readonly
-        The first is what performs the upload; the second is what the analytics loop reads.
-        Google will mark these as sensitive or restricted — that is expected and is not an
-        error. Add no other scope. Do not begin the verification process it may offer.
+            https://www.googleapis.com/auth/yt-analytics.readonly
+        These are not a guess: they are the exact list requested by the publishing tool at
+        vendor/yt-agent/modern-auth.js, which is what `npm run walkthrough` runs. Consenting
+        to fewer than the tool requests fails at authorization time.
+        Google will mark several of these as sensitive or restricted — that is expected and is
+        not an error. Add no other scope. Do not begin the verification process it may offer.
 
-    Report: user type, publishing status, test user email added, and whether each of the two
+    Report: user type, publishing status, test user email added, and whether each of the four
     scopes is present in the saved list.
 
 A6. Create the OAuth client. Navigation: "APIs & Services" -> "Credentials" (direct URL to try:
@@ -174,7 +178,9 @@ FINAL REPORT — reply with exactly this checklist, filled in:
   Publishing status:
   Test user added (email):
   Scope youtube.upload present (yes/no):
+  Scope youtube present (yes/no):
   Scope youtube.readonly present (yes/no):
+  Scope yt-analytics.readonly present (yes/no):
   OAuth client application type (must read "Desktop"):
   OAuth client ID (full):
   Client secret — NOT reported; downloaded JSON filename and folder:
@@ -250,6 +256,22 @@ cd vendor/yt-agent && npm run walkthrough    # browser consent -> writes YOUTUBE
 During the walkthrough's consent screen you will see Google's "Google hasn't verified this app"
 warning. That is the expected consequence of Testing status on a self-owned app — proceed with
 the account you added as a test user.
+
+### Verified against the installed tool, not assumed
+
+Two claims in §2 were checked against `vendor/yt-agent/` rather than inferred, because both
+fail silently and late:
+
+- **Desktop app is the correct client type.** `modern-auth.js` spins up a temporary local server
+  and uses `http://localhost:<port>/callback` as its redirect. A loopback redirect is what a
+  Desktop client permits; a Web client rejects it with `redirect_uri_mismatch`.
+  (Ignore `config/credentials.example.json` in that repo — it still shows the legacy
+  `urn:ietf:wg:oauth:2.0:oob` flow, which Google retired. `modern-auth.js` is the live path.)
+- **There are four scopes, not two.** An earlier draft of this document listed only
+  `youtube.upload` and `youtube.readonly`. The tool actually requests four, including plain
+  `youtube` and `yt-analytics.readonly`. Consenting to a subset produces an authorization
+  failure that reads like a config problem and isn't. The list in §2(e) is copied from the
+  source.
 
 ---
 
