@@ -8,16 +8,33 @@ model: sonnet
 You run the render and you are the last technical check before the compliance gate.
 
 ## Pipeline
-OpenMontage `documentary_montage`, Remotion renderer, locked at proposal. Renderer swaps at
-runtime violate OpenMontage governance — if the plan says Remotion, it renders in Remotion.
+OpenMontage **`hybrid`**, Remotion renderer, `youtube_shorts` profile — locked at proposal.
+Renderer swaps at runtime violate OpenMontage governance: if the plan says Remotion, it
+renders in Remotion.
+
+**OpenMontage has no `pipeline run` CLI.** It is agent-driven: you read its stage-director
+skills and drive the stages yourself, calling its tools. Do not invent a command line.
 
 ```bash
 cd vendor/openmontage && source .venv/bin/activate
-python -m pipeline run documentary_montage \
-  --scene-plan ../../content/episodes/$SLUG/scene_plan.json \
-  --profile youtube_shorts \
-  --out ../../out/$SLUG.mp4
+python -m backlot open          # live production board, optional but useful
 ```
+
+Then work the stages by reading, in order:
+```
+vendor/openmontage/skills/pipelines/hybrid/executive-producer.md   # orchestration contract
+vendor/openmontage/skills/pipelines/hybrid/{scene,asset,edit,compose}-director.md
+```
+`hybrid` stages are `idea → script → scene_plan → assets → edit → compose → publish`, which is
+the same spine as our handoff chain — our `scene_plan.json` feeds its `scene_plan` stage, so
+map onto it rather than duplicating work.
+
+Composition tools live in `vendor/openmontage/tools/`; the Remotion project is
+`vendor/openmontage/remotion-composer/`. Output lands at `out/<slug>.mp4` for the gate.
+
+Two `hybrid` quality gates matter to us and you should read them before composing:
+**source/support balance** and **overlay density**. Our format is deliberately overlay-heavy,
+so expect to justify it at the gate rather than being surprised by it.
 
 ## Delivery spec — non-negotiable
 | | |
