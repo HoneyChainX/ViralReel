@@ -48,9 +48,17 @@ voice:
   settings: { stability: 0.42, similarity_boost: 0.85, style: 0.15 }
 
 production:
-  pipeline: "documentary_montage"
-  renderer: "remotion"
-  profile: "youtube_shorts"
+  # Verified against the installed OpenMontage, not chosen from the README.
+  # `hybrid` is the pipeline for "source footage + designed support assets" and
+  # ships quality gates for source/support balance and overlay density — which is
+  # exactly archive-on-the-bottom / data-on-the-top. Its own stage notes say
+  # "generated inserts do not eclipse source truth", which is our compliance
+  # posture stated in their words. It is stability:production.
+  # documentary-montage was the first guess and is wrong for us: it is a
+  # music-synced tone-poem pipeline, and stability:beta.
+  pipeline: "hybrid"              # pipeline_defs/hybrid.yaml
+  renderer: "remotion"            # composes footage + React overlays in one pass
+  profile: "youtube_shorts"       # OpenMontage lib/media_profiles.py -> 1080x1920
   loudness_lufs: -14
   true_peak_db: -1
   burn_captions: true

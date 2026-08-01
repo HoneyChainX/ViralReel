@@ -33,7 +33,12 @@ echo "Keys"
 OM_ENV=vendor/openmontage/.env
 YT_ENV=vendor/yt-agent/.env
 
-getkey() { [ -f "$1" ] && grep -E "^$2=." "$1" >/dev/null 2>&1; }
+# A key is SET only if it has a real value. `KEY=` followed by whitespace and a
+# `# comment` is EMPTY — which is how both our template and OpenMontage's
+# .env.example document their keys. Matching `^KEY=.` treats every documented-but-
+# empty key as populated, which reported all eight paid keys as billing-enabled on
+# a clean install. Same matcher as the CI secret scanner.
+getkey() { [ -f "$1" ] && grep -E "^$2=[ \t]*[^[:space:]#]" "$1" >/dev/null 2>&1; }
 
 if getkey "$OM_ENV" ELEVENLABS_API_KEY; then ok "ELEVENLABS_API_KEY set (your subscription)"
 else warn "ELEVENLABS_API_KEY empty — VO falls back to Piper (free, lower quality)"; fi
@@ -52,11 +57,27 @@ done
 [ "$LEAK" -eq 0 ] && ok "no paid generator keys — marginal cost stays \$0.00"
 
 echo ""
+echo "YouTube OAuth  (NOT env vars — the walkthrough writes these files)"
+YT_CREDS=vendor/yt-agent/config/credentials.json
+YT_TOKENS=vendor/yt-agent/config/tokens.json
+if [ -f "$YT_CREDS" ]; then ok "config/credentials.json present (client id + secret)"
+else bad "no config/credentials.json — run: cd vendor/yt-agent && npm run walkthrough"; fi
+if [ -f "$YT_TOKENS" ]; then ok "config/tokens.json present (refresh token)"
+else bad "no config/tokens.json — the browser consent step has not completed"; fi
+
+echo ""
 echo "Publishing safety"
-if grep -E '^PRIVACY_STATUS=private' "$YT_ENV" >/dev/null 2>&1; then
-  ok "PRIVACY_STATUS=private"
+# The variable is DEFAULT_PRIVACY_STATUS. PRIVACY_STATUS is not read by the
+# vendor; if it is present it is a leftover from the old template and is inert.
+if grep -E '^DEFAULT_PRIVACY_STATUS=private' "$YT_ENV" >/dev/null 2>&1; then
+  ok "DEFAULT_PRIVACY_STATUS=private"
+elif grep -E '^DEFAULT_PRIVACY_STATUS=' "$YT_ENV" >/dev/null 2>&1; then
+  bad "DEFAULT_PRIVACY_STATUS is set to something other than 'private'"
 else
-  bad "PRIVACY_STATUS is not 'private' — every upload must land private (compliance C10)"
+  warn "DEFAULT_PRIVACY_STATUS unset — vendor falls back to 'private', but set it explicitly"
+fi
+if grep -E '^PRIVACY_STATUS=' "$YT_ENV" >/dev/null 2>&1; then
+  warn "PRIVACY_STATUS found — that name is INERT, the vendor reads DEFAULT_PRIVACY_STATUS"
 fi
 
 echo ""

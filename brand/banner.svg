@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 2560 1440" width="2560" height="1440"
+     role="img" aria-labelledby="pa-banner-title pa-banner-desc">
+
+  <title id="pa-banner-title">Price Archaeology — We dig up what things used to cost.</title>
+  <desc id="pa-banner-desc">Channel banner: the receipt mark, channel name and tagline centred in
+  the TV/desktop/mobile safe area, with 2016 in amber to the left and 2026 in cyan to the right.</desc>
+
+  <!--
+    Price Archaeology — channel banner
+    Owner: brand-designer. Colours read from config/channel.yaml → brand.colors.
+    Name and tagline read from config/channel.yaml → channel.name / channel.tagline.
+
+    CANVAS      2560 × 1440 (YouTube's required upload size)
+    SAFE AREA   1546 × 423, centred → x 507–2053, y 508.5–931.5
+                Everything essential — mark, name, tagline — lives inside it, because
+                that rectangle is all a phone ever shows.
+    WIDE CROP   The full width is only seen on TV/desktop. It carries the colour grammar
+                (amber 2016 on the left, cyan 2026 on the right) and the strata bands, so
+                the big crop earns its extra pixels without the small crop needing them.
+
+    No price appears anywhere on this banner on purpose. A number on a banner is a claim
+    that outlives the episode that sourced it, and every number this channel shows has to
+    carry a citation. Years are configuration (channel.anchor_year / channel.current_year);
+    prices are evidence.
+
+    FONTS  No webfont, no external file: a self-contained SVG that renders offline. If your
+    rasteriser has none of the grotesques in the stack, convert the text to outlines before
+    upload rather than letting it fall back to a serif.
+  -->
+
+  <!-- Ground -->
+  <rect x="0" y="0" width="2560" height="1440" fill="#0A0A0A"/>
+
+  <!-- 2026 surface: one crisp cyan rule above the safe area. The present is a clean cut. -->
+  <rect x="0" y="452" width="2560" height="8" fill="#00E5FF"/>
+
+  <!-- Strata below: amber bands, thicker and fainter as they go deeper. The past is buried. -->
+  <g fill="#C8964B">
+    <rect x="0" y="1000" width="2560" height="10" opacity="0.55"/>
+    <rect x="0" y="1060" width="2560" height="22" opacity="0.40"/>
+    <rect x="0" y="1132" width="2560" height="40" opacity="0.28"/>
+    <rect x="0" y="1232" width="2560" height="70" opacity="0.18"/>
+    <rect x="0" y="1352" width="2560" height="88" opacity="0.10"/>
+  </g>
+
+  <!-- Colour grammar, wide crop only: amber past on the left, cyan present on the right. -->
+  <g font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+     font-weight="700" font-size="120" letter-spacing="4"
+     style="font-variant-numeric: tabular-nums lining-nums; font-feature-settings: 'tnum' 1, 'lnum' 1;">
+    <text x="150"  y="762" fill="#C8964B" text-anchor="start">2016</text>
+    <text x="2410" y="762" fill="#00E5FF" text-anchor="end">2026</text>
+  </g>
+
+  <!-- ================= SAFE AREA CONTENT (x 507–2053, y 508–931) ================= -->
+
+  <!-- The mark, at 0.30 of the avatar. Same geometry as brand/avatar.svg — if that file
+       changes, this transform block changes with it. -->
+  <g transform="translate(1160, 477.4) scale(0.30)">
+    <rect x="235" y="142" width="330" height="210" fill="#00E5FF"/>
+    <g fill="#0A0A0A">
+      <rect x="273" y="194" width="118" height="32"/>
+      <rect x="447" y="194" width="80"  height="32"/>
+      <rect x="273" y="258" width="150" height="32"/>
+      <rect x="467" y="258" width="60"  height="32"/>
+    </g>
+    <path fill="#C8964B"
+          d="M235,396 H565 V606
+             l-33,52 l-33,-52 l-33,52 l-33,-52 l-33,52
+             l-33,-52 l-33,52 l-33,-52 l-33,52 l-33,-52 Z"/>
+    <g fill="#0A0A0A">
+      <rect x="273" y="448" width="100" height="32"/>
+      <rect x="432" y="448" width="95"  height="32"/>
+      <rect x="273" y="512" width="140" height="32"/>
+      <rect x="452" y="512" width="75"  height="32"/>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+     text-anchor="middle">
+    <!-- channel.name -->
+    <text x="1280" y="800" fill="#FFFFFF" font-weight="700" font-size="116" letter-spacing="-1">Price Archaeology</text>
+    <!-- channel.tagline -->
+    <text x="1280" y="878" fill="#FFFFFF" opacity="0.72" font-weight="400" font-size="46" letter-spacing="2">We dig up what things used to cost.</text>
+  </g>
+
+  <!-- ============================================================================
+       Safe-area guide. display="none" so it never ships; flip to "inline" to check
+       a layout change, then flip it back. Do not upload with this visible.
+       ========================================================================== -->
+  <g id="safe-area-guide" display="none">
+    <rect x="507" y="508.5" width="1546" height="423"
+          fill="none" stroke="#5A5A5A" stroke-width="4" stroke-dasharray="24 16"/>
+  </g>
+</svg>

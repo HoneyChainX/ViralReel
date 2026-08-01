@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 800 800" width="800" height="800"
+     role="img" aria-labelledby="pa-avatar-title pa-avatar-desc">
+
+  <title id="pa-avatar-title">Price Archaeology</title>
+  <desc id="pa-avatar-desc">A receipt read as a core sample: a crisp cyan slab (2026) above a
+  torn amber slab (2016), split by the gap between them.</desc>
+
+  <!--
+    Price Archaeology — channel avatar
+    Owner: brand-designer. Colours read from config/channel.yaml → brand.colors.
+      ground  #0A0A0A   present/cyan #00E5FF   past/amber #C8964B
+
+    CONCEPT
+      One shape doing three jobs. It is a receipt (line items, torn bottom edge),
+      a stratigraphic column (younger material on top, older material below), and
+      the beat sheet itself: 2026 crisp on top, THE GAP in the middle, 2016 buried
+      and ragged underneath. The top edge is machine-cut — the present is crisp
+      data. The bottom edge is torn — the past is excavated, not retrieved.
+
+    LEGIBILITY AT 48px (where YouTube actually renders this)
+      Three shapes, two colours, one gap. No text, no hairlines, no gradients:
+      at 1/16 scale the knocked-out line items dissolve into texture and the
+      silhouette still reads. Everything sits inside a circle of radius ~304 of
+      the 400 available, so the circular crop never clips the mark.
+  -->
+
+  <!-- Ground. Full-bleed so the circular crop is edge-to-edge near-black. -->
+  <rect x="0" y="0" width="800" height="800" fill="#0A0A0A"/>
+
+  <!-- PRESENT — 2026. Machine-cut rectangle, hard cyan. -->
+  <rect x="235" y="142" width="330" height="210" fill="#00E5FF"/>
+
+  <!-- Line items knocked back out to ground: item on the left, price on the right. -->
+  <g fill="#0A0A0A">
+    <rect x="273" y="194" width="118" height="32"/>
+    <rect x="447" y="194" width="80"  height="32"/>
+    <rect x="273" y="258" width="150" height="32"/>
+    <rect x="467" y="258" width="60"  height="32"/>
+  </g>
+
+  <!-- THE GAP: y 352–396. Ground, deliberately empty. It is the format. -->
+
+  <!-- PAST — 2016. Faded amber, torn along the bottom where it was dug out. -->
+  <path fill="#C8964B"
+        d="M235,396 H565 V606
+           l-33,52 l-33,-52 l-33,52 l-33,-52 l-33,52
+           l-33,-52 l-33,52 l-33,-52 l-33,52 l-33,-52 Z"/>
+
+  <g fill="#0A0A0A">
+    <rect x="273" y="448" width="100" height="32"/>
+    <rect x="432" y="448" width="95"  height="32"/>
+    <rect x="273" y="512" width="140" height="32"/>
+    <rect x="452" y="512" width="75"  height="32"/>
+  </g>
+</svg>

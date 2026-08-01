@@ -35,7 +35,7 @@ it's the whole reason this stack looks the way it does.
               │   OpenMontage         │  │ youtube-automation-agent│
               │   PRODUCTION          │  │ DISTRIBUTION            │
               ├───────────────────────┤  ├─────────────────────────┤
-              │ documentary_montage   │  │ SEO optimizer           │
+              │ hybrid pipeline       │  │ SEO optimizer           │
               │ Archive.org/Wikimedia │  │ Publishing + scheduling │
               │ Remotion compose      │  │ Analytics collection    │
               │ FFmpeg encode 9:16    │  │ Dashboard :3456         │
@@ -55,7 +55,7 @@ modified — both are pinned as cloned dependencies so upstream fixes flow in cl
 
 | Need | Choice | Why not the alternative |
 |---|---|---|
-| Pipeline | OpenMontage **`documentary_montage`** | Purpose-built for real archival footage from free sources; it is the only one of the 12 pipelines that matches the format |
+| Pipeline | OpenMontage **`hybrid`** | Built for "source footage + designed support assets" with quality gates for source/support balance and overlay density — literally archive-on-the-bottom, data-on-the-top. `stability: production`. See the correction note below |
 | Footage | Archive.org, Wikimedia Commons | Free, period-accurate, public domain. Pexels as filler only |
 | Composition | Remotion | React; the `<PriceOdometer>` signature move needs programmatic control that a template editor cannot give |
 | Narration | ElevenLabs (yours) → Piper fallback | Voice consistency is channel branding; Piper keeps cost at zero if the sub lapses |
@@ -126,6 +126,34 @@ Real secrets live only in the vendor `.env` files, which are gitignored. Nothing
 ever contains a key.
 
 ---
+
+## Correction: what the smoke test found
+
+`make setup` was run against the real upstream repos and two things in this document's first
+draft were wrong. Both are recorded here rather than quietly fixed, because "verified against
+the installed thing" and "read off a README" are different confidence levels and the
+difference should be visible.
+
+**1. The pipeline was misnamed and mischosen.** The file is `documentary-montage.yaml`
+(hyphens, not underscores) — but more importantly it was the wrong pipeline. It is a
+music-synced, CLIP-retrieval *tone poem* pipeline in the Adam Curtis mould, and `stability:
+beta`. The right one is **`hybrid`**: "videos that combine source footage with designed or
+generated support assets… montage edits with support inserts," with quality gates for
+**source/support balance** and **overlay density**, at `stability: production`. Its own stage
+notes require that "generated inserts do not eclipse source truth" — our compliance posture,
+in upstream's words — and that Remotion composes "source footage and React support overlays
+in one pass," which is exactly `<PriceOdometer>` over archival footage.
+
+**2. There is no `python -m pipeline run` CLI.** That command was inferred from the README and
+does not exist — there is no `pipeline` module. OpenMontage is **agent-driven**: stage-director
+skills under `skills/pipelines/hybrid/` tell the agent how to run each stage using `tools/`.
+`python -m backlot open` opens the live production board. `.claude/agents/post-supervisor.md`
+now describes the real model.
+
+Confirmed working in the same run: `tools/video/stock_sources/archive_org.py` and
+`wikimedia.py` are shared across pipelines, so `hybrid` retrieves the same free archival
+footage; and OpenMontage's own `youtube_shorts` profile is 1080×1920, matching gate check C9
+exactly.
 
 ## Making an episode
 

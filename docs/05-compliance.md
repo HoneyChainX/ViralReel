@@ -100,11 +100,24 @@ $ make gate SLUG=airpods-159
 | C7 | Template-similarity | script > 70% structurally similar to the last 10 |
 | C8 | Editorial bounds | partisan/medical/financial/individual-claim language detected |
 | C9 | Delivery QC | not 1080×1920, or duration outside 25–50s |
-| C10 | Privacy | upload privacy != `private` |
+| C10 | Privacy | upload privacy != `private` — **see the limit below** |
 
 **Any FAIL blocks publish.** Result written to `gate.json`. There is no override flag and no
 `--force`. If you need to ship something the gate rejects, fix the episode or change the rule
 in this document deliberately — the absence of a bypass is the feature.
+
+### On C10 — what it actually enforces, and what it doesn't
+
+C10 checks *our* `packaging.json`. It does **not** reach into the vendor uploader. That uploader
+reads `process.env.DEFAULT_PRIVACY_STATUS || 'private'`
+(`vendor/yt-agent/agents/publishing-scheduling-agent.js:130`), so uploads do land private — but
+that is the **vendor's hardcoded fallback** doing the work, not this gate.
+
+Stated plainly: if `DEFAULT_PRIVACY_STATUS=public` were set in `vendor/yt-agent/.env`, C10 would
+still pass and the upload would go out public. `make doctor` catches that case; the gate does
+not. Found by auditing the vendor rather than trusting our own env template, and recorded here
+rather than quietly rewritten — a compliance check that overstates its reach is worse than one
+that admits its edge.
 
 ### On C7 (template similarity)
 

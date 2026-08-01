@@ -43,6 +43,24 @@ say "Installing youtube-automation-agent"
 ( cd vendor/yt-agent && npm install )
 
 say "Templating .env files"
+# OpenMontage's own `make setup` already ran `cp .env.example .env`, so the guard
+# below is always a no-op for it — our template never lands. That is fine: their
+# .env.example documents every provider key and ships them all EMPTY, which is
+# exactly the cost control we want. What we add is the reason, so the next person
+# to open the file knows the blanks are deliberate.
+if [ -f vendor/openmontage/.env ] && ! grep -q "ViralReel cost control" vendor/openmontage/.env; then
+  cat >> vendor/openmontage/.env <<'EOF'
+
+# ── ViralReel cost control ──────────────────────────────────────────────────
+# Every paid generator key above is intentionally EMPTY. OpenMontage scores and
+# selects providers automatically; it cannot bill what it cannot see. Generated
+# b-roll is also the strategically weaker option for a provenance channel —
+# real archival footage is free AND more persuasive. See docs/04-stack.md.
+# The ONLY key to fill here is ELEVENLABS_API_KEY (your existing subscription).
+# `make doctor` fails if any paid key acquires a value.
+EOF
+  echo "  annotated vendor/openmontage/.env with the cost-control note"
+fi
 [ -f vendor/openmontage/.env ] || cp config/env.openmontage.template vendor/openmontage/.env
 [ -f vendor/yt-agent/.env ]    || cp config/env.ytagent.template    vendor/yt-agent/.env
 

@@ -57,7 +57,7 @@ The agents are real, invocable Claude Code subagents in [`.claude/agents/`](.cla
 | Job | Tool | Cost |
 |---|---|---|
 | Research + writing + orchestration | Claude Code (this studio) | — |
-| Video production pipeline | [OpenMontage](https://github.com/calesthio/OpenMontage) — Documentary Montage | Free / OSS |
+| Video production pipeline | [OpenMontage](https://github.com/calesthio/OpenMontage) — `hybrid` pipeline | Free / OSS |
 | Archival footage & stills | Archive.org, Wikimedia Commons, Pexels | Free |
 | Price evidence | Wayback Machine, BLS CPI, FRED | Free |
 | Narration | ElevenLabs (**your existing subscription**) | Already paid |
@@ -78,7 +78,8 @@ No Higgsfield credits, no Veo, no Kling, no paid video models. Wiring:
 4. [`docs/04-stack.md`](docs/04-stack.md) — how the repos plug together
 5. [`docs/05-compliance.md`](docs/05-compliance.md) — the publish gate
 6. [`docs/06-runbook.md`](docs/06-runbook.md) — day 0 → day 90
-7. [`content/episodes/`](content/episodes/) — the 10-episode launch slate
+7. [`docs/07-credentials-handoff.md`](docs/07-credentials-handoff.md) — YouTube OAuth + Gemini keys, as a browser-agent prompt
+8. [`content/episodes/`](content/episodes/) — the 10-episode launch slate
 
 ## Start
 
