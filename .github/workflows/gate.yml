@@ -118,16 +118,29 @@ jobs:
                   if m.group(2).lower() in PLACEHOLDERS:
                       continue
                   bad.append(f"{p}: {m.group(1)} has a value")
+          # The vendor's walkthrough writes plaintext credentials to these filenames.
+          # They are gitignored, but a `git add -f` or a moved copy would slip past that.
+          for name in ("credentials.json", "tokens.json", "token.json"):
+              for hit in pathlib.Path('.').rglob(name):
+                  if '.git' in hit.parts or 'vendor' in hit.parts:
+                      continue
+                  bad.append(f"{hit}: OAuth credential file must never be committed")
           if bad:
               print("::error::a credential appears to be committed\n" + "\n".join(bad))
               sys.exit(1)
-          print("ok no populated keys")
+          print("ok no populated keys, no credential files")
           PY
 
       - name: Assert compliance defaults intact
         run: |
-          grep -q 'PRIVACY_STATUS=private' config/env.ytagent.template \
-            || { echo "::error::uploads must default to private (compliance C10)"; exit 1; }
+          grep -q '^DEFAULT_PRIVACY_STATUS=private' config/env.ytagent.template \
+            || { echo "::error::uploads must default to private (compliance C10). NOTE the prefix: the vendor reads DEFAULT_PRIVACY_STATUS, not PRIVACY_STATUS"; exit 1; }
+          # The invented env names must not come back. The vendor reads none of them;
+          # they made the setup instructions silently wrong for a whole commit.
+          if grep -qE '^YOUTUBE_(CLIENT_ID|CLIENT_SECRET|REFRESH_TOKEN)=' config/env.ytagent.template; then
+            echo "::error::YOUTUBE_* env vars are inert — OAuth goes through the walkthrough into config/credentials.json"
+            exit 1
+          fi
           grep -q 'ai_disclosure: true' config/channel.yaml \
             || { echo "::error::AI disclosure must stay on (compliance C5)"; exit 1; }
           grep -q 'hard_cap_per_day: 2' config/channel.yaml \

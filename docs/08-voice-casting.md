@@ -154,6 +154,8 @@ settings, probably by whoever uploaded it. Regenerate every candidate yourself, 
 audition script in §4 and the exact settings in §3:
 
 ```bash
+mkdir -p content/voice/audition     # nothing else creates this; curl will not create it for you
+
 # per candidate
 curl -sS -X POST "https://api.elevenlabs.io/v1/text-to-speech/$CANDIDATE_ID" \
   -H "xi-api-key: $ELEVENLABS_API_KEY" -H "Content-Type: application/json" \
@@ -179,10 +181,12 @@ one whose `[PAUSE]` before the verdict word you are more willing to sit through 
 silence recurs in every episode for the life of the channel; preference for it is the correct
 tiebreaker.
 
-**Step 7 — record.** Keep the winning and rejected audition MP3s under `content/voice/audition/`
-and write a short casting log next to them: date, candidates heard, which gate each rejection
-failed. This costs ten minutes and makes the decision auditable in eighteen months when someone
-asks why. It is the same discipline as `evidence.json`, applied to a taste decision.
+**Step 7 — record.** Write a casting log at `content/voice/casting-log.md`: date, candidates
+heard, resolved voice_id, and which gate each rejection failed. **The log is the record, not the
+audio** — `.gitignore` excludes `*.mp3` repo-wide, so the MP3s stay local and must never be cited
+as the artefact. Keep them under `content/voice/audition/` for your own re-listening, but write
+the log so it stands alone: a reader in eighteen months will have the log and no audio at all.
+That is the same discipline as `evidence.json`, applied to a taste decision.
 
 **Step 8 — hand off.** `config/channel.yaml` is `strategy-lead`'s file (see its header).
 `voice-director` supplies the resolved ID and the log; `strategy-lead` writes the line:
@@ -280,11 +284,12 @@ by `post-supervisor`. Never solve a quiet read by re-generating hotter.
 > **AUDITION FIXTURE — NOT AN EPISODE.** Every figure below is arbitrary, invented for the purpose
 > of stressing a text-to-speech read, and refers to no real product, listing, retailer, or series.
 > It is deliberately object-less — "the shelf," never a named thing — so it can never be mistaken
-> for a claim. It is **85 words**, below the 95-word floor in `config/channel.yaml`, so it cannot
-> pass as a shippable script even by accident. It is never rendered and never published.
+> for a claim. It is **76 words** (80 counting the pacing marks), below the 95-word floor in
+> `config/channel.yaml`, so it cannot pass as a shippable script even by accident. It is never
+> rendered and never published.
 
 **[ARTIFACT]**
-In twenty sixteen, the shelf price was two forty-nine. [PAUSE]
+In twenty sixteen, the shelf price was two forty-nine dollars. [PAUSE]
 
 **[GAP]**
 Today, the same shelf: six ninety-five. [PAUSE]
@@ -329,8 +334,11 @@ This is the first sound of every episode we will ever publish.
 **GATE 3 — The percentage: "one hundred and seventy-six percent"**
 - **FAIL:** "percent" swallowed to "purcen." The terminal /t/ is the most-lost consonant in this
   channel's whole vocabulary, and it disappears first on a phone speaker.
-- **FAIL:** inconsistent construction — "one hundred and seventy-six" here, "a hundred
-  seventy-six" three lines later. Either is acceptable; varying between them inside one episode is
+- **FAIL:** inconsistent construction across a real episode — "one hundred and seventy-six" in
+  one line, "a hundred seventy-six" in another. The §4.1 fixture contains this figure only once,
+  so this gate is not scorable from the fixture alone: to test it, have the candidate read the
+  percentage line twice in the same take. Either construction is acceptable; varying between them
+  inside one episode is
   not.
 - **HARD FAIL:** the voice gets excited. Widening, rising, louder on the big number. If the
   delivery sells the figure, the figure was not shocking on its own, and the bible's entire

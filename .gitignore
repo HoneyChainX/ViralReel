@@ -22,6 +22,7 @@ content/episodes/*/assets/
 !config/env.*.template
 *.pem
 credentials.json
+tokens.json
 token.json
 
 # python / node

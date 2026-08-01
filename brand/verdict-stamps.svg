@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1700 1000" width="1700" height="1000"
+     role="img" aria-labelledby="pa-stamps-title pa-stamps-desc">
+
+  <title id="pa-stamps-title">Price Archaeology — verdict stamps</title>
+  <desc id="pa-stamps-desc">The four verdict stamps — RIPOFF in amber, STILL CHEAP in cyan,
+  EXTINCT in grey, FAIR in white — each hard-edged, unfilled and rotated four degrees.</desc>
+
+  <!--
+    Price Archaeology — verdict stamps
+    Owner: brand-designer. Bible §5 / .claude/agents/brand-designer.md.
+
+    THE DELIVERABLE is the four <g id="stamp-*"> definitions in <defs>. Each is centred on
+    its own origin, so dropping one into a frame is:
+
+        <use href="#stamp-ripoff" transform="translate(540, 1180)"/>
+
+    The 2×2 layout and the captions below are a contact sheet for review — hide
+    #sheet-annotations before rasterising anything for production.
+
+    RULES BAKED IN
+      · rotation 4°, clockwise (config/channel.yaml → brand.stamp_rotation_deg: 4)
+      · hard-edged: no corner radius, no blur, no distress texture, no shadow
+      · fill:none — ink on paper. The archive footage shows through the stamp.
+      · colour is fixed per verdict and never picked per episode:
+          RIPOFF      #C8964B  past/amber   (config brand.colors.past)
+          STILL CHEAP #00E5FF  present/cyan (config brand.colors.present)
+          EXTINCT     #848484  grey         (DERIVED — see note below)
+          FAIR        #FFFFFF  data/white   (config brand.colors.data)
+
+    EXTINCT GREY IS NOT LOCKED YET. config/channel.yaml has no grey key, so #848484 is the
+    floor of the 50/50 mix of brand.colors.data and brand.colors.ground rather than a guess.
+    ((0xFF + 0x0A) / 2 = 132.5, floored to 132 = 0x84.)
+    strategy-lead should add `extinct: "#848484"` to brand.colors to make it enforceable.
+    See brand/tokens.css.
+
+    MOTION lives in Remotion, not here: the stamp slams in with a 2px offset shake, the
+    pa-stamp-shake-px token in brand/tokens.css. It never fades, never scales up softly,
+    never eases in slowly. A rubber stamp is an impact.
+  -->
+
+  <defs>
+    <!-- RIPOFF — 480 × 168 -->
+    <g id="stamp-ripoff" transform="rotate(4)" fill="none" stroke="#C8964B">
+      <rect x="-240" y="-84" width="480" height="168" stroke-width="10"/>
+      <rect x="-226" y="-70" width="452" height="140" stroke-width="3"/>
+      <text x="0" y="31" fill="#C8964B" stroke="none" text-anchor="middle"
+            font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+            font-weight="700" font-size="88" letter-spacing="8">RIPOFF</text>
+    </g>
+
+    <!-- STILL CHEAP — 760 × 168 -->
+    <g id="stamp-still-cheap" transform="rotate(4)" fill="none" stroke="#00E5FF">
+      <rect x="-380" y="-84" width="760" height="168" stroke-width="10"/>
+      <rect x="-366" y="-70" width="732" height="140" stroke-width="3"/>
+      <text x="0" y="31" fill="#00E5FF" stroke="none" text-anchor="middle"
+            font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+            font-weight="700" font-size="88" letter-spacing="8">STILL CHEAP</text>
+    </g>
+
+    <!-- EXTINCT — 545 × 168 -->
+    <g id="stamp-extinct" transform="rotate(4)" fill="none" stroke="#848484">
+      <rect x="-272.5" y="-84" width="545" height="168" stroke-width="10"/>
+      <rect x="-258.5" y="-70" width="517" height="140" stroke-width="3"/>
+      <text x="0" y="31" fill="#848484" stroke="none" text-anchor="middle"
+            font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+            font-weight="700" font-size="88" letter-spacing="8">EXTINCT</text>
+    </g>
+
+    <!-- FAIR — 360 × 168. Conceding is a feature; this stamp gets used. -->
+    <g id="stamp-fair" transform="rotate(4)" fill="none" stroke="#FFFFFF">
+      <rect x="-180" y="-84" width="360" height="168" stroke-width="10"/>
+      <rect x="-166" y="-70" width="332" height="140" stroke-width="3"/>
+      <text x="0" y="31" fill="#FFFFFF" stroke="none" text-anchor="middle"
+            font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+            font-weight="700" font-size="88" letter-spacing="8">FAIR</text>
+    </g>
+  </defs>
+
+  <!-- Contact sheet -->
+  <rect x="0" y="0" width="1700" height="1000" fill="#0A0A0A"/>
+
+  <use href="#stamp-ripoff"      transform="translate(425, 300)"/>
+  <use href="#stamp-still-cheap" transform="translate(1275, 300)"/>
+  <use href="#stamp-extinct"     transform="translate(425, 700)"/>
+  <use href="#stamp-fair"        transform="translate(1275, 700)"/>
+
+  <g id="sheet-annotations" fill="#848484" opacity="0.7" text-anchor="middle"
+     font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+     font-weight="400" font-size="26" letter-spacing="3">
+    <text x="425"  y="460">THE DIG · #C8964B</text>
+    <text x="1275" y="460">STILL CHEAP · #00E5FF</text>
+    <text x="425"  y="860">EXTINCT PRICES · #848484 (derived)</text>
+    <text x="1275" y="860">THE DIG / TIME CAPSULE CART · #FFFFFF</text>
+  </g>
+</svg>

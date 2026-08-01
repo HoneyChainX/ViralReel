@@ -1,0 +1,202 @@
+/* ============================================================================
+ * Price Archaeology — design tokens
+ * Owner: brand-designer. Source of truth: config/channel.yaml (brand.*) and
+ * docs/02-channel-bible.md §5.
+ *
+ * Every hex below was read out of config/channel.yaml, not typed from memory.
+ * If this file and channel.yaml ever disagree, channel.yaml wins and this file
+ * is the bug. Verify with:
+ *
+ *   grep -A6 'colors:' config/channel.yaml && grep -n 'pa-color' brand/tokens.css
+ *
+ * Authoring unit: frame pixels on the 1080×1920 delivery frame
+ * (config format.width / format.height). Anything consuming these tokens at a
+ * different raster size must scale, not re-pick, the values.
+ * ========================================================================== */
+
+:root {
+  /* --- Colour: LOCKED. Sourced from config/channel.yaml → brand.colors ----- */
+
+  /* every 2016 figure — never reassign */
+  --pa-color-past: #C8964B;
+  /* every 2026 figure — never reassign */
+  --pa-color-present: #00E5FF;
+  /* deltas > +100% only. Rare on purpose. */
+  --pa-color-alarm: #FF3B30;
+  --pa-color-ground: #0A0A0A;
+  --pa-color-data: #FFFFFF;
+
+  /* --- Colour: DERIVED, NOT YET LOCKED ------------------------------------
+   * docs/02-channel-bible.md §5 assigns EXTINCT a "grey" but config/channel.yaml
+   * has no grey key, so there is nothing to read. This value is not invented:
+   * it is the floor of the 50/50 mix of --pa-color-data and --pa-color-ground
+   *   ((0xFF + 0x0A) / 2 = 0x84) → #848484
+   * so it is reproducible from two locked tokens.
+   *
+   * ACTION FOR strategy-lead: to make this enforceable, add to channel.yaml
+   *   brand.colors.extinct: "#848484"
+   * Until that lands, treat this token as provisional. Do not substitute a
+   * different grey per episode — pick once, lock it upstream.
+   */
+  --pa-color-extinct: #848484;
+
+  /* --- Type ---------------------------------------------------------------
+   * Bible §5: "one grotesque family, two weights."
+   *
+   * The family itself is a licensing decision that has not been made and cannot
+   * be guessed — a font file we do not have is a broken render, and a webfont
+   * URL is a network call inside a pipeline that is supposed to run offline.
+   * The stack below resolves to real grotesques that ship with the OS, so the
+   * system renders correctly today.
+   *
+   * To ship the licensed family, drop the file in brand/fonts/ and uncomment:
+   *
+   *   @font-face {
+   *     font-family: "PA Grotesque";
+   *     src: url("<<FILL: relative path to the .woff2 you licensed, e.g.
+   *               ./fonts/<family>-Regular.woff2 — obtain from the foundry you
+   *               buy from; record the licence in the episode licenses.json>>")
+   *          format("woff2");
+   *     font-weight: 400; font-style: normal; font-display: block;
+   *   }
+   *   (repeat for weight 700)
+   *
+   * then prepend "PA Grotesque" to --pa-font-grotesque. Nothing else changes.
+   */
+  --pa-font-grotesque:
+    "Helvetica Neue", Helvetica, Arial, "Liberation Sans", "Nimbus Sans",
+    system-ui, sans-serif;
+
+  /* two weights, no others */
+  --pa-weight-regular: 400;
+  --pa-weight-bold: 700;
+
+  /* --- Type scale (1080×1920 frame pixels) --------------------------------
+   * Bible §5: "Numbers set in tabular figures at 3–4× the body size."
+   * Body is the anchor; every number size below is a literal multiple of it.
+   */
+  --pa-text-body: 44px;                    /* 1×   — explains the number      */
+  --pa-text-label: 32px;                   /* 0.73× — eyebrow / segment label */
+  --pa-text-number: 176px;                 /* 4×   — the hero number          */
+  --pa-text-number-secondary: 132px;       /* 3×   — the paired/older number  */
+  --pa-text-stamp: 88px;                   /* 2×   — verdict stamp lettering  */
+
+  /* Citation chip. 14px is quoted verbatim from bible §5 and treated as locked.
+   * NOTE FOR head-of-format / strategy-lead: on a 1080-wide frame that is 1.3%
+   * of frame width (~5 CSS px on a phone). It is legible in a full-screen
+   * pause, marginal mid-scroll. Deliberately NOT changed here — the citation
+   * size is a format decision, and changing it locally is exactly the
+   * one-episode drift this system exists to prevent. If it should be larger,
+   * change the bible and this token together, once, for every episode.
+   */
+  --pa-text-cite: 14px;
+
+  --pa-leading-number: 1;                  /* odometer wheel height = 1em     */
+  --pa-leading-body: 1.25;
+  --pa-tracking-stamp: 0.08em;
+
+  /* --- Motion. Sourced from config/channel.yaml → brand.* ------------------ */
+  --pa-odometer-ms: 800ms;                 /* brand.odometer_ms: 800          */
+  --pa-odometer-ease: cubic-bezier(0.16, 1, 0.3, 1);  /* ease-out, no spring  */
+  --pa-stamp-rotation: 4deg;               /* brand.stamp_rotation_deg: 4     */
+  --pa-stamp-shake-px: 2px;                /* bible §5: 2px offset shake      */
+
+  /* --- Layer treatment ---------------------------------------------------- */
+  --pa-citation-opacity: 0.6;              /* brand.citation_opacity: 0.6     */
+  --pa-archive-saturation: 0.4;            /* bible §5: desaturated to ~40%   */
+  --pa-frame-w: 1080px;                    /* format.width                    */
+  --pa-frame-h: 1920px;                    /* format.height                   */
+  --pa-margin-edge: 56px;                  /* data layer never touches edge   */
+}
+
+/* ============================================================================
+ * Rules, not suggestions
+ * ========================================================================== */
+
+/* TABULAR FIGURES, ALWAYS.
+ * Proportional digits make the odometer jitter, which reads as cheap. Any
+ * element that can ever contain a digit gets this class. Both properties are
+ * present on purpose: font-variant-numeric is the modern path, the raw feature
+ * settings cover fonts that expose "tnum" without the high-level mapping.
+ */
+.pa-num,
+.pa-odometer,
+.pa-price,
+.pa-citation {
+  font-family: var(--pa-font-grotesque);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-kerning: none;                      /* kerning shifts digits mid-roll  */
+}
+
+/* The data layer: flat, sharp, pure white. Never blended into the footage.
+ * The no-effects block is the rule from bible §5 written as code so that a
+ * stray glow is a diff, not a vibe.
+ */
+.pa-data-layer {
+  color: var(--pa-color-data);
+  font-family: var(--pa-font-grotesque);
+  font-weight: var(--pa-weight-bold);
+  text-shadow: none;
+  box-shadow: none;
+  filter: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Colour grammar. After ten episodes the audience reads the colour before the
+ * label — which only works if these are never swapped.
+ */
+.pa-past    { color: var(--pa-color-past); }     /* 2016 figures, always */
+.pa-present { color: var(--pa-color-present); }  /* 2026 figures, always */
+.pa-alarm   { color: var(--pa-color-alarm); }    /* delta > +100% only   */
+
+/* The hero number */
+.pa-number {
+  font-size: var(--pa-text-number);
+  font-weight: var(--pa-weight-bold);
+  line-height: var(--pa-leading-number);
+  letter-spacing: -0.01em;
+}
+.pa-number--secondary { font-size: var(--pa-text-number-secondary); }
+
+/* Archive layer: grainy 2016 footage stays under the data layer, desaturated. */
+.pa-archive-layer {
+  filter: saturate(var(--pa-archive-saturation));
+  background-color: var(--pa-color-ground);
+}
+
+/* Citation chip — bottom-left, museum placard. Ugly is acceptable; absent is
+ * not. Gate check C3 fails the episode if a price frame renders without one.
+ */
+.pa-citation {
+  position: absolute;
+  left: var(--pa-margin-edge);
+  bottom: var(--pa-margin-edge);
+  font-size: var(--pa-text-cite);
+  font-weight: var(--pa-weight-regular);
+  line-height: var(--pa-leading-body);
+  color: var(--pa-color-data);
+  opacity: var(--pa-citation-opacity);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-shadow: none;
+}
+
+/* Verdict stamp geometry. Colour is applied per verdict, never per episode. */
+.pa-stamp {
+  display: inline-block;
+  font-size: var(--pa-text-stamp);
+  font-weight: var(--pa-weight-bold);
+  letter-spacing: var(--pa-tracking-stamp);
+  text-transform: uppercase;
+  transform: rotate(var(--pa-stamp-rotation));  /* positive = clockwise */
+  border: 8px solid currentColor;
+  padding: 0.18em 0.34em;
+  border-radius: 0;                             /* hard-edged. no radius. */
+  text-shadow: none;
+  box-shadow: none;
+}
+.pa-stamp--ripoff      { color: var(--pa-color-past); }
+.pa-stamp--still-cheap { color: var(--pa-color-present); }
+.pa-stamp--extinct     { color: var(--pa-color-extinct); }
+.pa-stamp--fair        { color: var(--pa-color-data); }

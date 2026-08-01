@@ -222,35 +222,42 @@ Env var names below are copied exactly from `config/env.ytagent.template` and
 `config/env.openmontage.template`. `make setup` copies those templates to the vendor `.env`
 files; you edit the copies, never the templates.
 
-| Value | File | Env var |
-|---|---|---|
-| OAuth Client ID (ends `.apps.googleusercontent.com`) | `vendor/yt-agent/.env` | `YOUTUBE_CLIENT_ID` |
-| OAuth Client secret (from the downloaded JSON) | `vendor/yt-agent/.env` | `YOUTUBE_CLIENT_SECRET` |
-| Refresh token — **not** from the browser agent; produced by `npm run walkthrough` | `vendor/yt-agent/.env` | `YOUTUBE_REFRESH_TOKEN` |
-| Gemini API key (AI Studio, free tier) | `vendor/yt-agent/.env` | `GEMINI_API_KEY` |
-| A password you invent, protecting the local dashboard on :3456 | `vendor/yt-agent/.env` | `API_KEY` |
-| Literal `private` — already correct, do not change (gate check C10) | `vendor/yt-agent/.env` | `PRIVACY_STATUS` |
-| ElevenLabs key — outside this handoff, from your existing subscription | `vendor/openmontage/.env` | `ELEVENLABS_API_KEY` |
+**The OAuth values do not go in a file you edit.** An earlier version of this document said to
+paste them into `vendor/yt-agent/.env` as `YOUTUBE_CLIENT_ID` / `YOUTUBE_CLIENT_SECRET` /
+`YOUTUBE_REFRESH_TOKEN`. **The tool reads none of those names** — a repo-wide grep of
+`vendor/yt-agent/` finds them only in the `.env` our own template wrote. Pasting them there does
+nothing and the walkthrough would ask for them again.
 
-Target state of `vendor/yt-agent/.env` after this handoff — the values are written as trailing
-comments here on purpose, see §5:
+What actually happens: `npm run walkthrough` **prompts you at the terminal** to paste the Client
+ID and Client Secret (`walkthrough.js:350`), and writes them to
+`vendor/yt-agent/config/credentials.json` (`utils/credential-manager.js:11`). The browser consent
+step then writes the tokens to `vendor/yt-agent/config/tokens.json` (`modern-auth.js:11`).
+
+| Value | Where it goes | How |
+|---|---|---|
+| OAuth Client ID (ends `.apps.googleusercontent.com`) | `vendor/yt-agent/config/credentials.json` | **pasted at the walkthrough prompt** — you never edit the file |
+| OAuth Client secret | `vendor/yt-agent/config/credentials.json` | same prompt, masked input |
+| Refresh token | `vendor/yt-agent/config/tokens.json` | written automatically by the browser consent step |
+| Gemini API key | `vendor/yt-agent/.env` → `GEMINI_API_KEY` | env var, read at `index.js:97` |
+| Dashboard password you invent | `vendor/yt-agent/.env` → `API_KEY` | env var, read at `index.js:133` |
+| Literal `private` | `vendor/yt-agent/.env` → `DEFAULT_PRIVACY_STATUS` | **note the prefix**, read at `agents/publishing-scheduling-agent.js:130` |
+| ElevenLabs key (outside this handoff) | `vendor/openmontage/.env` → `ELEVENLABS_API_KEY` | env var |
+
+Target state of the parts of `vendor/yt-agent/.env` you actually edit:
 
 ```bash
-GEMINI_API_KEY=          # <<FILL: AI Studio -> API keys -> Create API key (free tier)>>
-API_KEY=                 # <<FILL: invent one; `openssl rand -hex 24` is fine>>
-PRIVACY_STATUS=private
-YOUTUBE_CLIENT_ID=       # <<FILL: Cloud Console -> APIs & Services -> Credentials -> your Desktop client>>
-YOUTUBE_CLIENT_SECRET=   # <<FILL: same client; from the downloaded client_secret_*.json>>
-YOUTUBE_REFRESH_TOKEN=   # <<FILL: written by `cd vendor/yt-agent && npm run walkthrough`>>
+GEMINI_API_KEY=              # <<FILL: AI Studio -> API keys -> Create API key (free tier)>>
+API_KEY=                     # <<FILL: invent one; `openssl rand -hex 24` is fine>>
+DEFAULT_PRIVACY_STATUS=private
 ```
 
-**Order matters.** The client ID and secret must be in place *before* the walkthrough runs — the
-walkthrough exchanges them for the refresh token. Sequence:
+**Sequence.** The walkthrough is interactive, so have the Client ID and Secret on screen (or the
+downloaded JSON open) before you start it:
 
 ```bash
 make setup                                   # creates both vendor .env files from the templates
-# paste client ID + secret + Gemini key into vendor/yt-agent/.env
-cd vendor/yt-agent && npm run walkthrough    # browser consent -> writes YOUTUBE_REFRESH_TOKEN
+# put GEMINI_API_KEY + API_KEY into vendor/yt-agent/.env
+cd vendor/yt-agent && npm run walkthrough    # PROMPTS for client id + secret, then browser consent
 ```
 
 During the walkthrough's consent screen you will see Google's "Google hasn't verified this app"
@@ -295,14 +302,16 @@ A `WARN` on `ELEVENLABS_API_KEY` is not a failure — it means VO falls back to 
 `GEMINI_API_KEY` means the key never made it into `vendor/yt-agent/.env`. `make doctor` exits
 non-zero if anything failed and prints `Not ready — fix the FAILs above.`
 
-`doctor.sh` does **not** inspect the three `YOUTUBE_*` values, so check those separately with a
-command that prints a count and never a value:
+OAuth is verified by the presence of the two files the walkthrough writes — never by reading
+their contents:
 
-```bash
-grep -cE '^YOUTUBE_(CLIENT_ID|CLIENT_SECRET|REFRESH_TOKEN)=.' vendor/yt-agent/.env   # expect: 3
+```
+  OK    config/credentials.json present (client id + secret)
+  OK    config/tokens.json present (refresh token)
 ```
 
-Anything less than 3 means the walkthrough did not complete. The real end-to-end proof is a
+A `FAIL` on `credentials.json` means the walkthrough never got your client ID; a `FAIL` on
+`tokens.json` means the browser consent step didn't complete. The real end-to-end proof is a
 private upload of a gated episode (`make publish SLUG=…`), which lands private by design and can
 be deleted from YouTube Studio afterwards.
 
@@ -310,10 +319,16 @@ be deleted from YouTube Studio afterwards.
 
 ## 5. Security note
 
-**Keys live in exactly two files, both gitignored: `vendor/openmontage/.env` and
-`vendor/yt-agent/.env`.** `.gitignore` excludes `vendor/`, `.env`, `.env.*`, `credentials.json`,
-and `token.json`. Nothing in this repository ever contains a credential — not a doc, not a
-config, not a test fixture, not a comment.
+**Credentials live in four files, all gitignored:** `vendor/openmontage/.env`,
+`vendor/yt-agent/.env`, `vendor/yt-agent/config/credentials.json`, and
+`vendor/yt-agent/config/tokens.json`. `.gitignore` excludes `vendor/` wholesale plus `.env`,
+`.env.*`, `credentials.json`, `tokens.json`, and `token.json` by name. Nothing in this
+repository ever contains a credential — not a doc, not a config, not a test fixture, not a
+comment.
+
+> The two JSON files are the ones people forget, because nothing in this repo tells you to
+> create them — the vendor's walkthrough writes them. They hold your client secret and refresh
+> token in plaintext.
 
 - **Never paste a key into a chat.** Not into Claude for Chrome, not into Claude Code, not into
   this repo's agents. That is why §2 forbids the browser agent from reporting the secret and the
