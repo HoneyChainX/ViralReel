@@ -43,33 +43,46 @@
   /* --- Type ---------------------------------------------------------------
    * Bible §5: "one grotesque family, two weights."
    *
-   * The family itself is a licensing decision that has not been made and cannot
-   * be guessed — a font file we do not have is a broken render, and a webfont
-   * URL is a network call inside a pipeline that is supposed to run offline.
-   * The stack below resolves to real grotesques that ship with the OS, so the
-   * system renders correctly today.
+   * RESOLVED: Acumin Pro, licensed through the founder's Creative Cloud plan.
+   * Entitlement verified against Adobe Fonts — Regular, Semibold, Bold, Black and
+   * the Condensed cut all returned available:true for this account.
    *
-   * To ship the licensed family, drop the file in brand/fonts/ and uncomment:
+   * Chosen over Archivo / IBM Plex / Roboto Mono for one reason that is not
+   * taste: Acumin ships true tabular lining figures. <PriceOdometer> rolls digits
+   * for 800ms, and on proportional figures the column widths change mid-roll, so
+   * the number visibly jitters. That roll is the channel's signature motion; a
+   * family without tnum cannot be used here whatever it looks like standing still.
    *
-   *   @font-face {
-   *     font-family: "PA Grotesque";
-   *     src: url("<<FILL: relative path to the .woff2 you licensed, e.g.
-   *               ./fonts/<family>-Regular.woff2 — obtain from the foundry you
-   *               buy from; record the licence in the episode licenses.json>>")
-   *          format("woff2");
-   *     font-weight: 400; font-style: normal; font-display: block;
-   *   }
-   *   (repeat for weight 700)
+   * TWO LOADING PATHS — they are not equivalent:
    *
-   * then prepend "PA Grotesque" to --pa-font-grotesque. Nothing else changes.
+   *   1. Remotion render (the pipeline). Sync Acumin Pro to the machine through
+   *      the Creative Cloud desktop app so it resolves as an installed family.
+   *      This is the path that matters: the render must not depend on a network
+   *      call to use.typekit.net, because a font that fails to load mid-render
+   *      produces a silently wrong video, not an error.
+   *
+   *   2. HTML / Adobe Express surfaces. Kit meo1cll, embedded in <head>:
+   *        <link rel="stylesheet" href="https://use.typekit.net/meo1cll.css">
+   *      CSS family names: "acumin-pro", "acumin-pro-condensed".
+   *
+   * The stack below lists the kit name first, then the installed name, then real
+   * OS grotesques — so it degrades to something correct rather than to a serif
+   * if neither path is present.
    */
   --pa-font-grotesque:
+    "acumin-pro", "Acumin Pro",
     "Helvetica Neue", Helvetica, Arial, "Liberation Sans", "Nimbus Sans",
     system-ui, sans-serif;
 
+  /* Sanctioned exception, not a third face in the system: long figures such as
+   * $1,495 at hero size overflow a 1080px-wide frame in the regular width. Use
+   * ONLY for that, and note the reason in the episode's scene_plan. */
+  --pa-font-grotesque-condensed:
+    "acumin-pro-condensed", "Acumin Pro Condensed", var(--pa-font-grotesque);
+
   /* two weights, no others */
   --pa-weight-regular: 400;
-  --pa-weight-bold: 700;
+  --pa-weight-bold: 900;   /* Acumin Black — the hero-number weight */
 
   /* --- Type scale (1080×1920 frame pixels) --------------------------------
    * Bible §5: "Numbers set in tabular figures at 3–4× the body size."

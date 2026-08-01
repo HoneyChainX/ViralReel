@@ -42,6 +42,21 @@ brand:
   stamp_rotation_deg: 4
   citation_opacity: 0.6
 
+  # Licensed through the founder's Creative Cloud plan. Entitlement verified
+  # against Adobe Fonts for this account — every PostScript name below returned
+  # available:true. Chosen for true tabular lining figures: <PriceOdometer> rolls
+  # digits for 800ms and proportional figures jitter mid-roll, which would wreck
+  # the channel's signature motion. Locked — see brand/README.md.
+  type:
+    family: "Acumin Pro"
+    css_family: "acumin-pro"
+    typekit_id: "meo1cll"          # HTML/Express surfaces only
+    render_path: "creative-cloud-desktop-sync"   # Remotion must not depend on the network
+    weights:
+      body: "AcuminPro-Regular"
+      hero: "AcuminPro-Black"
+    condensed: "AcuminProCond-Bold"  # sanctioned exception for overlong figures only
+
 voice:
   provider: "elevenlabs"       # falls back to piper when key absent
   voice_id: ""                 # set by voice-director after casting, then never changed
@@ -69,6 +84,20 @@ sources:
   allowed: ["archive.org", "commons.wikimedia.org", "web.archive.org", "pexels.com", "pixabay.com"]
   licenses_allowed: ["public-domain", "CC0", "CC-BY-4.0", "CC-BY-SA-4.0", "pexels-license"]
   paid_generators_enabled: false
+
+# Adobe Creative Cloud. Fixed subscription the founder already pays, so fonts and
+# image treatment carry no marginal cost — same category as ElevenLabs.
+# Full policy and reasoning: docs/09-adobe-connectors.md
+adobe:
+  fonts: true                    # Adobe Fonts — the type decision above
+  image_treatment: true          # grain / tint / temperature on OUR OWN stills
+  # Consumes licensing credits, which is the one thing here that would break the
+  # $0.00-per-video guarantee. Opt-in per episode, never a default source, and
+  # NEVER presented as period material.
+  stock_enabled: false
+  # Outpainting. Banned outright: extending an archival frame fabricates visual
+  # evidence on a channel whose entire defence is that its evidence is real.
+  generative_expand_enabled: false
 
 publishing:
   privacy_status: "private"    # a human flips this public. Gate check C10.

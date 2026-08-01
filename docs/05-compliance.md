@@ -73,7 +73,30 @@ Public domain or CC-BY only. Every asset in `licenses.json` with source URL, lic
 attribution string. Attribution renders in the video description. No asset without a recorded
 license reaches the render — the gate checks the file, not the intention.
 
-## Rule 6 — no editorial drift
+## Rule 6 — the archive layer is never synthesised
+
+Adobe Creative Cloud brings image tooling into reach. Two capabilities would
+**falsify evidence** if pointed at the archive layer, and both are banned:
+
+**`image_generative_expand` — banned outright, everywhere.** It is outpainting: it invents
+pixels beyond the frame edge. Extending a 2016 storefront photo to fill 9:16 would fabricate
+visual evidence on a channel whose entire defence is that its evidence is real. If an archival
+frame does not fill vertical, **crop it, letterbox it, or source a different clip** — those are
+the only three answers. There is no episode important enough to invent a shopfront for.
+
+**Adobe Stock is never period material.** Stock is modern imagery. Using it for a 2016
+comparison shot is the same falsification by an easier route, which is precisely what makes it
+dangerous — `archive-sourcer` already bans presenting modern footage as period, and Stock makes
+that ban easier to break by accident than any other source. Stock is permitted only for
+explicitly-present-day shots, must be recorded in `licenses.json` like any other asset, and is
+`stock_enabled: false` by default because licensing consumes credits and breaks the $0 model.
+
+**What Adobe tooling *is* for.** Colour and grain treatment of assets we already legitimately
+hold — desaturation, grain, monochromatic tint, temperature — applied to make sourced material
+match the bible's look. Treating a real photograph is grading. Extending one is fabrication.
+The line is whether a pixel describes something that was actually photographed.
+
+## Rule 7 — no editorial drift
 
 No political-party framing, no partisan blame, no medical or financial advice, no claims about
 named living individuals. Mechanical causes only (see bible §7).

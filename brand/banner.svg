@@ -45,8 +45,8 @@
   </g>
 
   <!-- Colour grammar, wide crop only: amber past on the left, cyan present on the right. -->
-  <g font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
-     font-weight="700" font-size="120" letter-spacing="4"
+  <g font-family="acumin-pro, Acumin Pro, Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+     font-weight="900" font-size="120" letter-spacing="4"
      style="font-variant-numeric: tabular-nums lining-nums; font-feature-settings: 'tnum' 1, 'lnum' 1;">
     <text x="150"  y="762" fill="#C8964B" text-anchor="start">2016</text>
     <text x="2410" y="762" fill="#00E5FF" text-anchor="end">2026</text>
@@ -76,10 +76,10 @@
     </g>
   </g>
 
-  <g font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+  <g font-family="acumin-pro, Acumin Pro, Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
      text-anchor="middle">
     <!-- channel.name -->
-    <text x="1280" y="800" fill="#FFFFFF" font-weight="700" font-size="116" letter-spacing="-1">Price Archaeology</text>
+    <text x="1280" y="800" fill="#FFFFFF" font-weight="900" font-size="116" letter-spacing="-1">Price Archaeology</text>
     <!-- channel.tagline -->
     <text x="1280" y="878" fill="#FFFFFF" opacity="0.72" font-weight="400" font-size="46" letter-spacing="2">We dig up what things used to cost.</text>
   </g>

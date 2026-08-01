@@ -54,9 +54,21 @@ export const PA_TOKENS = {
 /** config/channel.yaml → brand.odometer_ms */
 export const PA_ODOMETER_MS = 800;
 
-/** Mirrors --pa-font-grotesque in brand/tokens.css. See that file re: the licensed family. */
+/**
+ * Mirrors --pa-font-grotesque in brand/tokens.css.
+ *
+ * Acumin Pro, licensed via Creative Cloud. Chosen for true tabular lining figures:
+ * this component rolls digits for 800ms and proportional figures shift column width
+ * mid-roll, which makes the channel's signature motion jitter. See tokenStyle below —
+ * fontVariantNumeric is what actually enforces it.
+ *
+ * For a Remotion render the family must be SYNCED LOCALLY via the Creative Cloud
+ * desktop app. Do not add a Typekit <link> to the render: a webfont fetch that fails
+ * mid-render yields a silently wrong video rather than an error. The Typekit kit
+ * (meo1cll) is for HTML/Express surfaces only.
+ */
 export const PA_FONT_STACK =
-  '"Helvetica Neue", Helvetica, Arial, "Liberation Sans", "Nimbus Sans", system-ui, sans-serif';
+  '"acumin-pro", "Acumin Pro", "Helvetica Neue", Helvetica, Arial, "Liberation Sans", "Nimbus Sans", system-ui, sans-serif';
 
 /** --pa-text-number: the hero number, 4× body. */
 const DEFAULT_FONT_SIZE = 176;
