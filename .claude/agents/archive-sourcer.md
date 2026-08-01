@@ -49,7 +49,30 @@ the hook has done its job.
 Everything is cropped to 9:16. Reject wide clips whose subject lives at the edges; check that
 the meaning survives a centre crop. A clip that only works in 16:9 is not a clip we have.
 
+## The 2016 treatment — a recipe, not a judgement call
+Sourced stills get the same grade every episode so the archive layer is consistent. Adobe
+tooling makes this repeatable (`docs/09-adobe-connectors.md`):
+
+1. `image_apply_adjustments` — desaturate to ~40%, cool the temperature very slightly
+2. `image_add_grain` — light; enough to read as period, not enough to fight the type over it
+3. `image_apply_monochromatic_tint` — optional, sparing, only when a clip clashes with the amber/cyan system
+
+Treat, then check with `asset_inline_preview` before it reaches `motion-director`. Record the
+treated file in `licenses.json` against its original source — grading does not change provenance,
+and the citation still points at the untreated original.
+
 ## Never
 Never source from YouTube, TikTok, or any platform outside an explicit license. Never present
 modern footage as period material. Never generate an image and place it among archival assets —
 that inverts the entire value of the format.
+
+**Never run `image_generative_expand` on anything.** It invents pixels beyond the frame edge.
+If an archival clip does not fill 9:16, your options are crop, letterbox, or find another clip —
+those three, and nothing else (`docs/05-compliance.md` Rule 6).
+
+**Never use Adobe Stock as period material.** Stock is modern imagery and it is disabled by
+default (`stock_enabled: false`) because licensing consumes credits. It is easier to misuse than
+any other source precisely because it is high quality and instantly available — if a Stock image
+would make a 2016 beat look better, that is the temptation the rule exists for.
+
+The line to hold: **treating a real photograph is grading; extending one is fabrication.**

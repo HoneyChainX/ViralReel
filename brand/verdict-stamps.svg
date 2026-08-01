@@ -45,8 +45,8 @@
       <rect x="-240" y="-84" width="480" height="168" stroke-width="10"/>
       <rect x="-226" y="-70" width="452" height="140" stroke-width="3"/>
       <text x="0" y="31" fill="#C8964B" stroke="none" text-anchor="middle"
-            font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
-            font-weight="700" font-size="88" letter-spacing="8">RIPOFF</text>
+            font-family="acumin-pro, Acumin Pro, Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+            font-weight="900" font-size="88" letter-spacing="8">RIPOFF</text>
     </g>
 
     <!-- STILL CHEAP — 760 × 168 -->
@@ -54,8 +54,8 @@
       <rect x="-380" y="-84" width="760" height="168" stroke-width="10"/>
       <rect x="-366" y="-70" width="732" height="140" stroke-width="3"/>
       <text x="0" y="31" fill="#00E5FF" stroke="none" text-anchor="middle"
-            font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
-            font-weight="700" font-size="88" letter-spacing="8">STILL CHEAP</text>
+            font-family="acumin-pro, Acumin Pro, Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+            font-weight="900" font-size="88" letter-spacing="8">STILL CHEAP</text>
     </g>
 
     <!-- EXTINCT — 545 × 168 -->
@@ -63,8 +63,8 @@
       <rect x="-272.5" y="-84" width="545" height="168" stroke-width="10"/>
       <rect x="-258.5" y="-70" width="517" height="140" stroke-width="3"/>
       <text x="0" y="31" fill="#848484" stroke="none" text-anchor="middle"
-            font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
-            font-weight="700" font-size="88" letter-spacing="8">EXTINCT</text>
+            font-family="acumin-pro, Acumin Pro, Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+            font-weight="900" font-size="88" letter-spacing="8">EXTINCT</text>
     </g>
 
     <!-- FAIR — 360 × 168. Conceding is a feature; this stamp gets used. -->
@@ -72,8 +72,8 @@
       <rect x="-180" y="-84" width="360" height="168" stroke-width="10"/>
       <rect x="-166" y="-70" width="332" height="140" stroke-width="3"/>
       <text x="0" y="31" fill="#FFFFFF" stroke="none" text-anchor="middle"
-            font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
-            font-weight="700" font-size="88" letter-spacing="8">FAIR</text>
+            font-family="acumin-pro, Acumin Pro, Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+            font-weight="900" font-size="88" letter-spacing="8">FAIR</text>
     </g>
   </defs>
 
@@ -86,7 +86,7 @@
   <use href="#stamp-fair"        transform="translate(1275, 700)"/>
 
   <g id="sheet-annotations" fill="#848484" opacity="0.7" text-anchor="middle"
-     font-family="Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
+     font-family="acumin-pro, Acumin Pro, Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
      font-weight="400" font-size="26" letter-spacing="3">
     <text x="425"  y="460">THE DIG · #C8964B</text>
     <text x="1275" y="460">STILL CHEAP · #00E5FF</text>

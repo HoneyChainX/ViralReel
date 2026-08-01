@@ -133,17 +133,27 @@ crisp digit, and only a price in motion is allowed to smear.
 
 ---
 
-## Open items — two placeholders, deliberately not filled
+## Open items — one placeholder left
 
-**1. The grotesque family is not chosen.** The bible says "one grotesque family, two weights" and
-does not name one, and a font file this repo does not have is a broken render (a webfont URL is
-worse — it is a network call inside a pipeline that runs offline). `--pa-font-grotesque` currently
-resolves to grotesques that ship with the OS, so everything renders correctly today.
+**1. ~~The grotesque family is not chosen.~~ RESOLVED: Acumin Pro.** Licensed through the
+founder's Creative Cloud plan; entitlement verified per weight against this account
+(`Regular`, `Semibold`, `Bold`, `Black`, `AcuminProCond-Bold` — all `available: true`).
 
-To ship a licensed family: put the file in `brand/fonts/`, fill the `<<FILL: …>>` in the commented
-`@font-face` block in `tokens.css`, prepend the family to `--pa-font-grotesque`, and mirror it in
-`PA_FONT_STACK`. Record the licence the same way episode assets are recorded (`docs/05-compliance.md`,
-Rule 5). Nothing else changes.
+Chosen for **true tabular lining figures**, which is a functional requirement here rather than a
+preference: `<PriceOdometer>` rolls digits for 800ms, and proportional figures shift column width
+mid-roll, so the number jitters through the channel's signature motion.
+
+The concern this placeholder originally raised — *"a webfont URL is a network call inside a
+pipeline that runs offline"* — was correct and still stands, so the two surfaces load differently:
+
+- **Remotion render:** sync Acumin Pro locally through the Creative Cloud desktop app. No network
+  call in the render path. A font that fails to load mid-render produces a silently wrong video,
+  not an error, which is the failure this avoids.
+- **HTML / Express:** Typekit kit `meo1cll` — `<link rel="stylesheet" href="https://use.typekit.net/meo1cll.css">`,
+  families `acumin-pro` and `acumin-pro-condensed`.
+
+`--pa-font-grotesque` lists the kit name, then the installed name, then real OS grotesques, so it
+degrades to something correct rather than to a serif. Full reasoning: `docs/09-adobe-connectors.md`.
 
 **2. EXTINCT grey is derived, not locked.** The bible assigns EXTINCT a grey; `config/channel.yaml`
 has no grey key, so there was nothing to read. Rather than invent one, `#848484` is the floor of the 50/50

@@ -147,4 +147,11 @@ jobs:
             || { echo "::error::throughput cap changed — this is the mass-production risk"; exit 1; }
           grep -q 'paid_generators_enabled: false' config/channel.yaml \
             || { echo "::error::paid generators enabled — breaks the \$0 cost model"; exit 1; }
+          # Adobe. Outpainting an archival frame fabricates visual evidence, and
+          # Stock is modern imagery that must never pass as period material.
+          # docs/05-compliance.md Rule 6, docs/09-adobe-connectors.md.
+          grep -q 'generative_expand_enabled: false' config/channel.yaml \
+            || { echo "::error::image_generative_expand must stay disabled — it fabricates archival evidence"; exit 1; }
+          grep -q 'stock_enabled: false' config/channel.yaml \
+            || { echo "::error::Adobe Stock must stay opt-in — it consumes credits and must never pass as period material"; exit 1; }
           echo "ok compliance defaults intact"
