@@ -42,3 +42,5 @@ out/
 content/tests/*/assets/
 content/tests/kids-cartoon-60s/vo/*.wav
 content/tests/kids-cartoon-60s/audio60.m4a
+content/tests/*/audio60.m4a
+content/tests/*/remotion/node_modules/

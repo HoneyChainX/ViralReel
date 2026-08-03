@@ -121,3 +121,52 @@ terminators.
 ghuntley.com/ralph · github.com/ghuntley/how-to-ralph-wiggum · github.com/snarktank/ralph ·
 ScreenSkills VFX career map · Simon Willison's MrBeast-handbook summary · the GitHub repos
 named above, each verified via API on 2026-08-03.*
+
+---
+
+## 5. Film-assembly research (third sweep, 2026-08-03)
+
+Question: how to make storyboards, scene flow, montage, and the linking of many scene-videos
+into one film — and which top-studio open repos to adopt. Two parallel deep sweeps
+(assembly tooling; studio/expert repos). Verdicts:
+
+**The spine decision, independently confirmed:** a plain film manifest + ffmpeg as the
+default conform renderer; OTIO as the *derived* interchange projection (it describes
+timelines, it does not render them — there is no official otio-ffmpeg render adapter);
+MLT XML via `otio-mlt-adapter` → `melt` as the escape hatch for complex timelines.
+Implemented as `studio/film/*.yaml` + `scripts/studio/conform.py`.
+
+**Adopted from the sweep:**
+- `Breakthrough/PySceneDetect` (BSD-3) — cut verification in conform QC: every manifest
+  hard cut must exist in the stitched film (±0.5s); catches dropped scenes/double-joins.
+- `OpenTimelineIO-Plugins` + `apetrynet/otio-mlt-adapter` (Apache/MIT) — EDL/AAF/FCPXML
+  export and the write-only OTIO→MLT bridge, added to the otio module.
+- **VMAF is already available**: the pinned static ffmpeg build ships `libvmaf`
+  (Netflix, BSD+Patent; 2026 "VMAF v1" models add banding/color awareness) — stitched-vs-
+  mezzanine scoring needs no new module, only kept scene mezzanines.
+
+**Continuity practice for generative multi-scene films (recorded for the GPU host):**
+keyframe-first planning; **Wan 2.2 FLF2V** (first+last frame conditioning) is the best
+open-weights tool for controlled scene joins; last-frame chaining
+(`ffmpeg -sseof -0.05 -i sceneN.mp4 -frames:v 1 last.png` → I2V init for scene N+1) is the
+cheap universal fallback with drift over many hops; identity: character LoRA (kohya
+sd-scripts) > reference adapters (IP-Adapter/PuLID — note IPAdapter_plus is
+maintenance-only since Apr 2025) > StoryDiffusion (code CC BY-NC — unusable commercially).
+
+**Studied, not adopted (architecture references):** ViMax (MIT — its Screenwriter→Director→
+Producer→Generator loop with dependency-aware continuity is the best current reference;
+MIT permits lifting logic), VideoClaw (six-stage pipeline with reviewable intermediates;
+**license discrepancy between sweeps — verify before any adoption**), MovieAgent (no
+license), ShortGPT's "Editing Markup Language" (edit-decision-as-LLM-output precedent),
+editly (manifest→ffmpeg precedent, drifting), MoneyPrinterTurbo (service-pattern reference).
+
+**Studio-repo verdicts:** usd-core (pip, Modified Apache) — cheap bet on structured scene
+description, adopt when a department actually uses it (D8 rule 3); raven — build-once OTIO
+viewer for humans; Flamenco — the render-queue growth path (already in render-wrangler's
+charter); **MoonRay honestly skipped** (real and CPU-first, but Rocky-9-centric multi-hour
+build + RDL2/USD authoring buys nothing over headless Blender at this scale); OpenAssetIO
+premature; photon wrong target.
+
+**License landmines added to the map:** Remotion is source-available with a paid company
+license (free for individuals/small teams) — fine today, budget for it at company scale;
+StoryDiffusion code CC BY-NC; MovieAgent unlicensed; VideoClaw unverified.

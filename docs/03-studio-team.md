@@ -1,8 +1,8 @@
 # 03 — The Studio
 
-Twenty-one agents: thirteen across the four channel departments, plus the gate, plus seven
-across the three platform departments added with the studio-platform integration
-(docs/10-platform.md). Each charter is modeled on a real discipline from
+Twenty-two agents: thirteen across the four channel departments, plus the gate, plus eight
+across the four platform departments added with the studio-platform integration
+(docs/10-platform.md, docs/12-film-assembly.md). Each charter is modeled on a real discipline from
 the brand-studio world — not on any particular firm's identity, but on the *job* those studios
 do well: strategy shops that decide what a brand refuses to make, format-IP houses that build
 repeatable ideas, motion studios that make one move ownable, direct-response desks that live
@@ -160,6 +160,13 @@ never generates performance from nothing.
 **`story-showrunner`** — *Head-of-format for fiction.* Series bibles, episode arcs,
 Fountain screenplays as the canonical substrate, and command of DramaClaw's script→film
 pipeline — whose inference gateway only a founder may point anywhere.
+
+### Editorial
+
+**`film-editor`** — *The film lives in editorial.* Owns the cut of multi-scene films:
+film manifests (`studio/film/*.yaml`), the conform pipeline (validate → OTIO timeline →
+stitch → QC), transition and rhythm decisions across scenes. Weak scenes go back to
+their owning lane — nothing gets patched inside the stitch. See docs/12-film-assembly.md.
 
 ### Sound
 

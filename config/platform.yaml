@@ -63,6 +63,9 @@ modules:
     notes: >
       Feeds motion-director and the new previs role: shot vocabulary, sequence patterns,
       beat-sync method. CPU-only Remotion rendering — fits the $0 doctrine exactly.
+      LICENSE HONESTY (research 2026-08): the skill is Apache-2.0 but Remotion itself is
+      source-available with a paid company license (free tier for individuals/small
+      teams). Fine at this studio's size today; a company-scale future needs the license.
 
   - id: screenplain
     repo: https://github.com/vilcans/screenplain
@@ -109,12 +112,36 @@ modules:
     gpu: none
     headless: true
     install: script
-    install_cmd: "python3 -m venv .venv && .venv/bin/pip install opentimelineio"
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install opentimelineio OpenTimelineIO-Plugins otio-mlt-adapter"
     enabled: true
     doctor:
       - { type: dir, path: vendor/otio }
       - { type: cmd, run: "vendor/otio/.venv/bin/python -c 'import opentimelineio'" }
-    notes: "Adopted as a file standard: cuts move between tools as .otio, not as prose."
+    notes: >
+      Adopted as a file standard: cuts move between tools as .otio, not as prose.
+      OTIO describes timelines, it does not render them (assembly research, docs/11 §5) —
+      conform.py renders from the film manifest; .otio is the derived interchange. The
+      plugins meta-package + MLT adapter (install_cmd) are the escape hatch to EDL/AAF/
+      FCPXML and to `melt`-rendered complex timelines.
+
+  - id: pyscenedetect
+    repo: https://github.com/Breakthrough/PySceneDetect
+    ref: main
+    profile: core
+    role: "Scene-boundary detection — conform QC verifies manifest cuts exist in the stitched film"
+    license: BSD-3-Clause
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install 'scenedetect[opencv]'"
+    enabled: true
+    doctor:
+      - { type: cmd, run: "vendor/pyscenedetect/.venv/bin/scenedetect version" }
+    notes: >
+      Wired into scripts/studio/conform.py QC: every expected hard cut must have a
+      detected boundary (±0.5s); extra boundaries are legitimate internal scene cuts.
+      Also the honest check against dropped scenes and double-joins at splice points.
 
   - id: pinokio
     repo: https://github.com/pinokiocomputer/pinokio

@@ -1,0 +1,20 @@
+{
+  "film": "showcase-reel",
+  "output": "out/showcase-reel.mp4",
+  "scenes": [
+    "sourced-lane",
+    "cartoon-lane"
+  ],
+  "duration_s": 74.4,
+  "expected_s": 74.4,
+  "duration_ok": true,
+  "delivery": "1080x1920@30",
+  "delivery_ok": true,
+  "integrated_lufs": -14.0,
+  "cut_check": {
+    "expected_hard_cuts": [],
+    "detected_boundaries": 1,
+    "missed": [],
+    "ok": true
+  }
+}
