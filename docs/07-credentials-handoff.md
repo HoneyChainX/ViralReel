@@ -1,13 +1,27 @@
-# 07 — Credentials Handoff
+# 07 — Credentials Handoff — **PHASE 2 ONLY. Nothing here is needed at launch.**
 
-Two credentials stand between a finished render and a published video, and both of them can only
-come from your own logged-in Google account: an **OAuth 2.0 client** for the YouTube Data API v3
-(so `youtube-automation-agent` can upload on your behalf) and a **Gemini API key** (the free-tier
-LLM that drives that agent's publish/SEO/analytics loop). Neither can be created by this repo,
-by Claude Code, or by any agent that isn't sitting inside your browser session. This document
-exists so you don't have to click through Google Cloud yourself: section 2 is a prompt you hand
-verbatim to **Claude for Chrome**, which does the navigation while you supervise and do the two
-things it is explicitly forbidden from doing — copying the secret values.
+> **Distribution is manual-first (docs/DECISIONS.md D1).** The founder uploads via YouTube
+> Studio using `handoffs/upload-episode.md` — no OAuth client, no Gemini key, no walkthrough.
+>
+> **The only credential the studio needs today is `ELEVENLABS_API_KEY`** — either set as a
+> Claude/host environment variable (`make setup` propagates it into the vendor `.env`
+> automatically), or pasted into `vendor/openmontage/.env` after `make setup` creates that
+> file. Note: the file does not exist until `make setup` runs, and never appears on GitHub —
+> it is gitignored by design. Nothing is ever pushed.
+>
+> Everything below applies only if/when automated publishing (yt-agent) is switched on.
+
+---
+
+Two credentials stand between a finished render and an *automated* published video, and both of
+them can only come from your own logged-in Google account: an **OAuth 2.0 client** for the
+YouTube Data API v3 (so `youtube-automation-agent` can upload on your behalf) and a **Gemini API
+key** (the free-tier LLM that drives that agent's publish/SEO/analytics loop). Neither can be
+created by this repo, by Claude Code, or by any agent that isn't sitting inside your browser
+session. This document exists so you don't have to click through Google Cloud yourself: section
+2 is a prompt you hand verbatim to **Claude for Chrome**, which does the navigation while you
+supervise and do the two things it is explicitly forbidden from doing — copying the secret
+values.
 
 Nothing here produces a value this repo can verify for you. Every `<<FILL: …>>` below is a real
 gap that only your account can close. Do not let any agent, including me, guess one.

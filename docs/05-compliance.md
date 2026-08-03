@@ -119,9 +119,9 @@ $ make gate SLUG=airpods-159
 | C3 | On-screen citations render | any price frame without a citation chip |
 | C4 | Asset licenses recorded | any asset missing license/URL/attribution |
 | C5 | AI disclosure set | `ai_disclosure != true` |
-| C6 | Publish cap | ≥ 2 already published in the trailing 24h |
-| C7 | Template-similarity | script > 70% structurally similar to the last 10 |
-| C8 | Editorial bounds | partisan/medical/financial/individual-claim language detected |
+| C6 | Publish cap | ≥ 2 non-retracted publishes in the trailing 24h (log written by `scripts/log_publish.py`) |
+| C7 | Template-similarity | script > 50% structurally similar to the last 10 (threshold measured — docs/DECISIONS.md D4) |
+| C8 | Editorial bounds | partisan/medical/financial-advice language detected. **Regex tripwire only** — it does not detect claims about named private individuals; that stays the compliance-officer's semantic judgement (bible §7) |
 | C9 | Delivery QC | not 1080×1920, or duration outside 25–50s |
 | C10 | Privacy | upload privacy != `private` — **see the limit below** |
 
@@ -141,6 +141,11 @@ still pass and the upload would go out public. `make doctor` catches that case; 
 not. Found by auditing the vendor rather than trusting our own env template, and recorded here
 rather than quietly rewritten — a compliance check that overstates its reach is worse than one
 that admits its edge.
+
+**Under manual-first distribution (docs/DECISIONS.md D1) this check becomes literal:** the
+founder uploads private via `handoffs/upload-episode.md`, watches the video, and personally
+flips it public. The human is not simulating the gate — the human *is* the gate. The C6 side
+of the bargain is that every upload ends with `scripts/log_publish.py`, or the cap goes blind.
 
 ### On C7 (template similarity)
 

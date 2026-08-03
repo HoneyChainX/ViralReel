@@ -190,6 +190,73 @@ class TestNonCompliantEpisode(GateTestBase):
                          "a recorded but disallowed license must still fail")
 
 
+class TestPublishLogWriter(GateTestBase):
+    """scripts/log_publish.py is what makes C6 real. The review that added it proved
+    the cap had passed unconditionally forever because nothing wrote the log."""
+
+    def run_writer(self, *args):
+        return subprocess.run(
+            [sys.executable, str(ROOT / "scripts" / "log_publish.py"), *args],
+            capture_output=True, text=True, cwd=ROOT, timeout=60,
+        )
+
+    def test_writer_appends_and_gate_counts_it(self):
+        PUBLISH_LOG.unlink(missing_ok=True)
+        p1 = self.run_writer("--slug", "_selftest")
+        p2 = self.run_writer("--slug", "_selftest")
+        self.assertEqual((p1.returncode, p2.returncode), (0, 0), p1.stderr + p2.stderr)
+        rows = json.loads(PUBLISH_LOG.read_text())
+        self.assertEqual(len(rows), 2)
+        report, _ = run_gate("_selftest")
+        self.assertEqual(verdicts(report)["C6"], "FAIL",
+                         "two logged publishes in 24h must block the third")
+
+    def test_retraction_frees_the_cap_slot(self):
+        PUBLISH_LOG.unlink(missing_ok=True)
+        self.run_writer("--slug", "_selftest")
+        self.run_writer("--slug", "_selftest")
+        r = self.run_writer("--slug", "_selftest", "--retract")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        report, _ = run_gate("_selftest")
+        self.assertEqual(verdicts(report)["C6"], "PASS",
+                         "a retracted publish must not occupy a cap slot — "
+                         "corrections re-renders depend on this")
+
+    def test_writer_refuses_unknown_slug(self):
+        r = self.run_writer("--slug", "no-such-episode")
+        self.assertNotEqual(r.returncode, 0, "logging a publish for a nonexistent episode must fail")
+
+
+class TestEditorialBounds(GateTestBase):
+    """C8 regex probes — the patterns were rewritten after 'a conservative estimate'
+    false-positived and plural party language sailed through."""
+
+    CASES = [
+        ("a conservative estimate puts it near the 2016 figure", False),
+        ("panel oversupply, not demand, moved the price", False),
+        ("the tariff schedule changed in 2018", False),
+        ("Republicans passed the tariff and Democrats kept it", True),
+        ("the GOP budget did this", True),
+        ("conservative policies caused this", True),
+        ("this treats inflation anxiety", True),
+        ("you should buy this dip right now", True),
+    ]
+
+    def test_c8_patterns(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("gate", ROOT / "scripts" / "gate.py")
+        gate = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(gate)
+        import re as _re
+        for text, should_hit in self.CASES:
+            hits = [lbl for pat, lbl in gate.BANNED_PATTERNS if _re.search(pat, text, _re.I)]
+            with self.subTest(text=text):
+                if should_hit:
+                    self.assertTrue(hits, f"should have been flagged: {text!r}")
+                else:
+                    self.assertFalse(hits, f"false positive {hits} on: {text!r}")
+
+
 class TestThroughputCap(GateTestBase):
     """C6 caps the channel at 2 published/day. Raising throughput is the single
     behaviour that got 16 channels deleted this year — see docs/05-compliance.md."""

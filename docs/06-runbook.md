@@ -66,7 +66,10 @@ Then, in Claude Code:
 @post-supervisor      render
 make gate SLUG=four-k-tv
 @seo-packager         title, description, tags
-make publish SLUG=four-k-tv                          ← lands PRIVATE
+make publish SLUG=four-k-tv        ← verifies the gate, prints the manual handoff
+# then: fill handoffs/upload-episode.md from packaging.json, hand to Claude for
+# Chrome (uploads PRIVATE), review, flip public, and REQUIRED:
+make published SLUG=four-k-tv      ← logs it, keeps the 2/day cap real
 ```
 
 **Expect the first gate run to fail.** That is the system working. Route each failure to the

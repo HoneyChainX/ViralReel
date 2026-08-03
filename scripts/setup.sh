@@ -42,6 +42,26 @@ say "Installing OpenMontage"
 say "Installing youtube-automation-agent"
 ( cd vendor/yt-agent && npm install )
 
+say "Pinning OpenMontage cost + checkpoint config"
+# Verified against vendor/openmontage/config.yaml + lib/config_model.py: the vendor
+# ships budget.mode=warn with $10 headroom and checkpoint.policy=guided. Warn-mode
+# with headroom is not a cap — pin to cap/$0 so a paid tool CANNOT bill even if a
+# key ever leaks in, and auto_noncreative so mechanical stages run unattended while
+# creative checkpoints still stop for a human (the docs/03 handoff contract).
+python3 - <<'PYEOF'
+import pathlib, re
+cfg = pathlib.Path("vendor/openmontage/config.yaml")
+if cfg.exists():
+    t = cfg.read_text()
+    t = re.sub(r"(?m)^(\s*mode:)\s*\S+(\s*#.*)?$",  r"\1 cap\2",  t, count=1)
+    t = re.sub(r"(?m)^(\s*total_usd:)\s*\S+",       r"\1 0.00",   t, count=1)
+    t = re.sub(r"(?m)^(\s*policy:)\s*\S+(\s*#.*)?$", r"\1 auto_noncreative\2", t, count=1)
+    cfg.write_text(t)
+    print("  pinned: budget.mode=cap, budget.total_usd=0.00, checkpoint.policy=auto_noncreative")
+else:
+    print("  (no vendor config.yaml yet — skipped)")
+PYEOF
+
 say "Templating .env files"
 # OpenMontage's own `make setup` already ran `cp .env.example .env`, so the guard
 # below is always a no-op for it — our template never lands. That is fine: their
@@ -63,6 +83,21 @@ EOF
 fi
 [ -f vendor/openmontage/.env ] || cp config/env.openmontage.template vendor/openmontage/.env
 [ -f vendor/yt-agent/.env ]    || cp config/env.ytagent.template    vendor/yt-agent/.env
+
+# If the ElevenLabs key is already in the process environment (e.g. set as a
+# Claude environment variable), propagate it into the .env so file-only tools see
+# it too. Nothing is printed; nothing leaves the machine.
+if [ -n "${ELEVENLABS_API_KEY:-}" ] && ! grep -qE '^ELEVENLABS_API_KEY=[ \t]*[^[:space:]#]' vendor/openmontage/.env; then
+  sed -i.bak 's|^ELEVENLABS_API_KEY=.*|ELEVENLABS_API_KEY='"$ELEVENLABS_API_KEY"'|' vendor/openmontage/.env \
+    && rm -f vendor/openmontage/.env.bak
+  echo "  ELEVENLABS_API_KEY propagated from environment into vendor/openmontage/.env"
+fi
+
+# Static ffmpeg fallback for hosts without root (verified in the cloud session)
+if ! command -v ffmpeg >/dev/null 2>&1; then
+  say "No system ffmpeg — fetching static build"
+  bash scripts/get-ffmpeg.sh
+fi
 
 cat <<'EOF'
 

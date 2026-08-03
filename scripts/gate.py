@@ -28,7 +28,13 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 LIMITS = {
     "sources_per_claim": 2,
     "primary_sources_required": 1,
-    "template_similarity_max": 0.70,
+    # Lowered from 0.70 after empirical probing: legitimate on-beat scripts measured
+    # a max pairwise similarity of 0.216 while a lazy noun-swap measured 0.762 — a
+    # wide empty band. 0.50 keeps zero measured false-positive risk while cutting the
+    # evasion margin. The mechanical check is a tripwire, not the defence: the
+    # compliance-officer's semantic review is load-bearing (a one-word-per-sentence
+    # pad scores 0.000 here and must be caught by the agent, not this number).
+    "template_similarity_max": 0.50,
     "hard_cap_per_day": 2,
     "duration": (25.0, 50.0),
     "resolution": (1080, 1920),
@@ -39,11 +45,21 @@ LIMITS = {
 
 # C8 — editorial bounds. Mechanical causes only; no partisan framing, no
 # medical/financial advice. See docs/02-channel-bible.md §7.
+#
+# Rewritten after probing found the originals both leaked and over-fired: bare
+# "conservative" flagged "a conservative estimate" (a phrase this channel will use
+# weekly), while plural party language sailed through. Parties are matched in any
+# number; liberal/conservative only when qualifying a political noun; medical and
+# financial patterns are advice-shaped rather than bare verbs. These regexes catch
+# the obvious; script-editor and compliance-officer own the judgement calls.
 BANNED_PATTERNS = [
-    (r"\b(democrat|republican|liberal|conservative|left-wing|right-wing)\b", "partisan framing"),
-    (r"\b(biden|trump|administration's fault|thanks to the president)\b", "political blame"),
-    (r"\b(you should invest|buy the dip|financial advice|guaranteed return)\b", "financial advice"),
-    (r"\b(cures|treats|prevents disease|medically proven)\b", "medical claim"),
+    (r"\b(democrats?|republicans?|gop|dems|left[- ]wing|right[- ]wing)\b", "partisan framing"),
+    (r"\b(liberal|conservative)s?\s+(party|parties|politicians?|polic(?:y|ies)|agenda|government|administration|voters?)\b",
+     "partisan framing"),
+    (r"\b(biden|trump)\b|administration'?s fault|thanks to the president", "political blame"),
+    (r"\byou should (invest|buy)\b|\bbuy the dip\b|\bfinancial advice\b|\bguaranteed returns?\b",
+     "financial advice"),
+    (r"\bthis (cures?|treats?|prevents?)\b|\bmedically proven\b|\bclinically proven\b", "medical claim"),
 ]
 
 
@@ -160,11 +176,16 @@ def run(slug, require_pass=False):
           "ai_disclosure: true" if (packaging or {}).get("ai_disclosure") is True
           else "ai_disclosure not set — required on every upload")
 
-    # C6 — throughput cap
+    # C6 — throughput cap. The log is written by scripts/log_publish.py as the last
+    # step of every upload (see handoffs/upload-episode.md). Retracted rows don't
+    # occupy a cap slot: a video unlisted under the corrections policy frees its
+    # slot so the corrected re-render can ship the same day.
     log = load_json(ROOT / "content" / "publish_log.json") or []
     cutoff = dt.datetime.now(dt.timezone.utc) - dt.timedelta(hours=24)
     recent = 0
     for row in log:
+        if row.get("retracted"):
+            continue
         try:
             if dt.datetime.fromisoformat(row["published_at"].replace("Z", "+00:00")) > cutoff:
                 recent += 1

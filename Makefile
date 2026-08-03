@@ -1,4 +1,4 @@
-.PHONY: help setup doctor test episode gate publish clean-vendor
+.PHONY: help setup doctor test episode gate publish published clean-vendor
 
 SHELL := /bin/bash
 ROOT  := $(shell pwd)
@@ -51,12 +51,24 @@ gate:
 	@test -n "$(SLUG)" || (echo "usage: make gate SLUG=<slug>"; exit 1)
 	@python3 scripts/gate.py --slug $(SLUG)
 
-# Refuses to run unless gate.json says PASS. There is deliberately no --force.
+# Manual-first (docs/DECISIONS.md D1): verifies the gate, then prints the handoff.
+# The actual upload happens in the founder's browser via handoffs/upload-episode.md.
+# There is deliberately no --force.
 publish:
 	@test -n "$(SLUG)" || (echo "usage: make publish SLUG=<slug>"; exit 1)
 	@python3 scripts/gate.py --slug $(SLUG) --require-pass
-	@cd vendor/yt-agent && node -e "console.log('handing $(SLUG) to youtube-automation-agent (privacy=private)')"
-	@echo "Uploaded PRIVATE. A human flips it public — see docs/05-compliance.md C10."
+	@echo ""
+	@echo "Gate PASS. Manual-first upload:"
+	@echo "  1. Fill handoffs/upload-episode.md from content/episodes/$(SLUG)/packaging.json"
+	@echo "  2. Hand the prompt block to Claude for Chrome (uploads PRIVATE)"
+	@echo "  3. Review playback, flip public, pin the source comment"
+	@echo "  4. REQUIRED: make published SLUG=$(SLUG)   <- keeps the 2/day cap real"
+
+# Record a completed upload in the C6 log. Not optional — an unlogged upload
+# makes the throughput cap blind.
+published:
+	@test -n "$(SLUG)" || (echo "usage: make published SLUG=<slug>"; exit 1)
+	@python3 scripts/log_publish.py --slug $(SLUG)
 
 clean-vendor:
 	rm -rf vendor

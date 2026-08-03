@@ -196,7 +196,7 @@ voice:
   provider: "elevenlabs"
   voice_id: "<<FILL: voice_id from your ElevenLabs library — the Step 5 winner. Copy it verbatim
              from the API response; do not retype it and do not reconstruct it from memory>>"
-  settings: { stability: 0.42, similarity_boost: 0.85, style: 0.15 }
+  settings: { stability: 0.42, similarity_boost: 0.85, style: 0.15 }   # hypotheses — see §3 note
 ```
 
 ---
@@ -205,6 +205,14 @@ voice:
 
 These are the values already in `config/channel.yaml`. Here is what each one is actually
 protecting against, because a setting nobody can defend is a setting somebody will change.
+
+> **Honesty note (Fable-5 review, B3): these values are hypotheses, not measurements.** They
+> were justified to two decimals before any audition had run — which is false precision, the
+> exact failure this repo polices elsewhere. Treat them as the starting grid: during the §2.4
+> audition, A/B exactly one perturbation per setting (stability ±0.10, similarity ±0.05,
+> style 0 vs 0.15) against the fixture, pick by the §4.2 gates, then lock what actually won.
+> The *rationales* below still describe what each dial trades off; only the numbers are
+> provisional until auditioned.
 
 ### `stability: 0.42`
 

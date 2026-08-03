@@ -57,15 +57,24 @@ export const PA_ODOMETER_MS = 800;
 /**
  * Mirrors --pa-font-grotesque in brand/tokens.css.
  *
- * Acumin Pro, licensed via Creative Cloud. Chosen for true tabular lining figures:
- * this component rolls digits for 800ms and proportional figures shift column width
- * mid-roll, which makes the channel's signature motion jitter. See tokenStyle below —
- * fontVariantNumeric is what actually enforces it.
+ * Acumin Pro, licensed via Creative Cloud. Note (Fable-5 review, B1a): tabular
+ * figures do NOT gate the roll — the DigitWheels below are fixed-width slots, so
+ * the motion is stable in any font. tnum earns its keep at rest: letterfit and
+ * consistency across captions and citation chips.
  *
- * For a Remotion render the family must be SYNCED LOCALLY via the Creative Cloud
- * desktop app. Do not add a Typekit <link> to the render: a webfont fetch that fails
- * mid-render yields a silently wrong video rather than an error. The Typekit kit
- * (meo1cll) is for HTML/Express surfaces only.
+ * FONT LOADING — PLATFORM CONSTRAINT (review B1b, a reversal): the CC desktop app
+ * does not exist for Linux, so on a Linux render host Acumin CANNOT be synced and
+ * the stack falls back to Liberation Sans (digit widths measured uniform in both
+ * weights — a safe degrade, but a different face). Renders that must ship in
+ * Acumin need a CC-synced macOS/Windows host, or separately licensed OTFs
+ * installed into fontconfig. scripts/doctor.sh reports which state you are in —
+ * the failure this guards is silent, not loud. Do not add a Typekit <link> to the
+ * render; kit meo1cll is for HTML/Express surfaces only.
+ *
+ * EXTINCT episodes: do not use this component for the final beat. EXTINCT's
+ * grammar is "no 2026 price exists" — a roll to $0 would land on present-cyan and
+ * lie in two ways at once. The stamp carries that verdict; the odometer sits out
+ * (review B4b).
  */
 export const PA_FONT_STACK =
   '"acumin-pro", "Acumin Pro", "Helvetica Neue", Helvetica, Arial, "Liberation Sans", "Nimbus Sans", system-ui, sans-serif';
@@ -376,7 +385,10 @@ export const PriceOdometer: React.FC<PriceOdometerProps> = ({
         color,
         fontFamily: PA_FONT_STACK,
         fontSize,
-        fontWeight: 700,
+        // The hero weight token: Acumin BLACK. This was hardcoded 700 while the
+        // system locked 400/900 — a banned third weight that only became visible
+        // once a real family with a 700 face could sync (Fable-5 review, B2a).
+        fontWeight: 900,
         lineHeight: `${faceHeight}px`,
         letterSpacing: '-0.01em',
         // TABULAR FIGURES. Both properties on purpose: the high-level one for fonts that
