@@ -3,7 +3,10 @@
   "profile": "youtube_shorts",
   "renderer": "remotion",
   "fps": 30,
-  "frame": { "width": 1080, "height": 1920 },
+  "frame": {
+    "width": 1080,
+    "height": 1920
+  },
   "vo": {
     "file": "vo.mp3",
     "measured_duration_sec": 45.192902,
@@ -11,13 +14,12 @@
     "tail_sec": 1.007098
   },
   "total_duration_sec": 46.2,
-  "_cut_method": "Every cut lands inside a silence window measured on vo.mp3 with ffmpeg silencedetect=noise=-30dB:d=0.09 (and cross-checked at -38dB). Cut timecodes are the midpoints of those windows, so no cut falls on a phoneme. The two [PAUSE] windows measured at 8.764-9.611 (0.848s) and 38.892-39.789 (0.897s) are held inside a single scene each — no cut crosses either one.",
+  "_cut_method": "Every cut lands inside a silence window measured on vo.mp3 with ffmpeg silencedetect=noise=-30dB:d=0.09 (and cross-checked at -38dB). Cut timecodes are the midpoints of those windows, so no cut falls on a phoneme. The two [PAUSE] windows measured at 8.764-9.611 (0.848s) and 38.892-39.789 (0.897s) are held inside a single scene each \u2014 no cut crosses either one.",
   "_layering": "Archive on the bottom (desaturate 0.4 + grain 0.06 per bible SS5 / --pa-archive-saturation), data layer on top: flat, sharp, no shadow. Amber #C8964B = every 2016 figure, cyan #00E5FF = every 2026 figure, white = derived/index data. Tokens read from brand/tokens.css and config/channel.yaml this session, not from memory.",
   "_slideshow_guard": "9 of 20 scenes are stills. Every still carries an explicit push and none is held static: the longest single still hold is 3.326s (s19) at push 1.06 with the stamp entrance and a second text layer inside it. The four moving-footage sources were motion-profiled this session (mean inter-frame luma delta on a 64x48 decode) and every in-point chosen sits in a measured high-motion window; nortex_walkthrough is handheld throughout (M 25-45) and carries the beats where a still would stall.",
   "_odometer_note": "Fires exactly once, scene s19 excluded, on s5 (GAP), 800ms, cubic-bezier(0.16,1,0.3,1). It starts 0.847s after the 2026 figure finishes being spoken, i.e. on the first frame after [PAUSE] #1, landing 0.078s before 'Same size.' ends. The pause is the wind-up; the roll is the landing. Not restyled, not re-timed.",
   "_evidence_discrepancy": "evidence.json claim c5 carries inflation_adjusted_value: 67.4, which contradicts its own text and quoted BLS arithmetic (76.2%). script.md flags the same thing. Scene s16 shows -76.2%, matching the spoken line and the quoted index values (283.408 -> 93.176 against CPI-U 239.261 -> 330.724). trend-archaeologist still needs to reconcile the field; this plan does not paper over it.",
   "_font_exception_used": false,
-
   "scenes": [
     {
       "id": "s1",
@@ -27,10 +29,33 @@
       "asset": "assets/Magicint1955.mp4",
       "asset_in": 168.0,
       "vo_line": "Nine sixty-seven fifty-eight dollars, in today's money.",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.46], "desaturate": 0.4, "grain": 0.06, "push": 1.08 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.5,
+          0.46
+        ],
+        "desaturate": 0.4,
+        "grain": 0.06,
+        "push": 1.08
+      },
       "text": [
-        { "content": "$967.58", "token": "past", "size": "hero", "enter": "rise", "enter_ms": 260 },
-        { "content": "55-inch 4K TV, 2016 — in 2026 dollars", "token": "data", "size": "body", "enter": "fade", "enter_ms": 200, "delay_ms": 320 }
+        {
+          "content": "$967.58",
+          "token": "past",
+          "size": "hero",
+          "enter": "rise",
+          "enter_ms": 260
+        },
+        {
+          "content": "55-inch 4K TV, 2016 \u2014 in 2026 dollars",
+          "token": "data",
+          "size": "body",
+          "enter": "fade",
+          "enter_ms": 200,
+          "delay_ms": 320
+        }
       ],
       "shows_price": true,
       "citation": "VIZIO press release, 19 Apr 2016 ($699.99 MSRP, E55u-D0) x BLS CPI-U CUUR0000SA0, Apr 2016 239.261 -> Jul 2026 330.724",
@@ -44,10 +69,29 @@
       "asset": "assets/nortex_walkthrough.mp4",
       "asset_in": 345.0,
       "vo_line": "That's VIZIO's cheapest fifty-five-inch four-K TV,",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.5], "desaturate": 0.4, "grain": 0.06, "push": 1.04 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.5,
+          0.5
+        ],
+        "desaturate": 0.4,
+        "grain": 0.06,
+        "push": 1.04
+      },
       "text": [
-        { "content": "VIZIO SmartCast E-Series", "token": "data", "size": "body" },
-        { "content": "E55u-D0 · 55\" · 3840×2160 · entry 4K line", "token": "data", "size": "label", "delay_ms": 260 }
+        {
+          "content": "VIZIO SmartCast E-Series",
+          "token": "data",
+          "size": "body"
+        },
+        {
+          "content": "E55u-D0 \u00b7 55\" \u00b7 3840\u00d72160 \u00b7 entry 4K line",
+          "token": "data",
+          "size": "label",
+          "delay_ms": 260
+        }
       ],
       "shows_price": false,
       "note": "Handheld walk past packed electronics shelving (measured motion 25.1). Carries the spec label; the four held axes come from evidence.json spec_note."
@@ -60,10 +104,28 @@
       "asset": "assets/Magicint1955.mp4",
       "asset_in": 172.0,
       "vo_line": "twenty sixteen.",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.46], "desaturate": 0.4, "grain": 0.06, "push": 1.03 },
-      "text": [{ "content": "2016", "token": "past", "size": "hero", "enter": "cut", "enter_ms": 0 }],
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.5,
+          0.46
+        ],
+        "desaturate": 0.4,
+        "grain": 0.06,
+        "push": 1.03
+      },
+      "text": [
+        {
+          "content": "2016",
+          "token": "past",
+          "size": "hero",
+          "enter": "cut",
+          "enter_ms": 0
+        }
+      ],
       "shows_price": false,
-      "note": "0.918s accent cut back to the s1 receiver — a rhyme, not a new location. Deliberately the shortest shot in the film so the year lands like a slug line. No price on frame, so no chip."
+      "note": "0.918s accent cut back to the s1 receiver \u2014 a rhyme, not a new location. Deliberately the shortest shot in the film so the year lands like a slug line. No price on frame, so no chip."
     },
     {
       "id": "s4",
@@ -72,13 +134,28 @@
       "out": 9.611,
       "asset": "assets/televisions-on-sale-2017.jpg",
       "vo_line": "It's three nineteen ninety-six now. [PAUSE]",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.3, 0.5], "desaturate": 0.15, "grain": 0.03, "push": 1.07 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.3,
+          0.5
+        ],
+        "desaturate": 0.15,
+        "grain": 0.03,
+        "push": 1.07
+      },
       "text": [
-        { "content": "$967.58", "token": "past", "size": "hero", "hold": true }
+        {
+          "content": "$967.58",
+          "token": "past",
+          "size": "hero",
+          "hold": true
+        }
       ],
       "shows_price": true,
-      "citation": "Store photo: Santeri Viinamäki / Wikimedia Commons, CC BY-SA 4.0, 27 Dec 2017 — in-frame tags are EUR retail tags in the photograph, not a Price Archaeology figure. Hero figure: VIZIO press release 19 Apr 2016 x BLS CPI-U CUUR0000SA0",
-      "note": "The frame flips to a present-day retail wall while the number on top is still the 2016 one. Deliberate: the picture arrives at 'now' before the number does, and s5 resolves it. Holds [PAUSE] #1 (8.764-9.611) uncut — the push eases to a stop at 8.764 so the pause reads as a held breath. Desaturation is reduced to 0.15, not 0.4: this is a present-day photograph, not archive, and the bible's 40% desaturation is an archive-layer rule."
+      "citation": "Store photo: Santeri Viinam\u00e4ki / Wikimedia Commons, CC BY-SA 4.0, 27 Dec 2017 \u2014 in-frame tags are EUR retail tags in the photograph, not a Price Archaeology figure. Hero figure: VIZIO press release 19 Apr 2016 x BLS CPI-U CUUR0000SA0",
+      "note": "The frame flips to a present-day retail wall while the number on top is still the 2016 one. Deliberate: the picture arrives at 'now' before the number does, and s5 resolves it. Holds [PAUSE] #1 (8.764-9.611) uncut \u2014 the push eases to a stop at 8.764 so the pause reads as a held breath. Desaturation is reduced to 0.15, not 0.4: this is a present-day photograph, not archive, and the bible's 40% desaturation is an archive-layer rule."
     },
     {
       "id": "s5",
@@ -88,12 +165,35 @@
       "asset": "assets/nortex_walkthrough.mp4",
       "asset_in": 321.0,
       "vo_line": "Same size. Same resolution.",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.5], "desaturate": 0.4, "grain": 0.06, "push": 1.05 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.5,
+          0.5
+        ],
+        "desaturate": 0.4,
+        "grain": 0.06,
+        "push": 1.05
+      },
       "text": [
-        { "content": "$319.96", "token": "present", "size": "hero", "enter": "odometer" },
-        { "content": "2016 → 2026", "token": "data", "size": "label", "delay_ms": 820 }
+        {
+          "content": "2016 \u2192 2026",
+          "token": "data",
+          "size": "label",
+          "delay_ms": 820
+        }
       ],
-      "odometer": { "from": 967.58, "to": 319.96, "duration_ms": 800, "ease": "cubic-bezier(0.16, 1, 0.3, 1)", "start_at": 9.611, "start_frame": 289, "from_token": "past", "to_token": "present" },
+      "odometer": {
+        "from": 967.58,
+        "to": 319.96,
+        "duration_ms": 800,
+        "ease": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "start_at": 9.611,
+        "start_frame": 289,
+        "from_token": "past",
+        "to_token": "present"
+      },
       "shows_price": true,
       "citation": "From: VIZIO press release 19 Apr 2016 ($699.99 MSRP) x BLS CPI-U CUUR0000SA0 = $967.58. To: TCL 55Q651G, P.C. Richard & Son, 3 Aug 2026, $319.96 (us.tcl.com $319.99)",
       "note": "THE ODOMETER. One per episode, here and nowhere else. Roll runs 9.611 -> 10.411; 'Same size.' ends at 10.489, so the digits stop 0.078s before the sentence does. Amber at frame 0 of the roll, cyan at frame 24. Base footage is handheld (measured motion 31.7) so the rigid roll has something to be rigid against."
@@ -104,11 +204,29 @@
       "in": 11.857,
       "out": 13.424,
       "asset": "assets/price-chart-2016-2026.png",
-      "transform": { "crop": "9:16", "fit": "contain", "source_rect": [0.0, 0.13, 1.0, 0.64], "background": "#0A0A0A", "push": 1.05 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "contain",
+        "source_rect": [
+          0.0,
+          0.13,
+          1.0,
+          0.64
+        ],
+        "background": "#0A0A0A",
+        "push": 1.05
+      },
       "vo_line": "Entry line to entry line.",
-      "text": [{ "content": "entry line → entry line", "token": "data", "size": "body", "enter": "wipe" }],
+      "text": [
+        {
+          "content": "entry line \u2192 entry line",
+          "token": "data",
+          "size": "body",
+          "enter": "wipe"
+        }
+      ],
       "shows_price": true,
-      "citation": "Chart compiled by Price Archaeology from VIZIO PR 19 Apr 2016 · LG Electronics USA PR 10 Mar 2016 · Forbes 12 Apr 2016 · P.C. Richard & Son, us.tcl.com, Newegg, vizio.com, 3 Aug 2026 · BLS CUUR0000SA0",
+      "citation": "Chart compiled by Price Archaeology from VIZIO PR 19 Apr 2016 \u00b7 LG Electronics USA PR 10 Mar 2016 \u00b7 Forbes 12 Apr 2016 \u00b7 P.C. Richard & Son, us.tcl.com, Newegg, vizio.com, 3 Aug 2026 \u00b7 BLS CUUR0000SA0",
       "note": "Cropped to the two entry-tier bands so the claim on screen is the claim being spoken. The premium-tier rows (c3/c4) stay in frame as the anti-cherry-pick check but carry no spoken figure, per script.md."
     },
     {
@@ -119,10 +237,26 @@
       "asset": "assets/sharp_calculator.mp4",
       "asset_in": 0.6,
       "vo_line": "The receipt:",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.5], "desaturate": 0.4, "grain": 0.06, "push": 1.04 },
-      "text": [{ "content": "the receipt", "token": "data", "size": "label" }],
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.5,
+          0.5
+        ],
+        "desaturate": 0.4,
+        "grain": 0.06,
+        "push": 1.04
+      },
+      "text": [
+        {
+          "content": "the receipt",
+          "token": "data",
+          "size": "label"
+        }
+      ],
       "shows_price": false,
-      "note": "0.789s texture cutaway: stacked paper only (measured motion 25.9), before the calculators enter frame at ~14s of source. Per licenses.json this clip must never be presented on screen as a TV ad — nothing here identifies it as a product, and no product claim is made over it."
+      "note": "0.789s texture cutaway: stacked paper only (measured motion 25.9), before the calculators enter frame at ~14s of source. Per licenses.json this clip must never be presented on screen as a TV ad \u2014 nothing here identifies it as a product, and no product claim is made over it."
     },
     {
       "id": "s8",
@@ -130,11 +264,27 @@
       "in": 14.213,
       "out": 16.632,
       "asset": "assets/2016-press-release.png",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.1], "desaturate": 0.0, "push": 1.1 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "contain",
+        "focus": [
+          0.5,
+          0.1
+        ],
+        "desaturate": 0.0,
+        "push": 1.1
+      },
       "vo_line": "VIZIO's own press release, April nineteenth.",
-      "text": [{ "content": "IRVINE, Calif., April 19, 2016 /PRNewswire/", "token": "past", "size": "body", "enter": "fade" }],
+      "text": [
+        {
+          "content": "IRVINE, Calif., April 19, 2016 /PRNewswire/",
+          "token": "past",
+          "size": "body",
+          "enter": "fade"
+        }
+      ],
       "shows_price": true,
-      "citation": "VIZIO, Inc. press release via PR Newswire, 19 Apr 2016 (captured 3 Aug 2026) — MSRP table visible on frame",
+      "citation": "VIZIO, Inc. press release via PR Newswire, 19 Apr 2016 (captured 3 Aug 2026) \u2014 MSRP table visible on frame",
       "note": "Dateline quoted verbatim from the c1 primary source. Push starts the document move that s9 continues."
     },
     {
@@ -143,14 +293,34 @@
       "in": 16.632,
       "out": 19.104,
       "asset": "assets/2016-press-release.png",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.7], "desaturate": 0.0, "push_from": 1.1, "push": 1.22 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "contain",
+        "focus": [
+          0.5,
+          0.7
+        ],
+        "desaturate": 0.0,
+        "push_from": 1.1,
+        "push": 1.22
+      },
       "vo_line": "Six ninety-nine ninety-nine, MSRP.",
       "text": [
-        { "content": "$699.99", "token": "past", "size": "hero", "enter": "rise" },
-        { "content": "E55u-D0 · MSRP at announcement", "token": "data", "size": "label", "delay_ms": 240 }
+        {
+          "content": "$699.99",
+          "token": "past",
+          "size": "hero",
+          "enter": "rise"
+        },
+        {
+          "content": "E55u-D0 \u00b7 MSRP at announcement",
+          "token": "data",
+          "size": "label",
+          "delay_ms": 240
+        }
       ],
       "shows_price": true,
-      "citation": "VIZIO press release, 19 Apr 2016: \"VIZIO SmartCast 55\" E-Series Ultra HD Home Theater Display (E55u-D0) MSRP $699.99\" · corroborated Reviewed.com, 19 Apr 2016",
+      "citation": "VIZIO press release, 19 Apr 2016: \"VIZIO SmartCast 55\" E-Series Ultra HD Home Theater Display (E55u-D0) MSRP $699.99\" \u00b7 corroborated Reviewed.com, 19 Apr 2016",
       "note": "Match-cut down the same document to the MSRP table row; the push continues 1.10 -> 1.22 rather than resetting, so the pair reads as one camera move on one artifact. This is the tier trap the evidence pack warns about: the E55-D0 at $569.99 is the 1080p sibling and is NOT the figure on screen."
     },
     {
@@ -161,8 +331,25 @@
       "asset": "assets/tomorrow_television.mp4",
       "asset_in": 481.0,
       "vo_line": "Panel makers built more capacity than the market bought.",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.5], "desaturate": 0.4, "grain": 0.06, "push": 1.06 },
-      "text": [{ "content": "more capacity than demand", "token": "data", "size": "body", "enter": "rise" }],
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.5,
+          0.5
+        ],
+        "desaturate": 0.4,
+        "grain": 0.06,
+        "push": 1.06
+      },
+      "text": [
+        {
+          "content": "more capacity than demand",
+          "token": "data",
+          "size": "body",
+          "enter": "rise"
+        }
+      ],
       "shows_price": false,
       "hero_moment": true,
       "note": "THE ONE CAUSE, on the highest-motion window in this source (measured 15.5): a real assembly floor, rows of workers building receivers. The mechanism beat gets the only manufacturing-line footage in the film so it cannot be confused with the retail or archive beats."
@@ -175,13 +362,33 @@
       "asset": "assets/nortex_walkthrough.mp4",
       "asset_in": 129.0,
       "vo_line": "VIZIO's SEC filing names the mechanism:",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.5], "desaturate": 0.4, "grain": 0.06, "push": 1.04 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.5,
+          0.5
+        ],
+        "desaturate": 0.4,
+        "grain": 0.06,
+        "push": 1.04
+      },
       "text": [
-        { "content": "\"resulting in a surge in production capacity\"", "token": "data", "size": "body", "enter": "fade" },
-        { "content": "VIZIO Holding Corp. Form 10-K, FY2023 · SEC EDGAR", "token": "data", "size": "label", "delay_ms": 400 }
+        {
+          "content": "\"resulting in a surge in production capacity\"",
+          "token": "data",
+          "size": "body",
+          "enter": "fade"
+        },
+        {
+          "content": "VIZIO Holding Corp. Form 10-K, FY2023 \u00b7 SEC EDGAR",
+          "token": "data",
+          "size": "label",
+          "delay_ms": 400
+        }
       ],
       "shows_price": false,
-      "note": "Quote is verbatim from the primary_cause primary source in evidence.json. Base is the densest stock footage in the walkthrough (measured motion 27.8) — the visual argument for glut."
+      "note": "Quote is verbatim from the primary_cause primary source in evidence.json. Base is the densest stock footage in the walkthrough (measured motion 27.8) \u2014 the visual argument for glut."
     },
     {
       "id": "s12",
@@ -191,8 +398,25 @@
       "asset": "assets/nortex_walkthrough.mp4",
       "asset_in": 393.0,
       "vo_line": "a capacity surge.",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.5], "desaturate": 0.4, "grain": 0.06, "push": 1.03 },
-      "text": [{ "content": "capacity surge", "token": "data", "size": "body", "enter": "cut" }],
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.5,
+          0.5
+        ],
+        "desaturate": 0.4,
+        "grain": 0.06,
+        "push": 1.03
+      },
+      "text": [
+        {
+          "content": "capacity surge",
+          "token": "data",
+          "size": "body",
+          "enter": "cut"
+        }
+      ],
       "shows_price": false,
       "note": "1.124s snap cut. Fast handheld (measured motion 29.6) against a two-word type card."
     },
@@ -202,12 +426,29 @@
       "in": 25.564,
       "out": 27.698,
       "asset": "assets/televisions-on-sale-2017.jpg",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.52, 0.55], "desaturate": 0.15, "grain": 0.03, "push": 1.08 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.52,
+          0.55
+        ],
+        "desaturate": 0.15,
+        "grain": 0.03,
+        "push": 1.08
+      },
       "vo_line": "Then retailers force prices down.",
-      "text": [{ "content": "\"retailers can exert strong downward pricing pressure\"", "token": "data", "size": "body", "enter": "fade" }],
+      "text": [
+        {
+          "content": "\"retailers can exert strong downward pricing pressure\"",
+          "token": "data",
+          "size": "body",
+          "enter": "fade"
+        }
+      ],
       "shows_price": true,
-      "citation": "Photo: Santeri Viinamäki / Wikimedia Commons, CC BY-SA 4.0, 27 Dec 2017 — in-frame tags are EUR retail tags in the photograph, not a Price Archaeology figure. Quote: VIZIO Form 10-K FY2023, SEC EDGAR",
-      "note": "The one beat where a real retail shelf is the argument. Marked shows_price because the photograph's own price tags are legible on frame — C3 is satisfied by naming them and disclaiming them rather than by cropping them out."
+      "citation": "Photo: Santeri Viinam\u00e4ki / Wikimedia Commons, CC BY-SA 4.0, 27 Dec 2017 \u2014 in-frame tags are EUR retail tags in the photograph, not a Price Archaeology figure. Quote: VIZIO Form 10-K FY2023, SEC EDGAR",
+      "note": "The one beat where a real retail shelf is the argument. Marked shows_price because the photograph's own price tags are legible on frame \u2014 C3 is satisfied by naming them and disclaiming them rather than by cropping them out."
     },
     {
       "id": "s14",
@@ -217,10 +458,30 @@
       "asset": "assets/tomorrow_television.mp4",
       "asset_in": 421.0,
       "vo_line": "Chinese fabs supplied that surge.",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.5], "desaturate": 0.4, "grain": 0.06, "push": 1.05 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.5,
+          0.5
+        ],
+        "desaturate": 0.4,
+        "grain": 0.06,
+        "push": 1.05
+      },
       "text": [
-        { "content": "\"the massive expansion of Chinese panel production capacity\"", "token": "data", "size": "body", "enter": "fade" },
-        { "content": "TrendForce, 3 Jan 2024", "token": "data", "size": "label", "delay_ms": 380 }
+        {
+          "content": "\"the massive expansion of Chinese panel production capacity\"",
+          "token": "data",
+          "size": "body",
+          "enter": "fade"
+        },
+        {
+          "content": "TrendForce, 3 Jan 2024",
+          "token": "data",
+          "size": "label",
+          "delay_ms": 380
+        }
       ],
       "shows_price": false,
       "note": "HONESTY CONSTRAINT for post-supervisor: this is public-domain US archive footage of component fabrication, used as texture. It is NOT footage of a Chinese fab and must never be captioned or described as one. The on-screen type is an attributed quote with its publisher, so the frame states what it is."
@@ -233,10 +494,27 @@
       "asset": "assets/Magicint1955.mp4",
       "asset_in": 341.5,
       "vo_line": "Constant quality, BLS:",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.45], "desaturate": 0.4, "grain": 0.06, "push": 1.06 },
-      "text": [{ "content": "constant quality", "token": "data", "size": "body", "enter": "rise" }],
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.5,
+          0.45
+        ],
+        "desaturate": 0.4,
+        "grain": 0.06,
+        "push": 1.06
+      },
+      "text": [
+        {
+          "content": "constant quality",
+          "token": "data",
+          "size": "body",
+          "enter": "rise"
+        }
+      ],
       "shows_price": false,
-      "note": "A test pattern on a round CRT under the words 'constant quality' — the visual pun is the point. Low native motion, so the 1.06 push over 1.569s is required."
+      "note": "A test pattern on a round CRT under the words 'constant quality' \u2014 the visual pun is the point. Low native motion, so the 1.06 push over 1.569s is required."
     },
     {
       "id": "s16",
@@ -244,15 +522,37 @@
       "in": 31.155,
       "out": 34.351,
       "asset": "assets/price-chart-2016-2026.png",
-      "transform": { "crop": "9:16", "fit": "contain", "source_rect": [0.0, 0.0, 1.0, 1.0], "background": "#0A0A0A", "push": 1.14 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "contain",
+        "source_rect": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "background": "#0A0A0A",
+        "push": 1.14
+      },
       "vo_line": "televisions down seventy-six point two percent after inflation.",
       "text": [
-        { "content": "−76.2%", "token": "data", "size": "hero", "enter": "count", "enter_ms": 600 },
-        { "content": "televisions, constant quality · BLS CUUR0000SERA01 · Apr 2016 283.408 → Jul 2026 93.176", "token": "data", "size": "label", "delay_ms": 620 }
+        {
+          "content": "\u221276.2%",
+          "token": "data",
+          "size": "hero",
+          "enter": "count",
+          "enter_ms": 600
+        },
+        {
+          "content": "televisions, constant quality \u00b7 BLS CUUR0000SERA01 \u00b7 Apr 2016 283.408 \u2192 Jul 2026 93.176",
+          "token": "data",
+          "size": "label",
+          "delay_ms": 620
+        }
       ],
       "shows_price": true,
-      "citation": "BLS CPI-U CUUR0000SERA01 (televisions), Apr 2016 283.408 → Jul 2026 93.176, deflated by CUUR0000SA0 239.261 → 330.724 = −76.2% real · data.bls.gov, extracted 2 Aug 2026",
-      "note": "White, not amber and not cyan: this is a derived index change spanning both years, so neither year token applies, and it is negative so the alarm token (deltas > +100% only) does not either. Longest still hold before the verdict; carried by a 1.00->1.14 push plus a 600ms count-in on the figure. See _evidence_discrepancy — the figure shown is 76.2%, which is what the quoted BLS values produce, not c5's inflation_adjusted_value field."
+      "citation": "BLS CPI-U CUUR0000SERA01 (televisions), Apr 2016 283.408 \u2192 Jul 2026 93.176, deflated by CUUR0000SA0 239.261 \u2192 330.724 = \u221276.2% real \u00b7 data.bls.gov, extracted 2 Aug 2026",
+      "note": "White, not amber and not cyan: this is a derived index change spanning both years, so neither year token applies, and it is negative so the alarm token (deltas > +100% only) does not either. Longest still hold before the verdict; carried by a 1.00->1.14 push plus a 600ms count-in on the figure. See _evidence_discrepancy \u2014 the figure shown is 76.2%, which is what the quoted BLS values produce, not c5's inflation_adjusted_value field."
     },
     {
       "id": "s17",
@@ -260,14 +560,33 @@
       "in": 34.351,
       "out": 37.218,
       "asset": "assets/2016-press-release.png",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.12], "desaturate": 0.0, "push": 1.08 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "contain",
+        "focus": [
+          0.5,
+          0.12
+        ],
+        "desaturate": 0.0,
+        "push": 1.08
+      },
       "vo_line": "One asterisk: twenty sixteen is a launch price,",
       "text": [
-        { "content": "*", "token": "past", "size": "hero", "enter": "cut" },
-        { "content": "2016 = manufacturer MSRP at announcement", "token": "past", "size": "body", "delay_ms": 200 }
+        {
+          "content": "*",
+          "token": "past",
+          "size": "hero",
+          "enter": "cut"
+        },
+        {
+          "content": "2016 = manufacturer MSRP at announcement",
+          "token": "past",
+          "size": "body",
+          "delay_ms": 200
+        }
       ],
       "shows_price": true,
-      "citation": "VIZIO, Inc. press release via PR Newswire, 19 Apr 2016 (captured 3 Aug 2026) — MSRP table visible on frame",
+      "citation": "VIZIO, Inc. press release via PR Newswire, 19 Apr 2016 (captured 3 Aug 2026) \u2014 MSRP table visible on frame",
       "note": "The concession beat gets the document again, because the document IS the concession: it is an announcement MSRP, not a till receipt. Amber token because the caveat is about the 2016 figure."
     },
     {
@@ -276,14 +595,30 @@
       "in": 37.218,
       "out": 39.789,
       "asset": "assets/televisions-on-sale-2017.jpg",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.72, 0.5], "desaturate": 0.15, "grain": 0.03, "push": 1.06, "push_ends_at": 38.892 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.72,
+          0.5
+        ],
+        "desaturate": 0.15,
+        "grain": 0.03,
+        "push": 1.06,
+        "push_ends_at": 38.892
+      },
       "vo_line": "today's a shelf price. Verdict: [PAUSE]",
       "text": [
-        { "content": "2026 = live shelf price", "token": "present", "size": "body", "enter": "rise" }
+        {
+          "content": "2026 = live shelf price",
+          "token": "present",
+          "size": "body",
+          "enter": "rise"
+        }
       ],
       "shows_price": true,
-      "citation": "Photo: Santeri Viinamäki / Wikimedia Commons, CC BY-SA 4.0, 27 Dec 2017 — in-frame tags are EUR retail tags in the photograph, not a Price Archaeology figure. 2026 figure: TCL 55Q651G, P.C. Richard & Son, 3 Aug 2026",
-      "note": "This is the held frame the charter asks for before the stamp. The push stops dead at 38.892, the first frame of [PAUSE] #2, and the frame freezes for 0.897s. No cut crosses the pause — the freeze is what marks it."
+      "citation": "Photo: Santeri Viinam\u00e4ki / Wikimedia Commons, CC BY-SA 4.0, 27 Dec 2017 \u2014 in-frame tags are EUR retail tags in the photograph, not a Price Archaeology figure. 2026 figure: TCL 55Q651G, P.C. Richard & Son, 3 Aug 2026",
+      "note": "This is the held frame the charter asks for before the stamp. The push stops dead at 38.892, the first frame of [PAUSE] #2, and the frame freezes for 0.897s. No cut crosses the pause \u2014 the freeze is what marks it."
     },
     {
       "id": "s19",
@@ -291,16 +626,33 @@
       "in": 39.789,
       "out": 43.115,
       "asset": "assets/price-chart-2016-2026.png",
-      "transform": { "crop": "9:16", "fit": "contain", "source_rect": [0.0, 0.5, 1.0, 0.3], "background": "#0A0A0A", "push": 1.06 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "contain",
+        "source_rect": [
+          0.0,
+          0.5,
+          1.0,
+          0.3
+        ],
+        "background": "#0A0A0A",
+        "push": 1.06
+      },
       "vo_line": "Still cheap. And today's set is QLED, with HDR.",
-      "stamp": { "word": "STILL CHEAP", "token": "present", "rotation_deg": 4, "shake_px": 2, "at": 39.789, "at_frame": 1194, "enter_ms": 120 },
-      "text": [
-        { "content": "TCL 55Q651G · QLED · HDR10+ / HLG · Google TV", "token": "present", "size": "body", "enter": "fade", "at": 40.628 }
-      ],
+      "stamp": {
+        "word": "STILL CHEAP",
+        "token": "present",
+        "rotation_deg": 4,
+        "shake_px": 2,
+        "at": 39.789,
+        "at_frame": 1194,
+        "enter_ms": 120
+      },
+      "text": [],
       "shows_price": true,
-      "citation": "TCL 55Q651G, P.C. Richard & Son, 3 Aug 2026, $319.96 (\"Panel Type: QLED · Display Resolution: 4K Ultra HD (2160p)\") · us.tcl.com, \"Q Class 4K UHD HDR QLED Smart TV with Google TV\", $319.99",
+      "citation": "TCL 55Q651G, P.C. Richard & Son, 3 Aug 2026, $319.96 (\"Panel Type: QLED \u00b7 Display Resolution: 4K Ultra HD (2160p)\") \u00b7 us.tcl.com, \"Q Class 4K UHD HDR QLED Smart TV with Google TV\", $319.99",
       "shot_note": "Chart cropped to the 2026 band only, so the frame under the stamp is the cyan evidence and nothing else.",
-      "note": "STAMP SYNC: segment c of vo.mp3 begins at 39.789 measured (silencedetect: silence_end 39.789002 after a 0.897s gap). At 30fps that is frame 1194 — the first frame of the word 'Still'. Slam at that frame, 4deg, 2px shake, 120ms. Do not soften and do not offset: 3 frames late reads as broken. The QLED/HDR line enters separately at 40.628 (measured onset of 'And today's set…') so the stamp is not competing with it."
+      "note": "STAMP SYNC: segment c of vo.mp3 begins at 39.789 measured (silencedetect: silence_end 39.789002 after a 0.897s gap). At 30fps that is frame 1194 \u2014 the first frame of the word 'Still'. Slam at that frame, 4deg, 2px shake, 120ms. Do not soften and do not offset: 3 frames late reads as broken. The QLED/HDR line enters separately at 40.628 (measured onset of 'And today's set\u2026') so the stamp is not competing with it."
     },
     {
       "id": "s20",
@@ -310,13 +662,33 @@
       "asset": "assets/Magicint1955.mp4",
       "asset_in": 426.0,
       "vo_line": "What did your first four-K TV cost?",
-      "transform": { "crop": "9:16", "fit": "cover", "focus": [0.5, 0.45], "desaturate": 0.4, "grain": 0.06, "push": 1.07 },
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "focus": [
+          0.5,
+          0.45
+        ],
+        "desaturate": 0.4,
+        "grain": 0.06,
+        "push": 1.07
+      },
       "text": [
-        { "content": "What did your first 4K TV cost?", "token": "data", "size": "body", "enter": "rise" },
-        { "content": "@PriceArchaeology", "token": "data", "size": "label", "delay_ms": 500 }
+        {
+          "content": "What did your first 4K TV cost?",
+          "token": "data",
+          "size": "body",
+          "enter": "rise"
+        },
+        {
+          "content": "@PriceArchaeology",
+          "token": "data",
+          "size": "label",
+          "delay_ms": 500
+        }
       ],
       "shows_price": false,
-      "note": "Comment question, not an affiliate line — script.md is explicit that the beat sheet never runs both, and YouTube Shopping is not live. A set playing in someone's room is the right last image for 'your first'. Runs 1.007s past the last vocal frame (45.073) to the 46.2s tail."
+      "note": "Comment question, not an affiliate line \u2014 script.md is explicit that the beat sheet never runs both, and YouTube Shopping is not live. A set playing in someone's room is the right last image for 'your first'. Runs 1.007s past the last vocal frame (45.073) to the 46.2s tail."
     }
   ]
 }

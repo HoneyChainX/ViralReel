@@ -45,7 +45,9 @@ type Scene = {
   in: number;
   out: number;
   asset: string; // filename relative to public/<slug>/
-  transform?: {crop?: string; desaturate?: number; push?: number};
+  // fit 'contain' is for DATA visuals (charts, receipts, press releases): they must
+  // stay legible edge to edge. Footage stays 'cover' (centre-crop is the format).
+  transform?: {crop?: string; desaturate?: number; push?: number; fit?: 'cover' | 'contain'};
   text?: TextLayer[];
   odometer?: {from: number; to: number; duration_ms?: number; currency?: string};
   stamp?: {word: string; token?: string; rotation_deg?: number};
@@ -81,15 +83,17 @@ const MediaLayer: React.FC<{scene: Scene; slug: string; localFrame: number; fps:
     extrapolateRight: 'clamp',
   });
   const desat = scene.transform?.desaturate ?? 0.4;
+  const fit = scene.transform?.fit ?? 'cover';
   const src = staticFile(`${slug}/${scene.asset}`);
   const style: React.CSSProperties = {
     width: '100%',
     height: '100%',
-    objectFit: 'cover',
+    objectFit: fit,
     transform: `scale(${scale})`,
     // bible §5: footage desaturated to ~40% with slight grain; grain comes from
     // the sources themselves (real archival), contrast pulled down a touch.
-    filter: `saturate(${1 - desat}) contrast(0.96)`,
+    // Data visuals (fit: contain) keep full saturation — they ARE the data layer.
+    filter: fit === 'contain' ? 'none' : `saturate(${1 - desat}) contrast(0.96)`,
   };
   return (
     <AbsoluteFill style={{backgroundColor: PA_TOKENS.ground}}>
