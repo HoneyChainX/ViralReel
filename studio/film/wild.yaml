@@ -10,6 +10,7 @@ delivery:
   fps: 30
   lufs: -14
   fit: crop
+  qc_cut_threshold: 12   # stylized palettes cut softly; default 27 misses real chapter cuts
 
 scenes:
   - { id: ch1-savanna,  source: out/wild-ch1.mp4 }

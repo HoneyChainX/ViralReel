@@ -205,7 +205,11 @@ def render(film: dict, film_path: Path) -> int:
         durs.append(real)
         print(f"✓ {s['id']:<12} {real:6.2f}s")
 
-    # Stitch: uniform xfade/acrossfade chain (cut = 1-frame fade).
+    # Stitch. Cuts use the concat filter; xfade only for REAL fades — chaining
+    # 1-frame xfades at exact-boundary offsets collapses the graph (found the hard
+    # way on a 6-scene film: video stream ended after the first join while the
+    # container claimed full length). Concat for cuts is also what the assembly
+    # research prescribes as the happy path.
     n = len(norm)
     if n == 1:
         stitched = norm[0][1]
@@ -213,17 +217,24 @@ def render(film: dict, film_path: Path) -> int:
         inputs, fc = [], []
         for _, p in norm:
             inputs += ["-i", str(p)]
-        offset = 0.0
+        cur_v, cur_a, cur_dur = "[0:v]", "[0:a]", durs[0]
         for i in range(n - 1):
             tr = norm[i][0].get("transition_out", {"type": "cut"})
-            tdur = float(tr.get("dur", 0.5)) if tr.get("type") == "xfade" else CUT_DUR
-            offset += durs[i] - tdur
-            vin = "[0:v]" if i == 0 else f"[vx{i}]"
-            ain = "[0:a]" if i == 0 else f"[ax{i}]"
-            fc.append(f"{vin}[{i+1}:v]xfade=transition=fade:duration={tdur:.4f}:offset={offset:.4f}[vx{i+1}]")
-            fc.append(f"{ain}[{i+1}:a]acrossfade=d={max(tdur, 0.02):.4f}[ax{i+1}]")
-        fc.append(f"[vx{n-1}]format=yuv420p[vout]")
-        fc.append(f"[ax{n-1}]loudnorm=I={lufs}:TP=-1:LRA=11[aout]")
+            nv, na = f"[{i+1}:v]", f"[{i+1}:a]"
+            ov, oa = f"[vj{i+1}]", f"[aj{i+1}]"
+            if tr.get("type") == "xfade":
+                tdur = max(2 / 30, float(tr.get("dur", 0.5)))
+                off = cur_dur - tdur
+                fc.append(f"{cur_v}{nv}xfade=transition=fade:duration={tdur:.4f}:offset={off:.4f}{ov}")
+                fc.append(f"{cur_a}{na}acrossfade=d={tdur:.4f}{oa}")
+                cur_dur += durs[i + 1] - tdur
+            else:
+                fc.append(f"{cur_v}{nv}concat=n=2:v=1:a=0{ov}")
+                fc.append(f"{cur_a}{na}concat=n=2:v=0:a=1{oa}")
+                cur_dur += durs[i + 1] - CUT_DUR * 0  # cuts drop no time
+            cur_v, cur_a = ov, oa
+        fc.append(f"{cur_v}format=yuv420p[vout]")
+        fc.append(f"{cur_a}loudnorm=I={lufs}:TP=-1:LRA=11[aout]")
         stitched = tmp / "stitched.mp4"
         cmd = [FFMPEG, "-hide_banner", "-loglevel", "error", "-y", *inputs,
                "-filter_complex", ";".join(fc),
@@ -236,12 +247,12 @@ def render(film: dict, film_path: Path) -> int:
             return 1
     subprocess.run(["cp", str(stitched), str(out_final)])
 
-    # QC — measure, never assume.
+    # QC — measure, never assume. Cuts lose no time; only xfades shorten the film.
     info = probe(out_final)
     expected = sum(durs) - sum(
-        (float(s.get("transition_out", {}).get("dur", 0.5))
-         if s.get("transition_out", {}).get("type") == "xfade" else CUT_DUR)
-        for s, _ in norm[:-1])
+        float(s.get("transition_out", {}).get("dur", 0.5))
+        for s, _ in norm[:-1]
+        if s.get("transition_out", {}).get("type") == "xfade")
     ok_dur = abs(info["duration"] - expected) < 0.5
     ebur = subprocess.run(
         [FFMPEG, "-hide_banner", "-i", str(out_final), "-af", "ebur128", "-f", "null", "-"],
@@ -261,12 +272,16 @@ def render(film: dict, film_path: Path) -> int:
     acc = 0.0
     for i in range(n - 1):
         tr = norm[i][0].get("transition_out", {"type": "cut"})
-        tdur = float(tr.get("dur", 0.5)) if tr.get("type") == "xfade" else CUT_DUR
+        tdur = float(tr.get("dur", 0.5)) if tr.get("type") == "xfade" else 0.0
         acc += durs[i] - tdur
         if tr.get("type", "cut") == "cut":
             expected_cuts.append(round(acc, 2))
     if sd.exists():
-        out = subprocess.run([str(sd), "-i", str(out_final), "detect-content", "list-scenes", "-n"],
+        # Threshold is per-film: stylized/harmonized palettes cut softly and need a
+        # lower bar than live footage (delivery.qc_cut_threshold; detector default 27).
+        thr = str(d.get("qc_cut_threshold", 27))
+        out = subprocess.run([str(sd), "-i", str(out_final), "detect-content", "-t", thr,
+                              "list-scenes", "-n"],
                              capture_output=True, text=True).stdout
         # Table rows: | Scene # | Start Frame | HH:MM:SS.mmm | End Frame | HH:MM:SS.mmm |
         detected = [
