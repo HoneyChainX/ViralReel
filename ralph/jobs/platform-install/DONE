@@ -1,0 +1,12 @@
+platform-install complete — 2026-08-03
+
+All enabled modules across all 6 profiles installed and verified on this host:
+`bash scripts/studio/doctor.sh --profile all` exits 0 (host GPU: no; GPU-level
+checks correctly deferred). 18 modules SHA-pinned in config/platform.yaml.
+OpenMontage budget pinned to cap/$0.00 + auto_noncreative via scripts/setup.sh.
+Gate suite untouched and green (30 tests).
+
+Run mode note: iterations 2+ executed from the main session at the founder's
+request after iteration 1 correctly identified that unattended
+`claude -p --permission-mode acceptEdits` lacks exec/network permissions on this
+host. That standing gap for future unattended runs is documented in AGENT.md.

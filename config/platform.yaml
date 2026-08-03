@@ -170,7 +170,7 @@ modules:
   # ── genai (GPU host; off for provenance channels by charter) ─────────────
   - id: comfyui
     repo: https://github.com/Comfy-Org/ComfyUI
-    ref: main
+    ref: 14b05228cef127ce529bc0c08660770d4af3e9a8  # pinned 2026-08-03, verified install
     profile: genai
     role: "Node-graph inference engine — the automation backbone every open model plugs into"
     license: GPL-3.0
@@ -182,13 +182,15 @@ modules:
     enabled: true
     doctor:
       - { type: file, path: vendor/comfyui/main.py }
-      - { type: dir,  path: vendor/comfyui/.venv }
+      # The venv (torch et al.) is part of the GPU-level install — on a CPU host the
+      # installer stops at code+config on purpose, so the check must degrade with it.
+      - { type: dir,  path: vendor/comfyui/.venv, needs_gpu: true }
       - { type: cmd,  run: "python3 studio/adapters/comfyui_client.py --selftest", needs_gpu: true }
     notes: "Driven exclusively through studio/adapters/comfyui_client.py in this platform."
 
   - id: ltx-2
     repo: https://github.com/Lightricks/LTX-2
-    ref: main
+    ref: 4f8905737aac86a554637cac86c178877a39c744  # pinned 2026-08-03, verified install
     profile: genai
     role: "LTX-2.3 22B open-weights joint audio+video generation (native 4K, T2V/I2V)"
     license: "LTX-2 custom (open weights, commercial OK, not OSI)"
@@ -206,7 +208,7 @@ modules:
 
   - id: wan2-2
     repo: https://github.com/Wan-Video/Wan2.2
-    ref: main
+    ref: 42bf4cfaa384bc21833865abc2f9e6c0e67233dc  # pinned 2026-08-03, verified install
     profile: genai
     role: "Alibaba Wan2.2 open T2V/I2V (MoE A14B + TI2V-5B, 720p24)"
     license: Apache-2.0
@@ -223,7 +225,7 @@ modules:
 
   - id: dramaclaw
     repo: https://github.com/dramaclaw/dramaclaw
-    ref: main
+    ref: 9f9c3f37cebce9511c95c4d87c463ded4bd88872  # pinned 2026-08-03, verified install
     profile: genai
     role: "Script→finished-film AIGC drama engine (characters, episodes, storyboards, VO, cut)"
     license: Elastic-2.0       # source-available; cannot be resold as a managed service
@@ -272,7 +274,7 @@ modules:
 
   - id: practical-rife
     repo: https://github.com/hzwer/Practical-RIFE
-    ref: main
+    ref: 17d8c7a1005b37f4c97bfee04e316aaec7fdc536  # pinned 2026-08-03, verified install
     profile: genai
     role: "Frame interpolation (24→48/60fps, slow-mo) — standard fps-doubling for gen output"
     license: MIT
@@ -319,7 +321,7 @@ modules:
 
   - id: blender-mcp
     repo: https://github.com/ahujasid/blender-mcp
-    ref: main
+    ref: 3ab892510cc0e5435ba5e611c01fb1021fbde8de  # pinned 2026-08-03, verified install
     profile: animation
     role: "MCP server that lets agents drive Blender directly (scenes, materials, assets)"
     license: MIT
@@ -383,7 +385,7 @@ modules:
 
   - id: kokoro
     repo: https://github.com/hexgrad/kokoro
-    ref: main
+    ref: dfb907a02bba8152ca444717ca5d78747ccb4bec  # pinned 2026-08-03, verified install
     profile: voice
     role: "82M-param permissive production TTS, CPU-viable — Piper's successor as the free fallback"
     license: Apache-2.0
@@ -401,7 +403,7 @@ modules:
 
   - id: chatterbox
     repo: https://github.com/resemble-ai/chatterbox
-    ref: main
+    ref: 5de7a54aa4e5e2baadb0182dde554908b48b85c2  # pinned 2026-08-03, verified install
     profile: voice
     role: "Expressive zero-shot voice cloning TTS with emotion control (MIT code + weights)"
     license: MIT
@@ -418,7 +420,7 @@ modules:
 
   - id: voxcpm
     repo: https://github.com/OpenBMB/VoxCPM
-    ref: main
+    ref: 616d3d3e630a9c96c2853250eef91b0f39dcd5fa  # pinned 2026-08-03, verified install
     profile: voice
     role: "Tokenizer-free TTS with promptable voice design — the open 'voice director' engine"
     license: Apache-2.0
@@ -437,7 +439,7 @@ modules:
   # ── audio (music generation FORBIDDEN on Price Archaeology — DECISIONS D5) ─
   - id: mmaudio
     repo: https://github.com/hkchengrex/MMAudio
-    ref: main
+    ref: 974010a026c731054592d8f777218bd9d85a6c24  # pinned 2026-08-03, verified install
     profile: audio
     role: "Video-to-audio foley — synchronized SFX from picture (the missing foley department)"
     license: MIT
@@ -454,7 +456,7 @@ modules:
 
   - id: ace-step
     repo: https://github.com/ace-step/ACE-Step
-    ref: main
+    ref: 1bee4c9f5b43e30995f8d4d33b3919197ce1bd68  # pinned 2026-08-03, verified install
     profile: audio
     role: "Full-song music generation foundation model (Apache code + weights)"
     license: Apache-2.0

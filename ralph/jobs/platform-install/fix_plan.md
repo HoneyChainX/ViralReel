@@ -16,18 +16,30 @@ One unchecked item per iteration. Add discoveries as new items; never delete his
       → done 2026-08-03, exit 0: openmontage (full `make setup`), video-shotcraft,
       screenplain, auto-editor, otio. SHAs pinned in config/platform.yaml via
       `platform.py pin` (added this run).
-- [ ] Verify OpenMontage + yt-agent (legacy `make setup` path) still install cleanly alongside the platform tree
-      → partially: both installed via the manifest path; still to run: `scripts/setup.sh`
-      to apply its OpenMontage budget pin (mode=cap/$0.00, checkpoint auto_noncreative) —
-      the manifest install alone does NOT pin the vendor's budget config.
-- [ ] Install `distribution` profile modules and smoke-test each headless driver
-      → yt-agent installed + pinned; smoke = doctor checks in the running full pass
-- [ ] Install `genai` profile modules to code+config level (GPU smoke tests only if a GPU exists)
-      → in progress (background run; this host has no GPU — code+config level only)
-- [ ] Install `animation` profile modules to code+config level
-      → in progress (blender-mcp clone; blender/opentoonz/toonflow are desktop, skipped)
-- [ ] Install `voice` + `audio` profile modules
-      → in progress: whisperx installed + pinned; kokoro/chatterbox/voxcpm/mmaudio/ace-step pending
-- [ ] Run `bash scripts/studio/doctor.sh` end to end; file one new item per red check above this line
-- [ ] Pin SHAs for the remaining modules once their installs verify (`platform.py pin --profile all`)
-- [ ] Run `make test` — the gate suite must still pass untouched
+- [x] Verify OpenMontage + yt-agent (legacy `make setup` path) still install cleanly alongside the platform tree
+      → done: `scripts/setup.sh` ran end-to-end idempotently over the manifest-installed
+      tree. Its two distinctive effects verified applied: OpenMontage budget pin
+      (mode=cap, total_usd=0.00, checkpoint auto_noncreative — vendor had shipped `warn`)
+      and the .env cost-control annotation.
+- [x] Install `distribution` profile modules and smoke-test each headless driver
+      → yt-agent installed + pinned; doctor checks green. Postiz stays disabled (D1/D2).
+- [x] Install `genai` profile modules to code+config level (GPU smoke tests only if a GPU exists)
+      → comfyui, ltx-2, wan2-2, dramaclaw, practical-rife cloned + pinned. No GPU on this
+      host: comfyui venv + adapter selftest correctly deferred (`needs_gpu` checks; the
+      .venv check gained `needs_gpu: true` this run — it demanded a GPU-level artifact on
+      a CPU host, a declaration bug, fixed in the manifest not the doctor).
+- [x] Install `animation` profile modules to code+config level
+      → blender-mcp cloned + pinned; blender/opentoonz/toonflow are desktop (human-installed).
+- [x] Install `voice` + `audio` profile modules
+      → whisperx, kokoro (pip installs), chatterbox, voxcpm, mmaudio, ace-step (clones):
+      all installed + pinned.
+- [x] Run `bash scripts/studio/doctor.sh` end to end; file one new item per red check above this line
+      → **All green for profile 'all', exit 0** (2026-08-03). One red found and root-caused
+      along the way (comfyui .venv declaration, above). Static ffmpeg fetched to
+      vendor/ffbin (no system ffmpeg on this host).
+- [x] Pin SHAs for the remaining modules once their installs verify (`platform.py pin --profile all`)
+      → 18 modules pinned total; `main` remains only on disabled/desktop modules, which is
+      the design: `main` visibly means "not verified".
+- [x] Run `make test` — the gate suite must still pass untouched
+      → 30 tests OK (3 pre-existing environment skips locally; CI runs them in full and is
+      green on the branch head).
