@@ -2,44 +2,50 @@
   {
     "file": "assets/nortex_walkthrough.mp4",
     "source_url": "https://archive.org/details/QuickWalkThroughAnOldWarehousePackedWithElectronicEquipment",
-    "license": "CC0 1.0 Universal (Public Domain Dedication)",
+    "license": "CC0",
     "attribution": "Archive.org, CC0 1.0 \u2014 no attribution legally required; credited as \"Warehouse of Old Electronics Equipment\" / Archive.org",
-    "used_for": "USED \u2014 4 scenes: s2 ARTIFACT (in 345.0s, 2.90s, spec label), s5 GAP (in 321.0s, 2.25s) = THE ODOMETER BASE, s11 EXCAVATION (in 129.0s, 2.89s, VIZIO 10-K quote), s12 EXCAVATION (in 393.0s, 1.12s, 'capacity surge'). 9.16s total. Chosen as the motion workhorse: handheld throughout, measured inter-frame luma delta 25-45 across every in-point used, so it carries the beats where a still would stall the slideshow score. Desaturate 0.4 + grain 0.06 per bible SS5."
+    "used_for": "USED \u2014 4 scenes: s2 ARTIFACT (in 345.0s, 2.90s, spec label), s5 GAP (in 321.0s, 2.25s) = THE ODOMETER BASE, s11 EXCAVATION (in 129.0s, 2.89s, VIZIO 10-K quote), s12 EXCAVATION (in 393.0s, 1.12s, 'capacity surge'). 9.16s total. Chosen as the motion workhorse: handheld throughout, measured inter-frame luma delta 25-45 across every in-point used, so it carries the beats where a still would stall the slideshow score. Desaturate 0.4 + grain 0.06 per bible SS5.",
+    "license_as_shown": "CC0 1.0 Universal (Public Domain Dedication)"
   },
   {
     "file": "assets/tomorrow_television.mp4",
     "source_url": "https://archive.org/details/tomorrow_television",
-    "license": "Public Domain (Prelinger Archives)",
+    "license": "public-domain",
     "attribution": "Prelinger Archives / Archive.org, Public Domain \u2014 \"Television Tomorrow\"",
-    "used_for": "USED \u2014 2 scenes: s10 EXCAVATION (in 481.0s, 2.45s) = THE ONE CAUSE, the only real assembly-line footage in the film, on this source's highest-motion window (measured 15.5); s14 EXCAVATION (in 421.0s, 1.89s, component fabrication macro under the TrendForce quote). 4.34s total. CONSTRAINT for post-supervisor: s14 is US archive footage of component fabrication used as texture \u2014 it is NOT footage of a Chinese fab and must never be captioned or described as one."
+    "used_for": "USED \u2014 2 scenes: s10 EXCAVATION (in 481.0s, 2.45s) = THE ONE CAUSE, the only real assembly-line footage in the film, on this source's highest-motion window (measured 15.5); s14 EXCAVATION (in 421.0s, 1.89s, component fabrication macro under the TrendForce quote). 4.34s total. CONSTRAINT for post-supervisor: s14 is US archive footage of component fabrication used as texture \u2014 it is NOT footage of a Chinese fab and must never be captioned or described as one.",
+    "license_as_shown": "Public Domain (Prelinger Archives)"
   },
   {
     "file": "assets/Magicint1955.mp4",
     "source_url": "https://archive.org/details/Magicint1955",
-    "license": "Public Domain (Prelinger Archives)",
+    "license": "public-domain",
     "attribution": "Prelinger Archives / Archive.org, Public Domain \u2014 \"Magic in the Air\" (1955)",
-    "used_for": "USED \u2014 4 scenes: s1 ARTIFACT (in 168.0s, 3.11s, opening receiver with a live picture, under the $967.58 hero), s3 ARTIFACT (in 172.0s, 0.92s, rhyme cut on the spoken year), s15 EXCAVATION (in 341.5s, 1.57s, round-CRT test pattern under 'constant quality'), s20 HANDOFF (in 426.0s, 3.09s, a set playing in a room, under the comment question). 8.69s total. Native motion is low (measured 1.0-5.4) so every one of these scenes carries a mandatory 1.03-1.08 push."
+    "used_for": "USED \u2014 4 scenes: s1 ARTIFACT (in 168.0s, 3.11s, opening receiver with a live picture, under the $967.58 hero), s3 ARTIFACT (in 172.0s, 0.92s, rhyme cut on the spoken year), s15 EXCAVATION (in 341.5s, 1.57s, round-CRT test pattern under 'constant quality'), s20 HANDOFF (in 426.0s, 3.09s, a set playing in a room, under the comment question). 8.69s total. Native motion is low (measured 1.0-5.4) so every one of these scenes carries a mandatory 1.03-1.08 push.",
+    "license_as_shown": "Public Domain (Prelinger Archives)"
   },
   {
     "file": "assets/HomeElec_2.mp4",
     "source_url": "https://archive.org/details/HomeElec_2",
-    "license": "Public Domain (Prelinger Archives)",
+    "license": "public-domain",
     "attribution": "Prelinger Archives / Archive.org, Public Domain \u2014 \"The Home Electrical\"",
-    "used_for": "NOT USED in this episode. Reason, stated rather than hidden: it is a 1915 General Electric silent film built around full-frame intertitle cards, and the data layer sits on top of the footage \u2014 intertitle type under our type is a collision, not a layer. It also predates television entirely, so it cannot honestly sit under a 4K TV comparison. Left licensed and on disk for a future appliance episode; retaining it is a C4 obligation, using it is not."
+    "used_for": "NOT USED in this episode. Reason, stated rather than hidden: it is a 1915 General Electric silent film built around full-frame intertitle cards, and the data layer sits on top of the footage \u2014 intertitle type under our type is a collision, not a layer. It also predates television entirely, so it cannot honestly sit under a 4K TV comparison. Left licensed and on disk for a future appliance episode; retaining it is a C4 obligation, using it is not.",
+    "license_as_shown": "Public Domain (Prelinger Archives)"
   },
   {
     "file": "assets/sharp_calculator.mp4",
     "source_url": "https://archive.org/details/sharp_calculator",
-    "license": "Public Domain (Prelinger Archives)",
+    "license": "public-domain",
     "attribution": "Prelinger Archives / Archive.org, Public Domain \u2014 \"Sharp Calculator Commercial\"",
-    "used_for": "USED \u2014 1 scene: s7 EXCAVATION (in 0.6s, 0.79s), the 'The receipt:' texture beat. Window chosen deliberately: source seconds 0-4 are stacked paper only (measured motion 25.9); the calculators do not enter frame until roughly source second 14. Honours the standing licence constraint that this clip must never be presented on screen as a TV ad \u2014 nothing in the used window identifies a product and no product claim is made over it."
+    "used_for": "USED \u2014 1 scene: s7 EXCAVATION (in 0.6s, 0.79s), the 'The receipt:' texture beat. Window chosen deliberately: source seconds 0-4 are stacked paper only (measured motion 25.9); the calculators do not enter frame until roughly source second 14. Honours the standing licence constraint that this clip must never be presented on screen as a TV ad \u2014 nothing in the used window identifies a product and no product claim is made over it.",
+    "license_as_shown": "Public Domain (Prelinger Archives)"
   },
   {
     "file": "assets/televisions-on-sale-2017.jpg",
     "source_url": "https://commons.wikimedia.org/wiki/File:Televisions_on_sale_20171227.jpg",
-    "license": "CC BY-SA 4.0",
+    "license": "CC-BY-SA-4.0",
     "attribution": "Santeri Viinam\u00e4ki (User:Zunter) / Wikimedia Commons, CC BY-SA 4.0",
-    "used_for": "USED \u2014 3 scenes, all with a mandatory push (still image): s4 ARTIFACT (6.93-9.61s, focus 0.30, push 1.07, holds PAUSE #1 uncut), s13 EXCAVATION (25.56-27.70s, focus 0.52, push 1.08, 'retailers force prices down'), s18 VERDICT (37.22-39.79s, focus 0.72, push 1.06 freezing at 38.892 = the held frame the stamp lands after). 7.39s total. All three are marked shows_price:true because the photograph's OWN yellow tags are legible on frame; each citation carries the CC BY-SA 4.0 attribution AND states the tags are EUR retail tags in the photograph, not a Price Archaeology figure. Desaturate 0.15, not 0.4 \u2014 this is a present-day photograph, and the 40% desaturation rule is an archive-layer rule."
+    "used_for": "USED \u2014 3 scenes, all with a mandatory push (still image): s4 ARTIFACT (6.93-9.61s, focus 0.30, push 1.07, holds PAUSE #1 uncut), s13 EXCAVATION (25.56-27.70s, focus 0.52, push 1.08, 'retailers force prices down'), s18 VERDICT (37.22-39.79s, focus 0.72, push 1.06 freezing at 38.892 = the held frame the stamp lands after). 7.39s total. All three are marked shows_price:true because the photograph's OWN yellow tags are legible on frame; each citation carries the CC BY-SA 4.0 attribution AND states the tags are EUR retail tags in the photograph, not a Price Archaeology figure. Desaturate 0.15, not 0.4 \u2014 this is a present-day photograph, and the 40% desaturation rule is an archive-layer rule.",
+    "license_as_shown": "CC BY-SA 4.0"
   },
   {
     "file": "assets/price-chart-2016-2026.png",

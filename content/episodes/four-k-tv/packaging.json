@@ -1,0 +1,26 @@
+{
+  "slug": "four-k-tv",
+  "title": "$699.99 to $319.96: The 55-Inch 4K TV, 2016 vs 2026",
+  "description": "VIZIO's cheapest 55-inch 4K smart TV (E55u-D0) launched at an MSRP of $699.99 in April 2016; TCL's cheapest 55-inch 4K smart TV (55Q651G) sells for $319.96 today.\n\nSources:\n- 2016 (primary): VIZIO, Inc. press release via PR Newswire, 19 Apr 2016 — \"VIZIO SmartCast 55\\\" E-Series Ultra HD Home Theater Display (E55u-D0) MSRP $699.99\" — https://www.prnewswire.com/news-releases/vizio-smartcast-e-series-ultra-hd-home-theater-display-joins-next-generation-smart-entertainment-ecosystem-with-ultra-hd-picture-quality-300253366.html\n- 2016 (secondary): Reviewed.com, 19 Apr 2016 — price breakdown confirming E55u-D0 MSRP $699.99 — https://www.reviewed.com/televisions/news/vizio-debuts-2016-m-series-e-series-tvs-with-smartcast\n- 2026: P.C. Richard & Son, live listing accessed 2026-08-03, $319.96 — https://www.pcrichard.com/tcl-55-class-q-series-qled-4k-uhd-smart-google-tv/55Q651G.html\n- 2026: TCL North America official US store, accessed 2026-08-03, $319.99 — https://us.tcl.com/products/q-class-4k-uhd-hdr-qled-smart-tv-with-google-tv\n- Series: BLS CPI-U CUUR0000SERA01 (Televisions, constant-quality index) — https://data.bls.gov/timeseries/CUUR0000SERA01\n- Series: BLS CPI-U CUUR0000SA0 (All items, used as the inflation deflator) — https://data.bls.gov/timeseries/CUUR0000SA0\n- Note: the 2016 figure is a manufacturer launch MSRP; the 2026 figure is a live retail shelf price. This is disclosed, not smoothed — street prices fell within 2016 too (LG's 55UH7700 launched at $1,799 in March 2016 and was reviewed at $999 the same year), so the true street-to-street fall is smaller than MSRP-to-street.\n\nFootage: Archive.org, CC0 1.0 — no attribution legally required; credited as \"Warehouse of Old Electronics Equipment\" / Archive.org; Prelinger Archives / Archive.org, Public Domain — \"Television Tomorrow\"; Prelinger Archives / Archive.org, Public Domain — \"Magic in the Air\" (1955); Prelinger Archives / Archive.org, Public Domain — \"Sharp Calculator Commercial\"; Santeri Viinamäki (User:Zunter) / Wikimedia Commons, CC BY-SA 4.0 (\"Televisions on sale\", 2017-12-27); Price Archaeology original chart — eleven named models, per-point citations, from evidence.json sources; Provenance render of VIZIO, Inc. press release, 19 Apr 2016, via PR Newswire (factual pricing record, provenance use); Provenance render of LG Electronics USA press release, 10 Mar 2016 (factual pricing record, provenance use)\n\nCorrections: github.com/HoneyChainX/ViralReel/blob/main/content/CORRECTIONS.md",
+  "tags": [
+    "4k tv price history",
+    "55 inch 4k tv",
+    "vizio e55u-d0",
+    "tcl 55q651g",
+    "tv prices 2016",
+    "tv prices 2026",
+    "2016 vs 2026",
+    "price archaeology",
+    "cost of living",
+    "electronics deflation",
+    "bls cpi televisions",
+    "consumer electronics prices",
+    "smart tv price drop"
+  ],
+  "pinned_comment": "The 2016 receipt: VIZIO's own press release lists the 55\" 4K E55u-D0 at MSRP $699.99 (19 Apr 2016) — https://www.prnewswire.com/news-releases/vizio-smartcast-e-series-ultra-hd-home-theater-display-joins-next-generation-smart-entertainment-ecosystem-with-ultra-hd-picture-quality-300253366.html — and the constant-quality check: BLS CPI-U Televisions index CUUR0000SERA01 — https://data.bls.gov/timeseries/CUUR0000SERA01",
+  "thumbnail_text": "$699.99 → $319.96",
+  "ai_disclosure": true,
+  "privacy_status": "private",
+  "category": "Education",
+  "production_notes": "VO is a Piper TTS draft (voice en_US-amy-medium, draft: true in vo.json) synthesized as a fallback because ELEVENLABS_API_KEY was absent in this environment (docs/DECISIONS.md D7). It is NOT the cast ElevenLabs voice. Do not publish without the founder's explicit decision on whether to regenerate with ElevenLabs first."
+}

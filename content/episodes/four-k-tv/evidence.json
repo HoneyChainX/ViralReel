@@ -1,8 +1,8 @@
 {
   "slug": "four-k-tv",
-  "object": "A 55-inch 4K smart TV, entry/mainstream tier: VIZIO SmartCast 55\" E-Series Ultra HD Home Theater Display (E55u-D0), 2016 — versus TCL 55Q651G (55\" Q-Series 4K QLED Google TV), 2026",
+  "object": "A 55-inch 4K smart TV, entry/mainstream tier: VIZIO SmartCast 55\" E-Series Ultra HD Home Theater Display (E55u-D0), 2016 \u2014 versus TCL 55Q651G (55\" Q-Series 4K QLED Google TV), 2026",
   "segment": "STILL CHEAP",
-  "spec_note": "Like-for-like is held on FOUR axes: 55-inch class · 3840x2160 (true 4K/UHD, not 1080p) · LED-backlit LCD (no OLED on either side) · mass-market brand's ENTRY 4K smart-TV line. 2016 anchor = VIZIO E55u-D0, the 55-inch Ultra HD model of VIZIO's cheapest 2016 SmartCast line, MSRP $699.99. 2026 anchor = TCL 55Q651G, the 55-inch model of TCL's cheapest current 4K line, $319.96-$319.99 street. THREE ASTERISKS, stated rather than hidden: (1) The 2016 figure is a manufacturer MSRP at announcement; the 2026 figure is a shelf price. Street prices fell inside 2016 too — TechRadar's review of the LG 55UH7700 quotes $999 against a $1,799 launch MSRP — so the true street-to-street fall is smaller than MSRP-to-street. (2) The 2026 set is BETTER, not merely cheaper (QLED, HDR10+/HLG, Google TV, higher brightness), so this understates the per-unit-quality collapse; the BLS constant-quality televisions index fell 67.1% over the same window. (3) TIER TRAP AVOIDED: the well-known Vizio E55-D0 is 1080p, NOT 4K — the 4K sibling is the E55u-D0 and it cost $130 more ($699.99 vs $569.99). Both figures appear in the same press release and in the artifact screenshot. A tier-matched premium check is carried as claims c3/c4 so the entry-tier headline cannot be read as cherry-picking.",
+  "spec_note": "Like-for-like is held on FOUR axes: 55-inch class \u00b7 3840x2160 (true 4K/UHD, not 1080p) \u00b7 LED-backlit LCD (no OLED on either side) \u00b7 mass-market brand's ENTRY 4K smart-TV line. 2016 anchor = VIZIO E55u-D0, the 55-inch Ultra HD model of VIZIO's cheapest 2016 SmartCast line, MSRP $699.99. 2026 anchor = TCL 55Q651G, the 55-inch model of TCL's cheapest current 4K line, $319.96-$319.99 street. THREE ASTERISKS, stated rather than hidden: (1) The 2016 figure is a manufacturer MSRP at announcement; the 2026 figure is a shelf price. Street prices fell inside 2016 too \u2014 TechRadar's review of the LG 55UH7700 quotes $999 against a $1,799 launch MSRP \u2014 so the true street-to-street fall is smaller than MSRP-to-street. (2) The 2026 set is BETTER, not merely cheaper (QLED, HDR10+/HLG, Google TV, higher brightness), so this understates the per-unit-quality collapse; the BLS constant-quality televisions index fell 67.1% over the same window. (3) TIER TRAP AVOIDED: the well-known Vizio E55-D0 is 1080p, NOT 4K \u2014 the 4K sibling is the E55u-D0 and it cost $130 more ($699.99 vs $569.99). Both figures appear in the same press release and in the artifact screenshot. A tier-matched premium check is carried as claims c3/c4 so the entry-tier headline cannot be read as cherry-picking.",
   "claims": [
     {
       "id": "c1-2016-entry-55in-4k",
@@ -19,7 +19,7 @@
           "publisher": "VIZIO, Inc. (manufacturer press release, distributed via PR Newswire)",
           "snapshot_date": "2016-04-19",
           "accessed": "2026-08-03",
-          "quote": "VIZIO SmartCast ™ 55\" E-Series ™ Ultra HD Home Theater Display ™ (E55u-D0) MSRP $699.99 — dateline: \"IRVINE, Calif., April 19, 2016 /PRNewswire/ -- VIZIO, Inc. announced today its all-new VIZIO SmartCast ™ E-Series ™ Home Theater Display ™ collection\". Same table, one line above: \"VIZIO SmartCast ™ 55\" E-Series ™ HDTV ™ (E55-D0) MSRP $569.99\" — the 1080p sibling."
+          "quote": "VIZIO SmartCast \u2122 55\" E-Series \u2122 Ultra HD Home Theater Display \u2122 (E55u-D0) MSRP $699.99 \u2014 dateline: \"IRVINE, Calif., April 19, 2016 /PRNewswire/ -- VIZIO, Inc. announced today its all-new VIZIO SmartCast \u2122 E-Series \u2122 Home Theater Display \u2122 collection\". Same table, one line above: \"VIZIO SmartCast \u2122 55\" E-Series \u2122 HDTV \u2122 (E55-D0) MSRP $569.99\" \u2014 the 1080p sibling."
         },
         {
           "url": "https://www.reviewed.com/televisions/news/vizio-debuts-2016-m-series-e-series-tvs-with-smartcast",
@@ -27,7 +27,7 @@
           "publisher": "Reviewed.com (contemporaneous journalism)",
           "snapshot_date": "2016-04-19",
           "accessed": "2026-08-03",
-          "quote": "Here's a full price breakdown for the 2016 E-Series: 1080P: ... • 55\" (E55-D0) — MSRP $569.99 / 4K UHD: ... • 55” (E55u-D0) — MSRP $699.99 (page datePublished 2016-04-19T13:00:00Z)"
+          "quote": "Here's a full price breakdown for the 2016 E-Series: 1080P: ... \u2022 55\" (E55-D0) \u2014 MSRP $569.99 / 4K UHD: ... \u2022 55\u201d (E55u-D0) \u2014 MSRP $699.99 (page datePublished 2016-04-19T13:00:00Z)"
         },
         {
           "url": "https://data.bls.gov/timeseries/CUUR0000SA0",
@@ -41,7 +41,7 @@
     },
     {
       "id": "c2-2026-entry-55in-4k",
-      "text": "On 3 August 2026 the TCL 55Q651G — a 55-inch 4K QLED Google TV, TCL's entry 4K line — sold for $319.96 at P.C. Richard & Son and $319.99 at TCL's own US store.",
+      "text": "On 3 August 2026 the TCL 55Q651G \u2014 a 55-inch 4K QLED Google TV, TCL's entry 4K line \u2014 sold for $319.96 at P.C. Richard & Son and $319.99 at TCL's own US store.",
       "value": 319.96,
       "currency": "USD",
       "year": 2026,
@@ -53,7 +53,7 @@
           "kind": "primary",
           "publisher": "P.C. Richard & Son (live retail listing)",
           "accessed": "2026-08-03",
-          "quote": "schema.org Product/Offer embedded in the page: {\"priceCurrency\":\"USD\",\"price\":\"319.96\",\"availability\":\"http://schema.org/InStock\",\"seller\":{\"name\":\"P.C. Richard & Son\"}}. On-page: \"TCL - 55\\\" Class Q-Series QLED 4K UHD Smart Google TV ... Panel Type: QLED · Display Resolution: 4K Ultra HD (2160p) · Screen Size Class: 55 Inch ... $319.96\". Analytics payload confirms item_id \"55Q651G\", price 319.96."
+          "quote": "schema.org Product/Offer embedded in the page: {\"priceCurrency\":\"USD\",\"price\":\"319.96\",\"availability\":\"http://schema.org/InStock\",\"seller\":{\"name\":\"P.C. Richard & Son\"}}. On-page: \"TCL - 55\\\" Class Q-Series QLED 4K UHD Smart Google TV ... Panel Type: QLED \u00b7 Display Resolution: 4K Ultra HD (2160p) \u00b7 Screen Size Class: 55 Inch ... $319.96\". Analytics payload confirms item_id \"55Q651G\", price 319.96."
         },
         {
           "url": "https://us.tcl.com/products/q-class-4k-uhd-hdr-qled-smart-tv-with-google-tv.json",
@@ -67,7 +67,7 @@
           "kind": "primary",
           "publisher": "Newegg.com (live retail listing, third independent seller, tier corroboration)",
           "accessed": "2026-08-03",
-          "quote": "\"Hisense 55QD65QF 55 inch Class QD6 Series 4K QLED Smart Fire TV — Model #: 55QD65QF — $299.99\" (new, not refurbished). Corroborates that the entry 55-inch 4K tier clears at roughly $300 on the same day."
+          "quote": "\"Hisense 55QD65QF 55 inch Class QD6 Series 4K QLED Smart Fire TV \u2014 Model #: 55QD65QF \u2014 $299.99\" (new, not refurbished). Corroborates that the entry 55-inch 4K tier clears at roughly $300 on the same day."
         }
       ]
     },
@@ -86,7 +86,7 @@
           "publisher": "LG Electronics USA (manufacturer press release PDF hosted on lg.com)",
           "snapshot_date": "2016-03-10",
           "accessed": "2026-08-03",
-          "quote": "\"ENGLEWOOD CLIFFS, N.J., March 10, 2016 – LG Electronics USA today announced pricing and availability for its 2016 ‘LG SUPER UHD TV’ series, the company's premium line of LED-backlit LCD 4K UHD TVs\" ... \"UH7700 - SUPER UHD TV o 55-inch class (54.6 inches diagonal) model 55UH7700: $1,799\" (also \"55-inch class ... model 55UH8500: $1,999\")."
+          "quote": "\"ENGLEWOOD CLIFFS, N.J., March 10, 2016 \u2013 LG Electronics USA today announced pricing and availability for its 2016 \u2018LG SUPER UHD TV\u2019 series, the company's premium line of LED-backlit LCD 4K UHD TVs\" ... \"UH7700 - SUPER UHD TV o 55-inch class (54.6 inches diagonal) model 55UH7700: $1,799\" (also \"55-inch class ... model 55UH8500: $1,999\")."
         },
         {
           "url": "https://www.digitaltrends.com/home-theater/lg-2016-super-uhd-4k-hdr-tv-lineup-pricing-availability/",
@@ -99,15 +99,15 @@
         {
           "url": "https://www.techradar.com/reviews/lg-55uh7700",
           "kind": "secondary",
-          "publisher": "TechRadar (review, price in body — recorded as the STREET-vs-MSRP asterisk, not as the MSRP)",
+          "publisher": "TechRadar (review, price in body \u2014 recorded as the STREET-vs-MSRP asterisk, not as the MSRP)",
           "accessed": "2026-08-03",
-          "quote": "\"It even looks like a good value at $999, too, considering it supports high dynamic range and native 4K playback.\" and \"As if the 55UH7700’s sub-$1,000 price, 4K and HDR features weren’t already attractive enough...\" — evidence that the 2016 street price fell well below the launch MSRP within the model year."
+          "quote": "\"It even looks like a good value at $999, too, considering it supports high dynamic range and native 4K playback.\" and \"As if the 55UH7700\u2019s sub-$1,000 price, 4K and HDR features weren\u2019t already attractive enough...\" \u2014 evidence that the 2016 street price fell well below the launch MSRP within the model year."
         }
       ]
     },
     {
       "id": "c4-2026-premium-55in-4k-led",
-      "text": "Tier-matched check, 2026 side: on 3 August 2026 Samsung's flagship 55-inch LED set, the Neo QLED QN55QN90F, listed at $1,297.99 — against $2,299 for Samsung's flagship flat 55-inch LED in 2016 (UN55KS9000).",
+      "text": "Tier-matched check, 2026 side: on 3 August 2026 Samsung's flagship 55-inch LED set, the Neo QLED QN55QN90F, listed at $1,297.99 \u2014 against $2,299 for Samsung's flagship flat 55-inch LED in 2016 (UN55KS9000).",
       "value": 1297.99,
       "currency": "USD",
       "year": 2026,
@@ -119,7 +119,7 @@
           "kind": "primary",
           "publisher": "Newegg.com (live retail listing)",
           "accessed": "2026-08-03",
-          "quote": "\"Samsung QN90F Neo QLED TV 55-Inch 4K Smart in Titan Black - QN55QN90FAFXZA — Model #: QN55QN90FAFXZA — $1,297.99 — More options from $1,197.99 - $1,887.99 — Free Shipping\" (new, not refurbished)."
+          "quote": "\"Samsung QN90F Neo QLED TV 55-Inch 4K Smart in Titan Black - QN55QN90FAFXZA \u2014 Model #: QN55QN90FAFXZA \u2014 $1,297.99 \u2014 More options from $1,197.99 - $1,887.99 \u2014 Free Shipping\" (new, not refurbished)."
         },
         {
           "url": "https://www.forbes.com/sites/johnarcher/2016/04/12/samsungs-2016-suhd-tv-line-up-details-with-prices/",
@@ -127,13 +127,13 @@
           "publisher": "Forbes / John Archer, 12 April 2016 (the 2016 comparison point in this claim)",
           "snapshot_date": "2016-04-12",
           "accessed": "2026-08-03",
-          "quote": "KS9000 series: \"Size options: 75-inch (June, $6,499), 65-inch (now, $3,499/£2,700), 55-inch ($2,299/£1,900). ... Resolution: 4K\". Same article: KS9500 55-inch $2,499; KS8500 55-inch $1,999; KS8000 55-inch $1,799."
+          "quote": "KS9000 series: \"Size options: 75-inch (June, $6,499), 65-inch (now, $3,499/\u00a32,700), 55-inch ($2,299/\u00a31,900). ... Resolution: 4K\". Same article: KS9500 55-inch $2,499; KS8500 55-inch $1,999; KS8000 55-inch $1,799."
         }
       ]
     },
     {
       "id": "c5-bls-constant-quality-televisions",
-      "text": "The official constant-quality benchmark: the BLS CPI televisions index fell from 283.408 in April 2016 to 93.176 in July 2026 — a 67.1% nominal fall, or 76.2% after general inflation.",
+      "text": "The official constant-quality benchmark: the BLS CPI televisions index fell from 283.408 in April 2016 to 93.176 in July 2026 \u2014 a 67.1% nominal fall, or 76.2% after general inflation.",
       "value": 93.176,
       "currency": "index",
       "year": 2026,
@@ -146,7 +146,7 @@
           "publisher": "U.S. Bureau of Labor Statistics, CPI for All Urban Consumers",
           "series_id": "CUUR0000SERA01",
           "accessed": "2026-08-03",
-          "quote": "\"Series Id: CUUR0000SERA01 · Not Seasonally Adjusted · Series Title: Televisions in U.S. city average, all urban consumers, not seasonally adjusted · Area: U.S. city average · Item: Televisions · Base Period: DECEMBER 2024=100 · Data extracted on: August 2, 2026\". Values read off the table: 2016 Jan 296.661, Apr 283.408, Nov 233.821, Dec 225.545; 2026 Jan 94.752, Jul 93.176. This is the HARDWARE item index, not the television-services index."
+          "quote": "\"Series Id: CUUR0000SERA01 \u00b7 Not Seasonally Adjusted \u00b7 Series Title: Televisions in U.S. city average, all urban consumers, not seasonally adjusted \u00b7 Area: U.S. city average \u00b7 Item: Televisions \u00b7 Base Period: DECEMBER 2024=100 \u00b7 Data extracted on: August 2, 2026\". Values read off the table: 2016 Jan 296.661, Apr 283.408, Nov 233.821, Dec 225.545; 2026 Jan 94.752, Jul 93.176. This is the HARDWARE item index, not the television-services index."
         },
         {
           "url": "https://data.bls.gov/timeseries/CUUR0000SA0",
@@ -154,7 +154,7 @@
           "publisher": "U.S. Bureau of Labor Statistics, CPI-U all items (deflator)",
           "series_id": "CUUR0000SA0",
           "accessed": "2026-08-03",
-          "quote": "\"Series Title: All items in U.S. city average, all urban consumers, not seasonally adjusted · Base Period: 1982-84=100\". 2016 Mar 238.132, Apr 239.261; 2026 Jul 330.724. Real television-index change = (93.176/283.408)/(330.724/239.261) - 1 = -76.2%."
+          "quote": "\"Series Title: All items in U.S. city average, all urban consumers, not seasonally adjusted \u00b7 Base Period: 1982-84=100\". 2016 Mar 238.132, Apr 239.261; 2026 Jul 330.724. Real television-index change = (93.176/283.408)/(330.724/239.261) - 1 = -76.2%."
         }
       ]
     }
@@ -166,7 +166,7 @@
       {
         "url": "https://www.sec.gov/Archives/edgar/data/1835591/000183559124000011/vzio-20231231.htm",
         "kind": "primary",
-        "publisher": "VIZIO Holding Corp., Form 10-K for FY2023, filed 2024-02-28 (SEC EDGAR) — the same manufacturer as the 2016 anchor set",
+        "publisher": "VIZIO Holding Corp., Form 10-K for FY2023, filed 2024-02-28 (SEC EDGAR) \u2014 the same manufacturer as the 2016 anchor set",
         "accessed": "2026-08-03",
         "quote": "\"Intense competition and expectations of growth in demand across the industry may cause media entertainment device companies or their suppliers to make additional investments in manufacturing capacity on similar schedules, resulting in a surge in production capacity. During these surges in capacity, retailers can exert strong downward pricing pressure, resulting in sharp declines in prices and significant fluctuations in Device gross margin.\" And: \"we rely on our third-party manufacturers to manage the prices paid for components used in our devices, especially key components such as LCD panels.\" And: \"The cost of the components used in our devices also tends to drop rapidly as volumes increase and technologies mature.\""
       },
@@ -175,33 +175,33 @@
         "kind": "secondary",
         "publisher": "TrendForce, 3 January 2024",
         "accessed": "2026-08-03",
-        "quote": "\"the massive expansion of Chinese panel production capacity and the resulting price competitiveness have led Korean panel makers to exit the supply chain under loss pressures, forcing Korean TV brands to pivot towards collaborations with other panel makers, including an increased reliance on Chinese panel makers.\" Same piece: \"the current surplus in TV panel production capacity, coupled with sluggish demand...\" and \"only Hisense and TCL—leveraging their cost advantages—have managed to defy this trend\"."
+        "quote": "\"the massive expansion of Chinese panel production capacity and the resulting price competitiveness have led Korean panel makers to exit the supply chain under loss pressures, forcing Korean TV brands to pivot towards collaborations with other panel makers, including an increased reliance on Chinese panel makers.\" Same piece: \"the current surplus in TV panel production capacity, coupled with sluggish demand...\" and \"only Hisense and TCL\u2014leveraging their cost advantages\u2014have managed to defy this trend\"."
       }
     ]
   },
   "secondary_causes": [
-    "Ad-subsidised smart-TV economics (mechanism: subsidy). VIZIO's FY2023 10-K reports 'Gross profit of $356.3 million, up 14%' and 'Platform+ gross profit of $364.9 million, up 23%' — Platform+ (advertising and data) gross profit EXCEEDS total company gross profit, so the device business contributed no gross profit at all that year. Runner-up cause: it explains why a TV can be priced below what the hardware alone would justify, but at roughly single-digit dollars per set it explains far less of the $380 delta than panel supply does. Source: https://www.sec.gov/Archives/edgar/data/1835591/000183559124000011/vzio-20231231.htm",
+    "Ad-subsidised smart-TV economics (mechanism: subsidy). VIZIO's FY2023 10-K reports 'Gross profit of $356.3 million, up 14%' and 'Platform+ gross profit of $364.9 million, up 23%' \u2014 Platform+ (advertising and data) gross profit EXCEEDS total company gross profit, so the device business contributed no gross profit at all that year. Runner-up cause: it explains why a TV can be priced below what the hardware alone would justify, but at roughly single-digit dollars per set it explains far less of the $380 delta than panel supply does. Source: https://www.sec.gov/Archives/edgar/data/1835591/000183559124000011/vzio-20231231.htm",
     "Brand mix shift toward vertically integrated low-cost makers. TrendForce (3 Jan 2024): Hisense and TCL 'leveraging their cost advantages' grew shipments over 10% to 13.8% and 12.9% share while premium-focused international brands declined. Source: https://www.trendforce.com/presscenter/news/20240103-11979.html",
     "Spec repositioning. 4K + HDR + smart platform was a premium specification in 2016 and is the floor specification in 2026, so a pure spec-match comparison overstates the tier-for-tier fall. This is why claims c3/c4 carry the premium tier separately.",
     "NOT USED, and deliberately so: tariffs. Section 301 and later US tariff rounds pushed in the OPPOSITE direction over this window. No tariff claim appears in this pack because none was verified here."
   ],
   "artifact": {
     "kind": "original-chart",
-    "path": "content/episodes/four-k-tv/assets/price-chart-2016-2026.png",
-    "description": "Original chart, built for this episode, that did not exist in retrievable form before it: eleven named 55-inch 4K models plotted on one axis — five 2016 sets from THREE independent sources (VIZIO press release, LG Electronics USA press release, Forbes) and six 2026 listings from FOUR independent sellers (Newegg, P.C. Richard & Son, us.tcl.com, vizio.com) — with every 2016 MSRP also drawn in July-2026 dollars using BLS CPI-U series CUUR0000SA0, and the BLS constant-quality televisions index CUUR0000SERA01 printed in the footer. No public source assembles the entry / mid / premium / flagship 55-inch price ladder for both years with per-point citations. Supporting provenance in the same folder: assets/2016-press-release.png (render of the captured VIZIO 19 Apr 2016 release body, showing the E55u-D0 $699.99 line directly above the 1080p E55-D0 $569.99 line) and assets/2016-press-release-lg.png (pixel render of pages 1 and 5 of LG's own 10 Mar 2016 pricing PDF). Chart source is checked in beside it as assets/price-chart-2016-2026.source.html so any figure can be re-derived. NOTE: a Wayback-Machine archived-retail-listing screenshot remains the preferred C1 artifact and is a PENDING UPGRADE — web.archive.org is blocked for this session at both the egress policy and the browser layer; record in docs/DECISIONS.md and re-run when it is allowlisted.",
+    "path": "assets/price-chart-2016-2026.png",
+    "description": "Original chart, built for this episode, that did not exist in retrievable form before it: eleven named 55-inch 4K models plotted on one axis \u2014 five 2016 sets from THREE independent sources (VIZIO press release, LG Electronics USA press release, Forbes) and six 2026 listings from FOUR independent sellers (Newegg, P.C. Richard & Son, us.tcl.com, vizio.com) \u2014 with every 2016 MSRP also drawn in July-2026 dollars using BLS CPI-U series CUUR0000SA0, and the BLS constant-quality televisions index CUUR0000SERA01 printed in the footer. No public source assembles the entry / mid / premium / flagship 55-inch price ladder for both years with per-point citations. Supporting provenance in the same folder: assets/2016-press-release.png (render of the captured VIZIO 19 Apr 2016 release body, showing the E55u-D0 $699.99 line directly above the 1080p E55-D0 $569.99 line) and assets/2016-press-release-lg.png (pixel render of pages 1 and 5 of LG's own 10 Mar 2016 pricing PDF). Chart source is checked in beside it as assets/price-chart-2016-2026.source.html so any figure can be re-derived. NOTE: a Wayback-Machine archived-retail-listing screenshot remains the preferred C1 artifact and is a PENDING UPGRADE \u2014 web.archive.org is blocked for this session at both the egress policy and the browser layer; record in docs/DECISIONS.md and re-run when it is allowlisted.",
     "source_url": "https://www.prnewswire.com/news-releases/vizio-smartcast-e-series-ultra-hd-home-theater-display-joins-next-generation-smart-entertainment-ecosystem-with-ultra-hd-picture-quality-300253366.html"
   },
   "footage_candidates": [
     {
       "url": "https://archive.org/details/QuickWalkThroughAnOldWarehousePackedWithElectronicEquipment",
       "license": "CC0 1.0 Universal (licenseurl on the item metadata: http://creativecommons.org/publicdomain/zero/1.0/)",
-      "note": "\"Warehouse of Old Electronics Equipment\" — handheld walkthrough of shelved consumer electronics. Ideal under the ARTIFACT and EXCAVATION beats. Files: nortex_walkthrough.mp4 / .ogv.",
+      "note": "\"Warehouse of Old Electronics Equipment\" \u2014 handheld walkthrough of shelved consumer electronics. Ideal under the ARTIFACT and EXCAVATION beats. Files: nortex_walkthrough.mp4 / .ogv.",
       "has_motion": true
     },
     {
       "url": "https://archive.org/details/tomorrow_television",
       "license": "Public domain (Prelinger Archives; licenseurl http://creativecommons.org/licenses/publicdomain/)",
-      "note": "\"Television Tomorrow\" — period television-industry film, TV sets and assembly imagery. Files: tomorrow_television.mp4, tomorrow_television_512kb.mp4.",
+      "note": "\"Television Tomorrow\" \u2014 period television-industry film, TV sets and assembly imagery. Files: tomorrow_television.mp4, tomorrow_television_512kb.mp4.",
       "has_motion": true
     },
     {
@@ -213,19 +213,19 @@
     {
       "url": "https://archive.org/details/HomeElec_2",
       "license": "Public domain (Prelinger Archives; licenseurl http://creativecommons.org/licenses/publicdomain/)",
-      "note": "\"The Home Electrical\" — domestic appliance/electrical-goods retail and living-room footage. Useful as the desaturated base layer under the 2016 number. Files: HomeElec_2.mp4, HomeElec_2_512kb.mp4.",
+      "note": "\"The Home Electrical\" \u2014 domestic appliance/electrical-goods retail and living-room footage. Useful as the desaturated base layer under the 2016 number. Files: HomeElec_2.mp4, HomeElec_2_512kb.mp4.",
       "has_motion": true
     },
     {
       "url": "https://archive.org/details/sharp_calculator",
       "license": "Public domain (Prelinger Archives; licenseurl http://creativecommons.org/licenses/publicdomain/)",
-      "note": "\"Sharp Calculator Commercial\" — period consumer-electronics advertising. Use only as a short texture cut; it is a calculator, not a TV, so do not let it read as a TV ad on screen.",
+      "note": "\"Sharp Calculator Commercial\" \u2014 period consumer-electronics advertising. Use only as a short texture cut; it is a calculator, not a TV, so do not let it read as a TV ad on screen.",
       "has_motion": true
     },
     {
       "url": "https://commons.wikimedia.org/wiki/File:Televisions_on_sale_20171227.jpg",
-      "license": "CC BY-SA 4.0 — attribution required: Santeri Viinamaki (User:Zunter). Read from the Commons imageinfo extmetadata: LicenseShortName \"CC BY-SA 4.0\".",
-      "note": "Still. A wall of flat-screen TVs for sale in a shop, dated 2017-12-27 — the closest genuinely period-accurate retail-shelf image found under an acceptable licence. Still image, so it needs a slow push/Ken Burns move; it is the only non-motion candidate here.",
+      "license": "CC BY-SA 4.0 \u2014 attribution required: Santeri Viinamaki (User:Zunter). Read from the Commons imageinfo extmetadata: LicenseShortName \"CC BY-SA 4.0\".",
+      "note": "Still. A wall of flat-screen TVs for sale in a shop, dated 2017-12-27 \u2014 the closest genuinely period-accurate retail-shelf image found under an acceptable licence. Still image, so it needs a slow push/Ken Burns move; it is the only non-motion candidate here.",
       "has_motion": false
     }
   ],
