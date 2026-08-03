@@ -1,0 +1,38 @@
+{
+  "chain": "wild-ch3",
+  "output": "out/wild-ch3.mp4",
+  "segments": [
+    "ch3s1",
+    "ch3s2",
+    "ch3s3"
+  ],
+  "handoff": {
+    "mode": "exact",
+    "overlap_frames": 1,
+    "ssim_min": 0.97
+  },
+  "joins": [
+    {
+      "join": "ch3s1\u2192ch3s2",
+      "ssim": 0.9965,
+      "ok": true
+    },
+    {
+      "join": "ch3s2\u2192ch3s3",
+      "ssim": 0.996,
+      "ok": true
+    }
+  ],
+  "duration_s": 30.0,
+  "expected_s": 30.0,
+  "duration_ok": true,
+  "seam_check": {
+    "join_times": [
+      10.0,
+      20.0
+    ],
+    "visible_seams": [],
+    "ok": true
+  },
+  "note": "picture only by design \u2014 audio is laid over the continuous shot at film level"
+}
