@@ -1,0 +1,538 @@
+{
+  "version": "1.0",
+  "style_playbook": "price-archaeology",
+  "scenes": [
+    {
+      "id": "s1",
+      "type": "broll",
+      "description": "ARTIFACT: A 55-inch 4K TV cost $967.58 in 2026 money. Base: Magicint1955.mp4 @168.0s",
+      "start_seconds": 0.0,
+      "end_seconds": 3.109,
+      "script_section_id": "ARTIFACT",
+      "framing": "9:16 cover, focus [0.5, 0.46]",
+      "movement": "push to 1.08",
+      "overlay_notes": "$967.58 [past/hero]; 55-inch 4K TV, 2016 \u2014 in 2026 dollars [data/body]; CITATION: VIZIO press release, 19 Apr 2016 ($699.99 MSRP, E55u-D0) x BLS CPI-U CUUR0000SA0, Apr 2016",
+      "shot_language": {
+        "shot_size": "medium_close",
+        "camera_movement": "dolly_in",
+        "lighting_key": "low_key",
+        "depth_of_field": "shallow",
+        "color_temperature": "neutral"
+      },
+      "shot_intent": "Open inside the artifact \u2014 a live picture inside a 1955 receiver \u2014 so the hero figure has an object to belong to, not a background.",
+      "narrative_role": "introduce_subject",
+      "information_role": "A 55-inch 4K TV cost $967.58 in 2026 money.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "grain",
+        "archive",
+        "desaturated"
+      ]
+    },
+    {
+      "id": "s2",
+      "type": "broll",
+      "description": "ARTIFACT: The 2016 anchor is a specific named model, not a category. Base: nortex_walkthrough.mp4 @345.0s",
+      "start_seconds": 3.109,
+      "end_seconds": 6.011,
+      "script_section_id": "ARTIFACT",
+      "framing": "9:16 cover, focus [0.5, 0.5]",
+      "movement": "push to 1.04",
+      "overlay_notes": "VIZIO SmartCast E-Series [data/body]; E55u-D0 \u00b7 55\" \u00b7 3840\u00d72160 \u00b7 entry 4K line [data/label]",
+      "shot_language": {
+        "shot_size": "wide",
+        "camera_movement": "handheld",
+        "lighting_key": "tungsten_warm",
+        "depth_of_field": "deep",
+        "color_temperature": "warm"
+      },
+      "shot_intent": "Handheld drift through packed electronics shelving establishes 'the market' as a physical place before any causal claim is made.",
+      "narrative_role": "establish_context",
+      "information_role": "The 2016 anchor is a specific named model, not a category.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "grain",
+        "handheld",
+        "gritty"
+      ]
+    },
+    {
+      "id": "s3",
+      "type": "broll",
+      "description": "ARTIFACT: The year being excavated is 2016. Base: Magicint1955.mp4 @172.0s",
+      "start_seconds": 6.011,
+      "end_seconds": 6.929,
+      "script_section_id": "ARTIFACT",
+      "framing": "9:16 cover, focus [0.5, 0.46]",
+      "movement": "push to 1.03",
+      "overlay_notes": "2016 [past/hero]",
+      "shot_language": {
+        "shot_size": "close_up",
+        "camera_movement": "zoom_in",
+        "lighting_key": "low_key",
+        "depth_of_field": "shallow",
+        "color_temperature": "neutral"
+      },
+      "shot_intent": "Shortest shot in the film \u2014 a 0.9s rhyme back to the opening receiver so the spoken year lands like a slug line.",
+      "narrative_role": "build_tension",
+      "information_role": "The year being excavated is 2016.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "grain",
+        "archive"
+      ]
+    },
+    {
+      "id": "s4",
+      "type": "broll",
+      "description": "ARTIFACT: Today's shelf looks nothing like the artifact; the number has not caught up yet. Base: televisions-on-sale-2017.jpg (still)",
+      "start_seconds": 6.929,
+      "end_seconds": 9.611,
+      "script_section_id": "ARTIFACT",
+      "framing": "9:16 cover, focus [0.3, 0.5]",
+      "movement": "push to 1.07",
+      "overlay_notes": "$967.58 [past/hero]; CITATION: Store photo: Santeri Viinam\u00e4ki / Wikimedia Commons, CC BY-SA 4.0, 27 Dec 2017 \u2014 in-frame t",
+      "shot_language": {
+        "shot_size": "wide",
+        "camera_movement": "dolly_in",
+        "lighting_key": "high_key",
+        "depth_of_field": "deep",
+        "color_temperature": "cool"
+      },
+      "shot_intent": "Cut the picture to a present-day retail wall while the number on top is still the 2016 one, so the image arrives at 'now' before the figure does.",
+      "narrative_role": "build_tension",
+      "information_role": "Today's shelf looks nothing like the artifact; the number has not caught up yet.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "clean",
+        "retail"
+      ]
+    },
+    {
+      "id": "s5",
+      "type": "broll",
+      "description": "GAP: $967.58 becomes $319.96 for the same size and resolution. Base: nortex_walkthrough.mp4 @321.0s",
+      "start_seconds": 9.611,
+      "end_seconds": 11.857,
+      "script_section_id": "GAP",
+      "framing": "9:16 cover, focus [0.5, 0.5]",
+      "movement": "push to 1.05",
+      "overlay_notes": "$319.96 [present/hero]; 2016 \u2192 2026 [data/label]; ODOMETER 967.58->319.96 800ms; CITATION: From: VIZIO press release 19 Apr 2016 ($699.99 MSRP) x BLS CPI-U CUUR0000SA0 = $967.58. To",
+      "shot_language": {
+        "shot_size": "medium_wide",
+        "camera_movement": "handheld",
+        "lighting_key": "tungsten_warm",
+        "depth_of_field": "deep",
+        "color_temperature": "warm"
+      },
+      "shot_intent": "Handheld drift under a rigid 800ms digit roll \u2014 the odometer needs something unsteady to be rigid against.",
+      "narrative_role": "deliver_payload",
+      "information_role": "$967.58 becomes $319.96 for the same size and resolution.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "handheld",
+        "grain"
+      ]
+    },
+    {
+      "id": "s6",
+      "type": "diagram",
+      "description": "GAP: Entry line to entry line, five 2016 sets against six 2026 listings. Base: price-chart-2016-2026.png (still)",
+      "start_seconds": 11.857,
+      "end_seconds": 13.424,
+      "script_section_id": "GAP",
+      "framing": "9:16 contain, focus centre",
+      "movement": "push to 1.05",
+      "overlay_notes": "entry line \u2192 entry line [data/body]; CITATION: Chart compiled by Price Archaeology from VIZIO PR 19 Apr 2016 \u00b7 LG Electronics USA PR 10 M",
+      "shot_language": {
+        "shot_size": "insert",
+        "camera_movement": "zoom_in",
+        "lighting_key": "high_key",
+        "depth_of_field": "deep",
+        "color_temperature": "cool"
+      },
+      "shot_intent": "Crop the chart to the two entry-tier bands so the frame shows exactly the comparison being spoken and no more.",
+      "narrative_role": "comparison",
+      "information_role": "Entry line to entry line, five 2016 sets against six 2026 listings.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "clean",
+        "data"
+      ]
+    },
+    {
+      "id": "s7",
+      "type": "broll",
+      "description": "EXCAVATION: What follows is documentary evidence. Base: sharp_calculator.mp4 @0.6s",
+      "start_seconds": 13.424,
+      "end_seconds": 14.213,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, focus [0.5, 0.5]",
+      "movement": "push to 1.04",
+      "overlay_notes": "the receipt [data/label]",
+      "shot_language": {
+        "shot_size": "extreme_close_up",
+        "camera_movement": "handheld",
+        "lighting_key": "natural",
+        "depth_of_field": "shallow",
+        "color_temperature": "warm"
+      },
+      "shot_intent": "0.789s texture beat on stacked paper \u2014 the word 'receipt' gets an object before the document arrives.",
+      "narrative_role": "transition",
+      "information_role": "What follows is documentary evidence.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "grain",
+        "tactile"
+      ]
+    },
+    {
+      "id": "s8",
+      "type": "broll",
+      "description": "EXCAVATION: The receipt is a VIZIO press release dated 19 April 2016. Base: 2016-press-release.png (still)",
+      "start_seconds": 14.213,
+      "end_seconds": 16.632,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, focus [0.5, 0.1]",
+      "movement": "push to 1.1",
+      "overlay_notes": "IRVINE, Calif., April 19, 2016 /PRNewswire/ [past/body]; CITATION: VIZIO, Inc. press release via PR Newswire, 19 Apr 2016 (captured 3 Aug 2026) \u2014 MSRP table ",
+      "shot_language": {
+        "shot_size": "medium",
+        "camera_movement": "dolly_in",
+        "lighting_key": "high_key",
+        "depth_of_field": "deep",
+        "color_temperature": "neutral"
+      },
+      "shot_intent": "Push into the dateline so the viewer reads the document's own date rather than being told it.",
+      "narrative_role": "evidence",
+      "information_role": "The receipt is a VIZIO press release dated 19 April 2016.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "clean",
+        "document"
+      ]
+    },
+    {
+      "id": "s9",
+      "type": "broll",
+      "description": "EXCAVATION: The E55u-D0 launched at $699.99, not the $569.99 1080p sibling. Base: 2016-press-release.png (still)",
+      "start_seconds": 16.632,
+      "end_seconds": 19.104,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, focus [0.5, 0.7]",
+      "movement": "push to 1.22 from 1.1",
+      "overlay_notes": "$699.99 [past/hero]; E55u-D0 \u00b7 MSRP at announcement [data/label]; CITATION: VIZIO press release, 19 Apr 2016: \"VIZIO SmartCast 55\" E-Series Ultra HD Home Theater Disp",
+      "shot_language": {
+        "shot_size": "insert",
+        "camera_movement": "dolly_in",
+        "lighting_key": "high_key",
+        "depth_of_field": "deep",
+        "color_temperature": "neutral"
+      },
+      "shot_intent": "Continue the same push down the same page into the MSRP table \u2014 one camera move on one artifact, not two slides.",
+      "narrative_role": "evidence",
+      "information_role": "The E55u-D0 launched at $699.99, not the $569.99 1080p sibling.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "clean",
+        "document"
+      ]
+    },
+    {
+      "id": "s10",
+      "type": "broll",
+      "description": "EXCAVATION: Panel makers built more capacity than the market bought. Base: tomorrow_television.mp4 @481.0s",
+      "start_seconds": 19.104,
+      "end_seconds": 21.555,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, focus [0.5, 0.5]",
+      "movement": "push to 1.06",
+      "overlay_notes": "more capacity than demand [data/body]",
+      "shot_language": {
+        "shot_size": "wide",
+        "camera_movement": "dolly_in",
+        "lighting_key": "tungsten_warm",
+        "depth_of_field": "deep",
+        "color_temperature": "warm"
+      },
+      "shot_intent": "The one cause gets the only real assembly-line footage in the film so the mechanism beat cannot be confused with the retail or archive beats.",
+      "narrative_role": "deliver_payload",
+      "information_role": "Panel makers built more capacity than the market bought.",
+      "hero_moment": true,
+      "texture_keywords": [
+        "grain",
+        "archive",
+        "industrial"
+      ]
+    },
+    {
+      "id": "s11",
+      "type": "broll",
+      "description": "EXCAVATION: VIZIO's own SEC filing names the surge in production capacity. Base: nortex_walkthrough.mp4 @129.0s",
+      "start_seconds": 21.555,
+      "end_seconds": 24.44,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, focus [0.5, 0.5]",
+      "movement": "push to 1.04",
+      "overlay_notes": "\"resulting in a surge in production capacity\" [data/body]; VIZIO Holding Corp. Form 10-K, FY2023 \u00b7 SEC EDGAR [data/label]",
+      "shot_language": {
+        "shot_size": "medium_wide",
+        "camera_movement": "handheld",
+        "lighting_key": "tungsten_warm",
+        "depth_of_field": "deep",
+        "color_temperature": "warm"
+      },
+      "shot_intent": "Densest stock in the walkthrough under a verbatim 10-K quote \u2014 the visual argument for glut sits beneath the legal one.",
+      "narrative_role": "evidence",
+      "information_role": "VIZIO's own SEC filing names the surge in production capacity.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "handheld",
+        "grain"
+      ]
+    },
+    {
+      "id": "s12",
+      "type": "broll",
+      "description": "EXCAVATION: The mechanism has a name: capacity surge. Base: nortex_walkthrough.mp4 @393.0s",
+      "start_seconds": 24.44,
+      "end_seconds": 25.564,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, focus [0.5, 0.5]",
+      "movement": "push to 1.03",
+      "overlay_notes": "capacity surge [data/body]",
+      "shot_language": {
+        "shot_size": "medium",
+        "camera_movement": "handheld",
+        "lighting_key": "tungsten_warm",
+        "depth_of_field": "medium",
+        "color_temperature": "warm"
+      },
+      "shot_intent": "1.1s snap cut on the fastest handheld in the source, against a two-word card.",
+      "narrative_role": "build_tension",
+      "information_role": "The mechanism has a name: capacity surge.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "handheld",
+        "gritty"
+      ]
+    },
+    {
+      "id": "s13",
+      "type": "broll",
+      "description": "EXCAVATION: Retailers convert the glut into shelf-price cuts. Base: televisions-on-sale-2017.jpg (still)",
+      "start_seconds": 25.564,
+      "end_seconds": 27.698,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, focus [0.52, 0.55]",
+      "movement": "push to 1.08",
+      "overlay_notes": "\"retailers can exert strong downward pricing pressure\" [data/body]; CITATION: Photo: Santeri Viinam\u00e4ki / Wikimedia Commons, CC BY-SA 4.0, 27 Dec 2017 \u2014 in-frame tags ar",
+      "shot_language": {
+        "shot_size": "wide",
+        "camera_movement": "zoom_in",
+        "lighting_key": "high_key",
+        "depth_of_field": "deep",
+        "color_temperature": "cool"
+      },
+      "shot_intent": "The only beat where a real retail shelf is itself the argument, under the 10-K's own words about retailer pricing pressure.",
+      "narrative_role": "evidence",
+      "information_role": "Retailers convert the glut into shelf-price cuts.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "clean",
+        "retail"
+      ]
+    },
+    {
+      "id": "s14",
+      "type": "broll",
+      "description": "EXCAVATION: Chinese panel capacity supplied the surge (TrendForce). Base: tomorrow_television.mp4 @421.0s",
+      "start_seconds": 27.698,
+      "end_seconds": 29.586,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, focus [0.5, 0.5]",
+      "movement": "push to 1.05",
+      "overlay_notes": "\"the massive expansion of Chinese panel production capacity\" [data/body]; TrendForce, 3 Jan 2024 [data/label]",
+      "shot_language": {
+        "shot_size": "extreme_close_up",
+        "camera_movement": "dolly_in",
+        "lighting_key": "low_key",
+        "depth_of_field": "shallow",
+        "color_temperature": "neutral"
+      },
+      "shot_intent": "Component fabrication in macro as texture under an attributed quote \u2014 the type states the source so the frame never implies the footage is the subject.",
+      "narrative_role": "evidence",
+      "information_role": "Chinese panel capacity supplied the surge (TrendForce).",
+      "hero_moment": false,
+      "texture_keywords": [
+        "grain",
+        "archive",
+        "tactile"
+      ]
+    },
+    {
+      "id": "s15",
+      "type": "broll",
+      "description": "EXCAVATION: The next figure is quality-adjusted, not a sticker price. Base: Magicint1955.mp4 @341.5s",
+      "start_seconds": 29.586,
+      "end_seconds": 31.155,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, focus [0.5, 0.45]",
+      "movement": "push to 1.06",
+      "overlay_notes": "constant quality [data/body]",
+      "shot_language": {
+        "shot_size": "close_up",
+        "camera_movement": "zoom_in",
+        "lighting_key": "low_key",
+        "depth_of_field": "shallow",
+        "color_temperature": "neutral"
+      },
+      "shot_intent": "A test pattern on a round CRT under the words 'constant quality' \u2014 the pun carries the pivot from cause to index.",
+      "narrative_role": "transition",
+      "information_role": "The next figure is quality-adjusted, not a sticker price.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "grain",
+        "archive"
+      ]
+    },
+    {
+      "id": "s16",
+      "type": "diagram",
+      "description": "EXCAVATION: Televisions fell 76.2% in real, constant-quality terms. Base: price-chart-2016-2026.png (still)",
+      "start_seconds": 31.155,
+      "end_seconds": 34.351,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 contain, focus centre",
+      "movement": "push to 1.14",
+      "overlay_notes": "\u221276.2% [data/hero]; televisions, constant quality \u00b7 BLS CUUR0000SERA01 \u00b7 Apr 2016 283.408 \u2192 Jul 2026 93.176 [data/label]; CITATION: BLS CPI-U CUUR0000SERA01 (televisions), Apr 2016 283.408 \u2192 Jul 2026 93.176, deflated by CU",
+      "shot_language": {
+        "shot_size": "insert",
+        "camera_movement": "zoom_in",
+        "lighting_key": "high_key",
+        "depth_of_field": "deep",
+        "color_temperature": "cool"
+      },
+      "shot_intent": "Slow push across the whole chart while the index figure counts in, so the number is read against the evidence that produced it.",
+      "narrative_role": "deliver_payload",
+      "information_role": "Televisions fell 76.2% in real, constant-quality terms.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "clean",
+        "data"
+      ]
+    },
+    {
+      "id": "s17",
+      "type": "broll",
+      "description": "VERDICT: The 2016 figure is a launch price. Base: 2016-press-release.png (still)",
+      "start_seconds": 34.351,
+      "end_seconds": 37.218,
+      "script_section_id": "VERDICT",
+      "framing": "9:16 cover, focus [0.5, 0.12]",
+      "movement": "push to 1.08",
+      "overlay_notes": "* [past/hero]; 2016 = manufacturer MSRP at announcement [past/body]; CITATION: VIZIO, Inc. press release via PR Newswire, 19 Apr 2016 (captured 3 Aug 2026) \u2014 MSRP table ",
+      "shot_language": {
+        "shot_size": "medium",
+        "camera_movement": "dolly_in",
+        "lighting_key": "high_key",
+        "depth_of_field": "deep",
+        "color_temperature": "neutral"
+      },
+      "shot_intent": "Return to the document for the concession, because the document is the concession: an announcement MSRP, not a till receipt.",
+      "narrative_role": "emotional_beat",
+      "information_role": "The 2016 figure is a launch price.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "clean",
+        "document"
+      ]
+    },
+    {
+      "id": "s18",
+      "type": "broll",
+      "description": "VERDICT: The 2026 figure is a live shelf price. Base: televisions-on-sale-2017.jpg (still)",
+      "start_seconds": 37.218,
+      "end_seconds": 39.789,
+      "script_section_id": "VERDICT",
+      "framing": "9:16 cover, focus [0.72, 0.5]",
+      "movement": "push to 1.06",
+      "overlay_notes": "2026 = live shelf price [present/body]; CITATION: Photo: Santeri Viinam\u00e4ki / Wikimedia Commons, CC BY-SA 4.0, 27 Dec 2017 \u2014 in-frame tags ar",
+      "shot_language": {
+        "shot_size": "medium_wide",
+        "camera_movement": "dolly_in",
+        "lighting_key": "high_key",
+        "depth_of_field": "deep",
+        "color_temperature": "cool"
+      },
+      "shot_intent": "The push stops dead on the first frame of the pause and the image freezes \u2014 the held frame the verdict slams onto.",
+      "narrative_role": "build_tension",
+      "information_role": "The 2026 figure is a live shelf price.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "clean",
+        "retail"
+      ]
+    },
+    {
+      "id": "s19",
+      "type": "diagram",
+      "description": "VERDICT: Verdict: STILL CHEAP \u2014 and the cheap set is QLED with HDR. Base: price-chart-2016-2026.png (still)",
+      "start_seconds": 39.789,
+      "end_seconds": 43.115,
+      "script_section_id": "VERDICT",
+      "framing": "9:16 contain, focus centre",
+      "movement": "push to 1.06",
+      "overlay_notes": "TCL 55Q651G \u00b7 QLED \u00b7 HDR10+ / HLG \u00b7 Google TV [present/body]; STAMP 'STILL CHEAP' 4deg @39.789; CITATION: TCL 55Q651G, P.C. Richard & Son, 3 Aug 2026, $319.96 (\"Panel Type: QLED \u00b7 Display Resoluti",
+      "shot_language": {
+        "shot_size": "insert",
+        "camera_movement": "zoom_in",
+        "lighting_key": "high_key",
+        "depth_of_field": "deep",
+        "color_temperature": "cool"
+      },
+      "shot_intent": "Stamp lands on frame 1194, the exact frame the voice says 'Still', over the cyan 2026 band and nothing else.",
+      "narrative_role": "resolution",
+      "information_role": "Verdict: STILL CHEAP \u2014 and the cheap set is QLED with HDR.",
+      "hero_moment": false,
+      "texture_keywords": [
+        "clean",
+        "data"
+      ]
+    },
+    {
+      "id": "s20",
+      "type": "broll",
+      "description": "HANDOFF: What did your first 4K TV cost? Base: Magicint1955.mp4 @426.0s",
+      "start_seconds": 43.115,
+      "end_seconds": 46.2,
+      "script_section_id": "HANDOFF",
+      "framing": "9:16 cover, focus [0.5, 0.45]",
+      "movement": "push to 1.07",
+      "overlay_notes": "What did your first 4K TV cost? [data/body]; @PriceArchaeology [data/label]",
+      "shot_language": {
+        "shot_size": "medium_close",
+        "camera_movement": "dolly_in",
+        "lighting_key": "natural",
+        "depth_of_field": "medium",
+        "color_temperature": "warm"
+      },
+      "shot_intent": "A set playing in someone's room is the right last image for a question about your first one.",
+      "narrative_role": "call_to_action",
+      "information_role": "What did your first 4K TV cost?",
+      "hero_moment": false,
+      "texture_keywords": [
+        "grain",
+        "archive"
+      ]
+    }
+  ],
+  "metadata": {
+    "slug": "four-k-tv",
+    "profile": "youtube_shorts",
+    "renderer": "remotion",
+    "fps": 30,
+    "companion_of": "scene_plan.json",
+    "note": "OpenMontage-schema view of scene_plan.json. scene_plan.json stays the contract for gate.py check C3 (shows_price/citation) and scripts/make_captions.py (beat windows); this file is what lib/slideshow_risk.py and the compose stage read. Same ids, same timecodes \u2014 regenerate both together or they drift."
+  }
+}

@@ -1,0 +1,106 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  :root{--past:#C8964B;--now:#00E5FF;--ground:#0A0A0A}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:#fff;
+       font-family:"DejaVu Sans","Liberation Sans",Arial,Helvetica,sans-serif;
+       -webkit-font-smoothing:antialiased;padding:44px 52px 34px}
+  h1{font-size:38px;margin:0 0 6px;letter-spacing:-.6px;font-weight:700}
+  h2{font-size:17px;margin:0 0 26px;font-weight:400;color:#9a9a9a;letter-spacing:.1px}
+  .legend{display:flex;gap:28px;margin:0 0 22px;font-size:14px;color:#bdbdbd}
+  .sw{display:inline-block;width:13px;height:13px;margin-right:8px;vertical-align:-1px}
+  .grp{font-size:13px;letter-spacing:2.2px;color:#7d7d7d;margin:22px 0 10px;text-transform:uppercase}
+  .row{display:grid;grid-template-columns:440px 1fr 120px;align-items:center;
+       gap:16px;margin-bottom:9px}
+  .lbl{font-size:15px;line-height:1.25}
+  .lbl b{font-weight:700}
+  .lbl span{display:block;font-size:11.5px;color:#8d8d8d;margin-top:2px;letter-spacing:.15px}
+  .barwrap{background:#171717;height:30px;position:relative}
+  .bar{height:30px}
+  .val{font-variant-numeric:tabular-nums;font-size:19px;text-align:right;font-weight:700}
+  .past .bar{background:var(--past)} .past .val{color:var(--past)}
+  .now .bar{background:var(--now)} .now .val{color:var(--now)}
+  .adj .bar{background:repeating-linear-gradient(135deg,#5c4622 0 7px,#3a2c15 7px 14px)}
+  .adj .val{color:#a98b57}
+  .axis{display:grid;grid-template-columns:440px 1fr 120px;gap:16px;
+        font-size:11px;color:#6a6a6a;margin-top:4px}
+  .ticks{display:flex;justify-content:space-between}
+  .foot{margin-top:26px;border-top:1px solid #262626;padding-top:16px;
+        font-size:12px;color:#8a8a8a;line-height:1.65}
+  .foot b{color:#c9c9c9}
+  .chip{display:inline-block;background:#141414;border:1px solid #2b2b2b;padding:2px 8px;
+        margin-right:7px;color:#adadad;font-size:11px}
+</style>
+<h1>A 55-inch 4K TV: 2016 vs 2026</h1>
+<h2>Named models, 55-inch class, 3840&times;2160. 2016 = manufacturer MSRP at announcement. 2026 = shelf price, all captured 3 Aug 2026. Nominal US dollars.</h2>
+
+<div class="legend">
+  <div><span class="sw" style="background:#C8964B"></span>2016 MSRP (nominal)</div>
+  <div><span class="sw" style="background:repeating-linear-gradient(135deg,#5c4622 0 4px,#3a2c15 4px 8px)"></span>2016 MSRP in July-2026 dollars (CPI-U)</div>
+  <div><span class="sw" style="background:#00E5FF"></span>2026 retail price</div>
+</div>
+
+<div class="grp">2016 &mdash; five 55&Prime; 4K sets, three independent sources</div>
+<div id="y2016"></div>
+
+<div class="grp">2026 &mdash; six 55&Prime; 4K listings, four independent sellers</div>
+<div id="y2026"></div>
+
+<div class="axis"><div></div><div class="ticks" id="ticks"></div><div></div></div>
+
+<div class="foot">
+  <b>Sources.</b>
+  <span class="chip">VIZIO, Inc. press release, 19 Apr 2016 (PR Newswire 300253366 &amp; 300253361)</span>
+  <span class="chip">LG Electronics USA press release, 10 Mar 2016 (lg.com PDF)</span>
+  <span class="chip">Forbes / John Archer, 12 Apr 2016 (Samsung 2016 SUHD prices)</span>
+  <span class="chip">Newegg.com</span>
+  <span class="chip">P.C. Richard &amp; Son</span>
+  <span class="chip">us.tcl.com</span>
+  <span class="chip">vizio.com</span>
+  <br>
+  <b>Inflation adjustment.</b> BLS CPI-U, series <b>CUUR0000SA0</b>, U.S. city average, not seasonally adjusted:
+  Apr 2016 = 239.261, Mar 2016 = 238.132, Jul 2026 = 330.724 (data extracted 2 Aug 2026).
+  <b>Quality-adjusted check.</b> BLS CPI series <b>CUUR0000SERA01</b> &ldquo;Televisions in U.S. city average&rdquo;:
+  283.408 (Apr 2016) &rarr; 93.176 (Jul 2026) = &minus;67.1%.
+  <br>
+  <b>Caveat.</b> 2016 figures are manufacturer MSRPs at announcement; street prices fell within 2016
+  (TechRadar priced the LG 55UH7700 at $999 in its review). 2026 figures are shelf prices, not MSRPs.
+  Compiled by Price Archaeology &mdash; trend-archaeologist, 3 Aug 2026. No figure on this chart is estimated.
+</div>
+
+<script>
+const MAX = 3300;
+const d2016 = [
+ {m:"VIZIO SmartCast 55&Prime; E-Series Ultra HD (E55u-D0)", s:"VIZIO press release, 19 Apr 2016 &middot; entry tier", v:699.99, adj:967.58},
+ {m:"VIZIO SmartCast 55&Prime; M-Series Ultra HD HDR (M55-D0)", s:"VIZIO press release, 19 Apr 2016 &middot; mid tier", v:999.99, adj:1382.26},
+ {m:"LG 55UH7700 SUPER UHD", s:"LG Electronics USA press release, 10 Mar 2016 &middot; premium LED", v:1799, adj:2498.50},
+ {m:"LG 55UH8500 SUPER UHD", s:"LG Electronics USA press release, 10 Mar 2016 &middot; premium LED", v:1999, adj:2776.26},
+ {m:"Samsung UN55KS9000 SUHD", s:"Forbes, 12 Apr 2016 &middot; flagship LED", v:2299, adj:3177.85}
+];
+const d2026 = [
+ {m:"Hisense 55QD65QF (QD6, 4K QLED Fire TV)", s:"Newegg.com, 3 Aug 2026 &middot; entry tier", v:299.99},
+ {m:"TCL 55Q651G (Q-Series 4K QLED Google TV)", s:"P.C. Richard &amp; Son, 3 Aug 2026 &middot; entry tier", v:319.96},
+ {m:"TCL 55Q651G (Q-Series 4K QLED Google TV)", s:"us.tcl.com official store, 3 Aug 2026 &middot; entry tier", v:319.99},
+ {m:"VIZIO V4K55M-0801 (55&Prime; 4K HDR Smart TV)", s:"vizio.com, 3 Aug 2026 &middot; mid tier", v:419.99},
+ {m:"Samsung QN55QN70F Neo QLED", s:"Newegg.com, 3 Aug 2026 &middot; upper-mid LED", v:897.99},
+ {m:"Samsung QN55QN90F Neo QLED", s:"Newegg.com, 3 Aug 2026 &middot; flagship LED", v:1297.99}
+];
+const money = n => "$" + n.toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:0});
+function row(o, cls, extra){
+  let h = `<div class="row ${cls}"><div class="lbl"><b>${o.m}</b><span>${o.s}</span></div>`;
+  h += `<div class="barwrap"><div class="bar" style="width:${(o.v/MAX*100).toFixed(2)}%"></div></div>`;
+  h += `<div class="val">${money(o.v)}</div></div>`;
+  if(extra && o.adj){
+    h += `<div class="row adj"><div class="lbl" style="color:#8a7350;font-size:12.5px;padding-left:18px">
+          &#8627; same MSRP in July-2026 dollars</div>`;
+    h += `<div class="barwrap"><div class="bar" style="width:${(o.adj/MAX*100).toFixed(2)}%"></div></div>`;
+    h += `<div class="val">${money(o.adj)}</div></div>`;
+  }
+  return h;
+}
+document.getElementById("y2016").innerHTML = d2016.map(o=>row(o,"past",true)).join("");
+document.getElementById("y2026").innerHTML = d2026.map(o=>row(o,"now",false)).join("");
+document.getElementById("ticks").innerHTML =
+  [0,500,1000,1500,2000,2500,3000].map(t=>`<span>$${t.toLocaleString()}</span>`).join("");
+</script>

@@ -1,0 +1,71 @@
+{
+  "slug": "four-k-tv",
+  "verdict": "FAIL",
+  "evaluated_at": "2026-08-03T01:54:33.262636+00:00",
+  "checks": [
+    {
+      "id": "C1",
+      "result": "FAIL",
+      "note": "original research artifact: original-chart \u2014 file not on disk"
+    },
+    {
+      "id": "C2",
+      "result": "PASS",
+      "note": "5 claims sourced"
+    },
+    {
+      "id": "C3",
+      "result": "PASS",
+      "note": "11 price scenes all cited"
+    },
+    {
+      "id": "C4",
+      "result": "FAIL",
+      "note": "unlicensed: ['2016-press-release-lg.png', '2016-press-release.png', 'price-chart-2016-2026.png', 'price-chart-2016-2026.source.html'] / disallowed: ['nortex_walkthrough.mp4', 'tomorrow_television.mp4', 'Magicint1955.mp4', 'HomeElec_2.mp4', 'sharp_calculator.mp4', 'televisions-on-sale-2017.jpg']"
+    },
+    {
+      "id": "C5",
+      "result": "FAIL",
+      "note": "ai_disclosure not set \u2014 required on every upload"
+    },
+    {
+      "id": "C6",
+      "result": "PASS",
+      "note": "0 published in trailing 24h (cap 2)"
+    },
+    {
+      "id": "C7",
+      "result": "PASS",
+      "note": "max structural similarity 4% vs _selftest"
+    },
+    {
+      "id": "C8",
+      "result": "PASS",
+      "note": "editorial bounds clean"
+    },
+    {
+      "id": "C9",
+      "result": "FAIL",
+      "note": "no render at out/four-k-tv.mp4 (or ffprobe unavailable)"
+    },
+    {
+      "id": "C10",
+      "result": "FAIL",
+      "note": "upload privacy must be 'private' \u2014 a human flips it public"
+    }
+  ],
+  "blocking": [
+    "C1",
+    "C4",
+    "C5",
+    "C9",
+    "C10"
+  ],
+  "owner_to_fix": {
+    "C1": "trend-archaeologist",
+    "C4": "archive-sourcer",
+    "C5": "seo-packager",
+    "C9": "post-supervisor",
+    "C10": "seo-packager"
+  }
+}
