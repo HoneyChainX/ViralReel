@@ -1,7 +1,7 @@
 {
   "slug": "four-k-tv",
   "verdict": "PASS",
-  "evaluated_at": "2026-08-03T02:08:26.154670+00:00",
+  "evaluated_at": "2026-08-03T11:41:35.371934+00:00",
   "checks": [
     {
       "id": "C1",
@@ -16,12 +16,12 @@
     {
       "id": "C3",
       "result": "PASS",
-      "note": "11 price scenes all cited"
+      "note": "6 price scenes all cited"
     },
     {
       "id": "C4",
       "result": "PASS",
-      "note": "9 assets licensed"
+      "note": "38 assets licensed"
     },
     {
       "id": "C5",
