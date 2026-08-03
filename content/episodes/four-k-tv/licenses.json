@@ -1,0 +1,44 @@
+[
+  {
+    "file": "assets/nortex_walkthrough.mp4",
+    "source_url": "https://archive.org/details/QuickWalkThroughAnOldWarehousePackedWithElectronicEquipment",
+    "license": "CC0 1.0 Universal (Public Domain Dedication)",
+    "attribution": "Archive.org, CC0 1.0 — no attribution legally required; credited as \"Warehouse of Old Electronics Equipment\" / Archive.org",
+    "used_for": "TBD scene plan — excavation/artifact beat, handheld walkthrough of shelved consumer electronics (verified: item metadata licenseurl = http://creativecommons.org/publicdomain/zero/1.0/; downloaded derivative nortex_walkthrough.mp4, h.264, 640x480, 570.98s, matches archive.org file listing)"
+  },
+  {
+    "file": "assets/tomorrow_television.mp4",
+    "source_url": "https://archive.org/details/tomorrow_television",
+    "license": "Public Domain (Prelinger Archives)",
+    "attribution": "Prelinger Archives / Archive.org, Public Domain — \"Television Tomorrow\"",
+    "used_for": "TBD scene plan — period television-industry film, TV sets and assembly imagery, technology/manufacturing beat (verified: item metadata licenseurl = http://creativecommons.org/licenses/publicdomain/; downloaded derivative tomorrow_television.mp4, h.264, 640x480, 736.82s, byte size matches archive.org file listing exactly: 76485369)"
+  },
+  {
+    "file": "assets/Magicint1955.mp4",
+    "source_url": "https://archive.org/details/Magicint1955",
+    "license": "Public Domain (Prelinger Archives)",
+    "attribution": "Prelinger Archives / Archive.org, Public Domain — \"Magic in the Air\" (1955)",
+    "used_for": "TBD scene plan — manufacturing/technology cutaway, introduces television and early TV technology (verified: item metadata licenseurl = http://creativecommons.org/licenses/publicdomain/; downloaded derivative Magicint1955.mp4, h.264, 640x480, 492.66s, byte size matches archive.org file listing exactly: 51274796)"
+  },
+  {
+    "file": "assets/HomeElec_2.mp4",
+    "source_url": "https://archive.org/details/HomeElec_2",
+    "license": "Public Domain (Prelinger Archives)",
+    "attribution": "Prelinger Archives / Archive.org, Public Domain — \"The Home Electrical\"",
+    "used_for": "TBD scene plan — domestic appliance/electrical-goods retail and living-room footage, desaturated base layer under the 2016 number (verified: item metadata licenseurl = http://creativecommons.org/licenses/publicdomain/; downloaded derivative HomeElec_2.mp4, h.264, 640x480, 683.02s, byte size matches archive.org file listing exactly: 71138473)"
+  },
+  {
+    "file": "assets/sharp_calculator.mp4",
+    "source_url": "https://archive.org/details/sharp_calculator",
+    "license": "Public Domain (Prelinger Archives)",
+    "attribution": "Prelinger Archives / Archive.org, Public Domain — \"Sharp Calculator Commercial\"",
+    "used_for": "TBD scene plan — SHORT TEXTURE CUTAWAY ONLY (period consumer-electronics advertising); it is a calculator, not a TV — must not be presented on screen as a TV ad (verified: item metadata licenseurl = http://creativecommons.org/licenses/publicdomain/; downloaded derivative sharp_calculator.mp4, h.264, 640x480, 61.03s, byte size matches archive.org file listing exactly: 6327090)"
+  },
+  {
+    "file": "assets/televisions-on-sale-2017.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Televisions_on_sale_20171227.jpg",
+    "license": "CC BY-SA 4.0",
+    "attribution": "Santeri Viinamäki (User:Zunter) / Wikimedia Commons, CC BY-SA 4.0",
+    "used_for": "TBD scene plan — still cutaway, wall of flat-screen TVs for sale in a shop, dated 2017-12-27, closest genuinely period-accurate retail-shelf image found; STILL IMAGE, needs a slow push/Ken Burns move to avoid slideshow-risk flag (verified via Commons API imageinfo/extmetadata: LicenseShortName=\"CC BY-SA 4.0\", Artist=Santeri Viinamäki; downloaded full resolution 4592x3448 JPEG from upload.wikimedia.org)"
+  }
+]

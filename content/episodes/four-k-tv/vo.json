@@ -1,0 +1,45 @@
+{
+  "provider": "piper",
+  "voice_model": "en_US-amy-medium",
+  "draft": true,
+  "duration_sec": 45.19,
+  "note": "ElevenLabs regeneration pending founder key. FALLBACK ENGAGED per docs/DECISIONS.md D7: ELEVENLABS_API_KEY absent in this environment, so this VO was synthesized with Piper TTS (female en_US voice, closest available to Profile A) instead of the cast ElevenLabs voice. This is a PIPER DRAFT and must be regenerated with the cast ElevenLabs voice before upload if the founder chooses.",
+  "settings": {
+    "length_scale": 0.72,
+    "sentence_silence_default": true,
+    "pause_marks_synthesized_as_silence_sec": 0.7,
+    "pause_count": 2
+  },
+  "source": {
+    "model_url": "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/amy/medium/en_US-amy-medium.onnx",
+    "config_url": "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/amy/medium/en_US-amy-medium.onnx.json",
+    "local_files": [
+      "en_US-amy-medium.onnx",
+      "en_US-amy-medium.onnx.json"
+    ]
+  },
+  "loudness": {
+    "target_lufs": -16,
+    "measured_input_i_lufs": -16.23,
+    "max_volume_dbfs": -1.2
+  },
+  "segments": [
+    {
+      "id": "a",
+      "text": "Nine sixty-seven fifty-eight dollars, in today's money. That's VIZIO's cheapest fifty-five-inch four-K TV, twenty sixteen. It's three nineteen ninety-six now.",
+      "duration_sec": 8.90
+    },
+    {"type": "pause", "duration_sec": 0.7},
+    {
+      "id": "b",
+      "text": "Same size. Same resolution. Entry line to entry line. The receipt: VIZIO's own press release, April nineteenth. Six ninety-nine ninety-nine, MSRP. Panel makers built more capacity than the market bought. VIZIO's SEC filing names the mechanism: a capacity surge. Then retailers force prices down. Chinese fabs supplied that surge. Constant quality, BLS: televisions down seventy-six point two percent after inflation. One asterisk: twenty sixteen is a launch price, today's a shelf price. Verdict:",
+      "duration_sec": 29.48
+    },
+    {"type": "pause", "duration_sec": 0.7},
+    {
+      "id": "c",
+      "text": "Still cheap. And today's set is QLED, with HDR. What did your first four-K TV cost?",
+      "duration_sec": 5.41
+    }
+  ]
+}
