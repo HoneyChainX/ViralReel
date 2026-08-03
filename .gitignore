@@ -35,3 +35,7 @@ node_modules/
 
 # Ralph loop runtime transcripts — machine-local, never committed (ralph/README.md)
 ralph/logs/
+
+# Cloned vendor dependencies — installed by scripts/setup.sh and scripts/studio/install.sh, never committed
+vendor/
+out/
