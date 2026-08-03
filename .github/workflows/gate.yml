@@ -98,10 +98,16 @@ jobs:
         run: |
           python3 - <<'PY'
           import pathlib, re, sys
-          KEYS = ["ELEVENLABS_API_KEY", "FAL_KEY", "RUNWAY_API_KEY", "KLING_API_KEY",
-                  "XAI_API_KEY", "SUNO_API_KEY", "ATLASCLOUD_API_KEY", "HEYGEN_API_KEY",
-                  "OPENAI_API_KEY", "GEMINI_API_KEY", "YOUTUBE_CLIENT_SECRET",
-                  "YOUTUBE_REFRESH_TOKEN"]
+          # Expanded after auditing what the vendor code actually reads — the
+          # original 8 missed 11+ live paid aliases (FAL_AI_API_KEY verified at
+          # vendor tools/video/_shared.py:422). Mirror of scripts/doctor.sh PAID.
+          KEYS = ["ELEVENLABS_API_KEY", "FAL_KEY", "FAL_AI_API_KEY", "RUNWAY_API_KEY",
+                  "KLING_API_KEY", "XAI_API_KEY", "SUNO_API_KEY", "ATLASCLOUD_API_KEY",
+                  "HEYGEN_API_KEY", "OPENAI_API_KEY", "GEMINI_API_KEY", "GOOGLE_API_KEY",
+                  "REPLICATE_API_TOKEN", "HIGGSFIELD_API_KEY", "HIGGSFIELD_API_SECRET",
+                  "HIGGSFIELD_KEY", "DASHSCOPE_API_KEY", "DOUBAO_SPEECH_API_KEY",
+                  "VOLC_ACCESSKEY", "VOLC_SECRETKEY", "AZURE_SPEECH_KEY",
+                  "YOUTUBE_CLIENT_SECRET", "YOUTUBE_REFRESH_TOKEN"]
           # A value is a non-comment, non-empty token. Docs legitimately write
           # `KEY=            # explanation`, which is an empty key, not a leak.
           pat = re.compile(r"^(%s)=[ \t]*([^\s#]\S*)" % "|".join(KEYS), re.M)
@@ -154,4 +160,13 @@ jobs:
             || { echo "::error::image_generative_expand must stay disabled — it fabricates archival evidence"; exit 1; }
           grep -q 'stock_enabled: false' config/channel.yaml \
             || { echo "::error::Adobe Stock must stay opt-in — it consumes credits and must never pass as period material"; exit 1; }
+          # Music generation bills against the ElevenLabs sub with no cap — forbidden.
+          grep -q 'generation: forbidden' config/channel.yaml \
+            || { echo "::error::music generation must stay forbidden (Fable-5 review, S4)"; exit 1; }
+          # C7 threshold is measured (legit 0.216 / noun-swap 0.762). Raising it back
+          # toward 0.70 re-opens the evasion margin — do it only as a documented decision.
+          grep -q 'template_similarity_max: 0.50' config/channel.yaml \
+            || { echo "::error::C7 threshold changed from the measured 0.50 — see docs/DECISIONS.md"; exit 1; }
+          grep -q 'template_similarity_max.: 0.50' scripts/gate.py \
+            || { echo "::error::gate.py C7 threshold out of sync with config/channel.yaml"; exit 1; }
           echo "ok compliance defaults intact"

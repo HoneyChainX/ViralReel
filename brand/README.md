@@ -139,18 +139,23 @@ crisp digit, and only a price in motion is allowed to smear.
 founder's Creative Cloud plan; entitlement verified per weight against this account
 (`Regular`, `Semibold`, `Bold`, `Black`, `AcuminProCond-Bold` — all `available: true`).
 
-Chosen for **true tabular lining figures**, which is a functional requirement here rather than a
-preference: `<PriceOdometer>` rolls digits for 800ms, and proportional figures shift column width
-mid-roll, so the number jitters through the channel's signature motion.
+Chosen for true tabular lining figures — with a correction from the Fable-5 review (B1a): tnum is
+**not** what keeps the odometer roll stable. The DigitWheels are fixed-width slots, so the roll
+is stable in any font. Tabular figures earn their keep *at rest* — letterfit and consistency
+across captions, citation chips and multi-figure frames. Still required; for the true reason.
 
-The concern this placeholder originally raised — *"a webfont URL is a network call inside a
-pipeline that runs offline"* — was correct and still stands, so the two surfaces load differently:
+**Platform constraint (review B1b — a reversal of the original loading plan):** the Creative
+Cloud desktop app does not exist for Linux, so on a Linux render host Acumin **cannot be synced**
+and every render silently falls back to Liberation Sans. That fallback is typographically safe
+(digit widths measured uniform in both weights, no serif degrade) but it is a different face.
 
-- **Remotion render:** sync Acumin Pro locally through the Creative Cloud desktop app. No network
-  call in the render path. A font that fails to load mid-render produces a silently wrong video,
-  not an error, which is the failure this avoids.
+- **Render in Acumin** → a CC-synced macOS/Windows machine, or separately licensed OTFs installed
+  into fontconfig on Linux. `scripts/doctor.sh` reports which state the host is in — the failure
+  this guards against is *silent*, not loud.
+- **Render on Linux without those** → Liberation Sans ships, deliberately and loudly. The founder
+  decides whether that's acceptable per batch (`docs/DECISIONS.md`).
 - **HTML / Express:** Typekit kit `meo1cll` — `<link rel="stylesheet" href="https://use.typekit.net/meo1cll.css">`,
-  families `acumin-pro` and `acumin-pro-condensed`.
+  families `acumin-pro` and `acumin-pro-condensed`. Never in the render path.
 
 `--pa-font-grotesque` lists the kit name, then the installed name, then real OS grotesques, so it
 degrades to something correct rather than to a serif. Full reasoning: `docs/09-adobe-connectors.md`.

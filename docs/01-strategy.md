@@ -67,6 +67,15 @@ sequencing, air fryers, and 3D printers have all genuinely collapsed in price si
 episodes end on "this is the cheapest this has ever been, here's the current one" — which is a
 recommendation the viewer *asked for* by watching, not an ad bolted onto a rant.
 
+**Counting rule (added after review M1):** the 40% quota counts only episodes whose brief says
+**Affiliate: yes** with no hedge. A "cautiously" (solar) or category-restricted (genome) brief
+is a STILL CHEAP *story* but not an affiliate *slot* — the launch slate's effective affiliate
+share was 2/10 while claiming 40%, which is exactly the drift this rule exists to catch.
+`growth-analyst` reports the **view-weighted** affiliate-eligible share, since slate-share and
+view-share will diverge. The slate also keeps a category-depth ledger
+(`content/episodes/SLATE.md`): when unaired affiliate-grade categories drop below 26 weeks of
+runway, finding more becomes a strategy-lead priority, not a nice-to-have.
+
 The rage episodes subsidize reach. The cheap episodes convert it. Neither works alone.
 
 ### Revenue ladder
@@ -74,10 +83,14 @@ The rage episodes subsidize reach. The cheap episodes convert it. Neither works 
 1. **Months 1–3 — none.** Build the archive and the format. Do not monetize a channel with no
    retention data; you will optimize for the wrong thing.
 2. **Months 3–6 — YouTube Shopping affiliate** on STILL CHEAP episodes only. Requires 10k subs.
-3. **Months 6–12 — the data product.** By month 6 the studio has a proprietary, sourced database
-   of hundreds of verified 2016↔2026 price pairs. That asset is worth more than the channel:
-   newsletter, licensed chart pack, press citations. Journalists will cite a sourced price
-   database; they will not cite a Shorts channel.
+3. **The data product — split in two after review (docs/DECISIONS.md D6):**
+   - **3a, from ~month 2 — the free public index.** A read-only page of *already-aired* price
+     pairs (they were on screen; publishing them leaks nothing), on the connected Cloudflare
+     free tier, with email capture. This is the off-platform hedge against R1 — the moat is
+     worthless as a hedge while it sits private — and it's what a journalist can actually cite.
+   - **3b, months 6–12 — paid products.** Newsletter, licensed chart pack. Unchanged. By then
+     the database holds hundreds of verified pairs, and journalists cite a sourced price
+     database; they will not cite a Shorts channel.
 4. **Month 12+ — long-form.** Long-form earns roughly **20× per view** what Shorts do. Shorts are
    the top of the funnel, not the destination. "The 2016 Grocery Cart" as a 12-minute video is
    the actual business.
@@ -105,7 +118,7 @@ opens a chatbot to feel something about a price. Design to that and the threat n
 
 | # | Risk | Severity | Mitigation |
 |---|---|---|---|
-| R1 | **Inauthentic Content Policy strike** — channel-level judgement on mass-production | **Fatal** | Hard compliance gate; original research artifact required per video; publish cap of 2/day enforced in config; no template-only episodes. See `docs/05-compliance.md` |
+| R1 | **Inauthentic Content Policy strike** — channel-level judgement on mass-production | **Fatal** | Hard compliance gate; original research artifact required per video; publish cap of 2/day enforced in config; no template-only episodes; **off-platform database + email list live by month 3** (docs/DECISIONS.md D6) so a strike costs distribution, not the asset. See `docs/05-compliance.md` |
 | R2 | **A wrong price number** — one bad figure destroys a provenance-based brand | **Fatal** | Two-source rule; `compliance-officer` veto; on-screen citations; public corrections log |
 | R3 | Nostalgia wave decays | High | The format's spine is *price*, not 2016. The anchor year is a config value — it can slide to a rolling 10-year window without touching the pipeline |
 | R4 | Weak purchase intent | High | 40% STILL CHEAP quota, enforced in `config/channel.yaml` |

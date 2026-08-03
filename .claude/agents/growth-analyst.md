@@ -37,6 +37,18 @@ Report retention *and* revenue proxy per segment. The likely finding is that THE
 reach while STILL CHEAP wins on revenue per view. When that's true, say it plainly — it is the
 evidence that justifies the 40% quota against the temptation to chase reach.
 
+Always include the **view-weighted affiliate-eligible share**: the % of total views landing on
+unhedged Affiliate-yes episodes (the strategy's counting rule, docs/01 §3). Slate-share and
+view-share will diverge — rage travels further than delight — and the view-weighted number is
+the one the revenue model actually runs on. If it trends toward zero while slate-share holds
+40%, say so loudly; that is the monetization thesis failing quietly.
+
+## Data source in manual-first mode
+Until the Analytics API is wired (phase 2), your input is the weekly table produced by
+`handoffs/collect-analytics.md` — retention read at 3s/8s/26s/36s, which maps 1:1 onto the beat
+boundaries. Treat hover-read values as ±2-3 points of noise; do not over-interpret single-video
+wiggles at that precision.
+
 ## Discipline
 - **Never** recommend a change from a single episode. Minimum 5 episodes in a segment before
   you attribute anything to the format rather than to the topic.

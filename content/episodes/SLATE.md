@@ -33,6 +33,28 @@ The verification checklist on each brief tells the researcher exactly where to l
 Reserves, if any of the above fails research: LED bulbs, air fryers, 3D printers, the headphone
 jack, unlimited data, a college textbook, home internet speed per dollar.
 
+### Affiliate reality check (added after review M1)
+
+Under the strategy's counting rule — only unhedged **Affiliate: yes** briefs count — this slate's
+effective affiliate share is **2/10** (001 four-k-tv, 003 ssd), not the 40% the segment shares
+suggest: 006 solar is hedged ("cautiously") and 008 genome is category-restricted. That is
+acceptable for a launch slate whose first job is format-proof, but slate v2 (episodes 011–020)
+must close the gap using the affiliate-grade reserves: **LED bulbs, air fryers, 3D printers**
+are clean Affiliate-yes candidates.
+
+### Category-depth ledger
+
+Affiliate-grade categories with a genuine, verifiable post-2016 price collapse:
+TVs · SSDs/storage · LED lighting · air fryers · 3D printers · robot vacuums · dash cams ·
+wireless earbuds (tier-adjusted) · power stations · mechanical keyboards · monitors ·
+USB-C accessories · e-readers (used market) · home NAS drives · action cams · smart plugs ·
+soldering/maker tools · bike lights · projectors (budget tier) · SD cards.
+
+~20 identified ≈ 50 weeks at 40% of a daily slate before repetition. **Trigger:** when unaired
+categories here fall below **26 weeks of runway**, replenishing this list becomes a
+strategy-lead priority (docs/01-strategy.md §3). Ledger updates when an episode airs or a
+category dies in research.
+
 ---
 
 ## 001 · `four-k-tv` — 🟢 STILL CHEAP

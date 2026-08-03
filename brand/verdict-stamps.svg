@@ -46,7 +46,7 @@
       <rect x="-226" y="-70" width="452" height="140" stroke-width="3"/>
       <text x="0" y="31" fill="#C8964B" stroke="none" text-anchor="middle"
             font-family="acumin-pro, Acumin Pro, Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
-            font-weight="900" font-size="88" letter-spacing="8">RIPOFF</text>
+            font-weight="900" font-size="88" letter-spacing="7.04">RIPOFF</text>
     </g>
 
     <!-- STILL CHEAP — 760 × 168 -->
@@ -55,7 +55,7 @@
       <rect x="-366" y="-70" width="732" height="140" stroke-width="3"/>
       <text x="0" y="31" fill="#00E5FF" stroke="none" text-anchor="middle"
             font-family="acumin-pro, Acumin Pro, Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
-            font-weight="900" font-size="88" letter-spacing="8">STILL CHEAP</text>
+            font-weight="900" font-size="88" letter-spacing="7.04">STILL CHEAP</text>
     </g>
 
     <!-- EXTINCT — 545 × 168 -->
@@ -64,7 +64,7 @@
       <rect x="-258.5" y="-70" width="517" height="140" stroke-width="3"/>
       <text x="0" y="31" fill="#848484" stroke="none" text-anchor="middle"
             font-family="acumin-pro, Acumin Pro, Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
-            font-weight="900" font-size="88" letter-spacing="8">EXTINCT</text>
+            font-weight="900" font-size="88" letter-spacing="7.04">EXTINCT</text>
     </g>
 
     <!-- FAIR — 360 × 168. Conceding is a feature; this stamp gets used. -->
@@ -73,7 +73,7 @@
       <rect x="-166" y="-70" width="332" height="140" stroke-width="3"/>
       <text x="0" y="31" fill="#FFFFFF" stroke="none" text-anchor="middle"
             font-family="acumin-pro, Acumin Pro, Helvetica Neue, Helvetica, Arial, Liberation Sans, Nimbus Sans, system-ui, sans-serif"
-            font-weight="900" font-size="88" letter-spacing="8">FAIR</text>
+            font-weight="900" font-size="88" letter-spacing="7.04">FAIR</text>
     </g>
   </defs>
 

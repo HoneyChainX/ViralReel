@@ -28,11 +28,18 @@ family**, because there was no licensed one to name. `brand/tokens.css` carried 
 **Resolved: Acumin Pro.** Entitlement verified per-weight against this account — `Regular`,
 `Semibold`, `Bold`, `Black`, and `AcuminProCond-Bold` all returned `available: true`.
 
-The deciding factor was not taste. Acumin ships **true tabular lining figures**.
-`<PriceOdometer>` rolls digits for 800ms; on proportional figures the column widths shift
-mid-roll and the number visibly jitters. That roll is the channel's signature motion, so a
-family without `tnum` is unusable here regardless of how it looks standing still. Archivo, IBM
-Plex Sans and Roboto Mono are all entitled and were all viable; Acumin won on figure quality.
+The deciding factor was figure quality — with a correction recorded after the Fable-5 review
+(B1a): tabular figures do **not** gate the odometer roll, whose DigitWheels are fixed-width
+slots and stable in any font. `tnum` matters *at rest* — letterfit and consistency across
+captions, citation chips and multi-figure frames. The requirement stands, for the true reason.
+Archivo, IBM Plex Sans and Roboto Mono are all entitled and were all viable.
+
+> **Platform constraint (B1b — reversal).** Adobe ships no CC desktop app for Linux, so on a
+> Linux render host Acumin cannot be synced and renders fall back to Liberation Sans (measured:
+> uniform digit widths in both weights — safe, but a different face). Shipping renders in Acumin
+> requires a CC-synced macOS/Windows machine, or separately licensed OTFs in fontconfig on
+> Linux. `scripts/doctor.sh` reports the host's actual state; the original "sync locally" plan
+> assumed a desktop OS and was wrong for the machine that actually renders.
 
 > Inter is also entitled but was skipped: its lookup resolved to the PostScript name
 > `Sinter-Bold`, which doesn't match the family and wasn't worth trusting unverified.

@@ -104,8 +104,26 @@ publishing:
   ai_disclosure: true          # unconditional. Gate check C5.
   category: "Education"
 
+# Music. ELEVENLABS_API_KEY would otherwise silently arm ElevenLabs-billed music
+# generation at the hybrid assets stage — there was no policy anywhere until the
+# Fable-5 review flagged it. Generation is forbidden; the format barely uses music
+# anyway (VO + archival sound). Free sources only, if a bed is ever wanted.
+music:
+  generation: forbidden
+  sources: ["music_library", "freesound", "pixabay"]
+
+# Distribution. Manual-first by the founder's decision (docs/DECISIONS.md D1):
+# uploads go through YouTube Studio via handoffs/upload-episode.md, and every
+# upload ends with scripts/log_publish.py so gate check C6 stays real.
+# yt-agent automation is phase 2, revisited when manual cadence hurts.
+distribution:
+  mode: "manual"
+  runbook: "handoffs/upload-episode.md"
+
 compliance:
   sources_per_claim: 2
   primary_sources_required: 1
-  template_similarity_max: 0.70
+  # 0.70 -> 0.50 after measurement: legit on-beat scripts max 0.216, noun-swap 0.762.
+  # Mirrors scripts/gate.py LIMITS — keep in sync.
+  template_similarity_max: 0.50
   require_original_artifact: true

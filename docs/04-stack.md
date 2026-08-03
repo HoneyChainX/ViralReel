@@ -173,10 +173,25 @@ make episode SLUG=airpods-159
 | 8 | Compose | `post-supervisor` | `out/<slug>.mp4` via OpenMontage |
 | 9 | **Gate** | `compliance-officer` | `gate.json` — **PASS required** |
 | 10 | Package | `seo-packager` | `packaging.json` |
-| 11 | Publish | yt-agent | private upload → human flips public |
+| 11 | Publish | **founder via `handoffs/upload-episode.md`** (manual-first, DECISIONS.md D1) | private upload → founder reviews → public → `make published SLUG=` |
 
-Stages 1–8 run unattended. Stages 3 and 11 stop for a human. That split is intentional: taste
-and liability get eyes, everything else gets automated.
+Stages 1–8 run unattended *in intent*; stages 3 and 11 stop for a human. That split is
+deliberate: taste and liability get eyes, everything else gets automated.
+
+Two footnotes from auditing the installed vendor rather than its README:
+
+- **OpenMontage's own defaults disagree with "unattended":** five `hybrid` stages ship
+  `human_approval: true`, and its budget config ships `mode: warn` with $10 headroom — warn-mode
+  is not a cap. `setup.sh` pins `budget.mode: cap`, `total_usd: 0.00`, and
+  `checkpoint.policy: auto_noncreative` (all keys verified against `lib/config_model.py`), so a
+  paid tool *cannot* bill even if a key leaks in, and mechanical stages run unattended while
+  creative checkpoints still stop. Our stage 3 (hook choice) and stage 11 (publish) remain the
+  human gates either way.
+- **The connected Higgsfield MCP is a billing path no `.env` controls.** Its generate tools
+  bill per call against the founder's Higgsfield credits, invoked through the connector rather
+  than through any key this repo manages. The cost discipline there is procedural, not
+  mechanical: no agent charter references those tools, and the paid-generator ban in
+  `docs/05-compliance.md` covers them by category.
 
 ---
 

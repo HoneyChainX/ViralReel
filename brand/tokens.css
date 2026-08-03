@@ -48,10 +48,11 @@
    * the Condensed cut all returned available:true for this account.
    *
    * Chosen over Archivo / IBM Plex / Roboto Mono for one reason that is not
-   * taste: Acumin ships true tabular lining figures. <PriceOdometer> rolls digits
-   * for 800ms, and on proportional figures the column widths change mid-roll, so
-   * the number visibly jitters. That roll is the channel's signature motion; a
-   * family without tnum cannot be used here whatever it looks like standing still.
+   * taste: Acumin ships true tabular lining figures. Correction (Fable-5 review,
+   * B1a): tnum is NOT what prevents roll jitter — <PriceOdometer>'s DigitWheels
+   * are fixed-width slots, so the roll is stable with any font. tnum's real job
+   * is at-rest letterfit and consistency across captions, citation chips and
+   * multi-figure frames, which is still worth requiring — just for true reasons.
    *
    * TWO LOADING PATHS — they are not equivalent:
    *
