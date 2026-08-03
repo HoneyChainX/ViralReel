@@ -138,7 +138,7 @@
       "currency": "index",
       "year": 2026,
       "estimated": false,
-      "inflation_adjusted_value": 67.4,
+      "inflation_adjusted_value": null,
       "sources": [
         {
           "url": "https://data.bls.gov/timeseries/CUUR0000SERA01",
@@ -156,7 +156,8 @@
           "accessed": "2026-08-03",
           "quote": "\"Series Title: All items in U.S. city average, all urban consumers, not seasonally adjusted \u00b7 Base Period: 1982-84=100\". 2016 Mar 238.132, Apr 239.261; 2026 Jul 330.724. Real television-index change = (93.176/283.408)/(330.724/239.261) - 1 = -76.2%."
         }
-      ]
+      ],
+      "reconciliation_note": "inflation_adjusted_value cleared 2026-08-03: prior 67.4 matched neither the claim text nor the quoted arithmetic ((93.176/283.408)/(330.724/239.261)-1 = -76.2%). The real-terms fall is -76.2%; carried in claim text + sources, not this dollar-denominated field."
     }
   ],
   "primary_cause": {
