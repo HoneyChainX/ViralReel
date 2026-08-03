@@ -1,0 +1,20 @@
+# Film manifest — WILD, a 3-minute chained nature documentary.
+# Each scene is a seamless chain output (one continuous 30s shot from 3 segments).
+# Chapter joins are film-level cuts — a documentary changes worlds on a cut.
+slug: wild-3min
+title: "WILD — a nature documentary"
+
+delivery:
+  width: 1920
+  height: 1080
+  fps: 30
+  lufs: -14
+  fit: crop
+
+scenes:
+  - { id: ch1-savanna,  source: out/wild-ch1.mp4 }
+  - { id: ch2-forest,   source: out/wild-ch2.mp4 }
+  - { id: ch3-river,    source: out/wild-ch3.mp4 }
+  - { id: ch4-mountain, source: out/wild-ch4.mp4 }
+  - { id: ch5-ocean,    source: out/wild-ch5.mp4 }
+  - { id: ch6-night,    source: out/wild-ch6.mp4 }
