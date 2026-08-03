@@ -1,27 +1,27 @@
 {
-  "slug": "_selftest",
-  "verdict": "FAIL",
-  "evaluated_at": "2026-08-03T00:14:33.297953+00:00",
+  "slug": "four-k-tv",
+  "verdict": "PASS",
+  "evaluated_at": "2026-08-03T11:48:54.532196+00:00",
   "checks": [
     {
       "id": "C1",
       "result": "PASS",
-      "note": "original research artifact: wayback-screenshot"
+      "note": "original research artifact: original-chart"
     },
     {
       "id": "C2",
       "result": "PASS",
-      "note": "2 claims sourced"
+      "note": "5 claims sourced"
     },
     {
       "id": "C3",
       "result": "PASS",
-      "note": "2 price scenes all cited"
+      "note": "6 price scenes all cited"
     },
     {
       "id": "C4",
       "result": "PASS",
-      "note": "4 assets licensed"
+      "note": "38 assets licensed"
     },
     {
       "id": "C5",
@@ -36,7 +36,7 @@
     {
       "id": "C7",
       "result": "PASS",
-      "note": "max structural similarity 0% (no peers yet)"
+      "note": "max structural similarity 4% vs _selftest"
     },
     {
       "id": "C8",
@@ -45,8 +45,8 @@
     },
     {
       "id": "C9",
-      "result": "FAIL",
-      "note": "no render at out/_selftest.mp4 (or ffprobe unavailable)"
+      "result": "PASS",
+      "note": "1080x1920, 48.0s"
     },
     {
       "id": "C10",
@@ -54,10 +54,6 @@
       "note": "privacy=private"
     }
   ],
-  "blocking": [
-    "C9"
-  ],
-  "owner_to_fix": {
-    "C9": "post-supervisor"
-  }
+  "blocking": [],
+  "owner_to_fix": {}
 }

@@ -1,0 +1,327 @@
+{
+  "version": "1.0",
+  "style_playbook": "price-archaeology",
+  "scenes": [
+    {
+      "id": "s01",
+      "type": "broll",
+      "description": "ARTIFACT: Nine sixty-seven fifty-eight dollars, in today's money. Base: assets/sh01-console-lid-lift.mp4",
+      "start_seconds": 0.0,
+      "end_seconds": 3.141,
+      "script_section_id": "ARTIFACT",
+      "framing": "9:16 cover, desaturate 0.35",
+      "movement": "kenburns in to 1.1",
+      "transition_in": "fade 0.45s",
+      "overlay_notes": "$967.58 [past/hero/rise]; 55-inch entry 4K TV, 2016 - in 2026 dollars [data/body/rise] | CITATION: VIZIO press release, 19 Apr 2016 (E55u-D0, $699.99 MSRP) x BLS CPI-U CUUR0000SA0, Apr 2016 239.261 -> Jul 2026 330.724",
+      "shot_language": {
+        "camera_movement": "dolly_in"
+      }
+    },
+    {
+      "id": "s02",
+      "type": "broll",
+      "description": "ARTIFACT: That's VIZIO's cheapest fifty-five-inch... Base: assets/sh02-showroom-row.mp4",
+      "start_seconds": 3.141,
+      "end_seconds": 5.1,
+      "script_section_id": "ARTIFACT",
+      "framing": "9:16 cover, desaturate 0.4",
+      "movement": "kenburns left to 1.1",
+      "transition_in": "slide 0.28s",
+      "overlay_notes": "the cheapest set in the line [data/body/typeon]",
+      "shot_language": {
+        "camera_movement": "tracking_left"
+      }
+    },
+    {
+      "id": "s03",
+      "type": "broll",
+      "description": "ARTIFACT: ...four-K TV, twenty sixteen. Base: assets/sh03-console-1961-picture.mp4",
+      "start_seconds": 5.1,
+      "end_seconds": 7.054,
+      "script_section_id": "ARTIFACT",
+      "framing": "9:16 cover, desaturate 0.4",
+      "movement": "kenburns in to 1.08",
+      "transition_in": "dip 0.22s",
+      "overlay_notes": "55-inch class - 4K [data/body/pop]; 2016 [past/body/pop]",
+      "shot_language": {
+        "camera_movement": "dolly_in"
+      }
+    },
+    {
+      "id": "s04",
+      "type": "broll",
+      "description": "GAP: It's three nineteen ninety-six now. [PAUSE] Base: assets/televisions-on-sale-2017.jpg",
+      "start_seconds": 7.054,
+      "end_seconds": 9.6,
+      "script_section_id": "GAP",
+      "framing": "9:16 cover, desaturate 0.15",
+      "movement": "kenburns right to 1.12",
+      "transition_in": "fade 0.3s",
+      "overlay_notes": "ODOMETER 967.58 -> 319.96 (800ms); 55-inch entry 4K - 2016 to 2026 [data/body/rise] | CITATION: 2016: VIZIO press release 19 Apr 2016 x BLS CPI-U CUUR0000SA0 | 2026: P.C. Richard & Son + us.tcl.com, 3 Aug 2026",
+      "shot_language": {
+        "camera_movement": "tracking_right"
+      }
+    },
+    {
+      "id": "s05",
+      "type": "broll",
+      "description": "GAP: Same size. Base: assets/sh05-picture-tube-screen.mp4",
+      "start_seconds": 9.6,
+      "end_seconds": 10.934,
+      "script_section_id": "GAP",
+      "framing": "9:16 cover, desaturate 0.4",
+      "movement": "kenburns up to 1.09",
+      "transition_in": "slide 0.2s",
+      "overlay_notes": "55-INCH [data/hero/pop]; same size, both years [data/body/rise]",
+      "shot_language": {
+        "camera_movement": "crane_up"
+      }
+    },
+    {
+      "id": "s06",
+      "type": "broll",
+      "description": "GAP: Same resolution. Base: assets/sh06-test-pattern.mp4",
+      "start_seconds": 10.934,
+      "end_seconds": 12.404,
+      "script_section_id": "GAP",
+      "framing": "9:16 cover, desaturate 0.4",
+      "movement": "kenburns down to 1.09",
+      "transition_in": "dip 0.2s",
+      "overlay_notes": "3840x2160 [data/hero/pop]; same resolution, both years [data/body/rise]",
+      "shot_language": {
+        "camera_movement": "crane_down"
+      }
+    },
+    {
+      "id": "s07",
+      "type": "broll",
+      "description": "GAP: Entry line to entry line. Base: assets/sh07-appliance-store-aisle.mp4",
+      "start_seconds": 12.404,
+      "end_seconds": 14.266,
+      "script_section_id": "GAP",
+      "framing": "9:16 cover, desaturate 0.4",
+      "movement": "kenburns left to 1.1",
+      "transition_in": "fade 0.24s",
+      "overlay_notes": "entry line [past/body/rise]; entry line [present/body/rise]",
+      "shot_language": {
+        "camera_movement": "tracking_left"
+      }
+    },
+    {
+      "id": "s08",
+      "type": "text_card",
+      "description": "EXCAVATION: The receipt: VIZIO's own press release, April nineteenth. Base: assets/2016-press-release-msrp-table.png",
+      "start_seconds": 14.266,
+      "end_seconds": 17.34,
+      "script_section_id": "EXCAVATION",
+      "framing": "none contain, desaturate 0.0",
+      "movement": "kenburns out to 1.06",
+      "transition_in": "dip 0.3s",
+      "overlay_notes": " | CITATION: VIZIO press release, 19 Apr 2016 - \"E55u-D0 MSRP $699.99\" (primary); Reviewed.com, 19 Apr 2016 (secondary)",
+      "shot_language": {
+        "camera_movement": "dolly_out"
+      }
+    },
+    {
+      "id": "s09",
+      "type": "broll",
+      "description": "EXCAVATION: Six ninety-nine ninety-nine, MSRP. Base: assets/sh09-announcement-podium.mp4",
+      "start_seconds": 17.34,
+      "end_seconds": 20.072,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, desaturate 0.4",
+      "movement": "kenburns right to 1.1",
+      "transition_in": "slide 0.26s",
+      "overlay_notes": "$699.99 [past/hero/rise]; MSRP - VIZIO E55u-D0 - 19 Apr 2016 [data/body/rise] | CITATION: VIZIO press release, 19 Apr 2016 - \"E55u-D0 MSRP $699.99\" (primary); Reviewed.com, 19 Apr 2016 (secondary)",
+      "shot_language": {
+        "camera_movement": "tracking_right"
+      }
+    },
+    {
+      "id": "s10",
+      "type": "broll",
+      "description": "EXCAVATION: [EMPHASIS] Panel makers built more capacity than the market bought. Base: assets/sh10-tube-assembly-line.mp4",
+      "start_seconds": 20.072,
+      "end_seconds": 22.74,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, desaturate 0.4",
+      "movement": "kenburns in to 1.1",
+      "transition_in": "fade 0.26s",
+      "overlay_notes": "the one cause [data/body/rise]; panel capacity outran demand [data/body/typeon]",
+      "shot_language": {
+        "camera_movement": "dolly_in"
+      }
+    },
+    {
+      "id": "s11",
+      "type": "broll",
+      "description": "EXCAVATION: VIZIO's SEC filing names the mechanism: Base: assets/sh11-filing-paper-stacks.mp4",
+      "start_seconds": 22.74,
+      "end_seconds": 25.006,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, desaturate 0.4",
+      "movement": "kenburns down to 1.09",
+      "transition_in": "dip 0.24s",
+      "overlay_notes": "VIZIO 10-K FY2023 - SEC EDGAR [data/body/typeon]",
+      "shot_language": {
+        "camera_movement": "crane_down"
+      }
+    },
+    {
+      "id": "s12",
+      "type": "broll",
+      "description": "EXCAVATION: a capacity surge. Base: assets/sh12-glass-envelope-blowing.mp4",
+      "start_seconds": 25.006,
+      "end_seconds": 26.86,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, desaturate 0.4",
+      "movement": "kenburns right to 1.1",
+      "transition_in": "slide 0.22s",
+      "overlay_notes": "\"a surge in production capacity\" [data/body/pop]",
+      "shot_language": {
+        "camera_movement": "tracking_right"
+      }
+    },
+    {
+      "id": "s13",
+      "type": "broll",
+      "description": "EXCAVATION: Then retailers force prices down. Base: assets/sh13-warehouse-shelves.mp4",
+      "start_seconds": 26.86,
+      "end_seconds": 28.766,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, desaturate 0.4",
+      "movement": "kenburns left to 1.06",
+      "transition_in": "fade 0.2s",
+      "overlay_notes": "\"retailers can exert strong downward pricing pressure\" [data/body/rise]; VIZIO 10-K FY2023 [data/body/rise]",
+      "shot_language": {
+        "camera_movement": "tracking_left"
+      }
+    },
+    {
+      "id": "s14",
+      "type": "broll",
+      "description": "EXCAVATION: Chinese fabs supplied that surge. Base: assets/sh14-mobile-supply-units.mp4",
+      "start_seconds": 28.766,
+      "end_seconds": 30.68,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, desaturate 0.4",
+      "movement": "kenburns up to 1.1",
+      "transition_in": "dip 0.22s",
+      "overlay_notes": "Chinese panel fabs supplied the surge [data/body/typeon]; TrendForce, 3 Jan 2024 [data/body/rise]",
+      "shot_language": {
+        "camera_movement": "crane_up"
+      }
+    },
+    {
+      "id": "s15",
+      "type": "diagram",
+      "description": "EXCAVATION: Constant quality, BLS: televisions down seventy-six point two percent after inflation. Base: assets/sh15-studio-lamps-dark.mp4",
+      "start_seconds": 30.68,
+      "end_seconds": 35.25,
+      "script_section_id": "EXCAVATION",
+      "framing": "9:16 cover, desaturate 0.55",
+      "movement": "kenburns in to 1.06",
+      "transition_in": "slide 0.3s",
+      "overlay_notes": "CHART: 55-inch 4K, like for like - BLS constant quality: -76.2% after inflation | 2016 entry - MSRP=699.99 [past]; the same 2016 MSRP, in 2026 dollars=967.58 [pastAdj]; 2026 entry - shelf price=319.96 [present]; 2016 premium 4K LED=1799.0 [past]; 2026 premium 4K LED=1297.99 [present] | CITATION: c1 VIZIO 19 Apr 2016 | c2 P.C. Richard & Son 3 Aug 2026 | c3 LG Electronics USA 10 Mar 2016 | c4 Newegg 3 Aug 2026 | BLS CUUR0000SA0 + CUUR0000SERA01",
+      "shot_language": {
+        "camera_movement": "dolly_in"
+      }
+    },
+    {
+      "id": "s16",
+      "type": "text_card",
+      "description": "VERDICT: One asterisk: twenty sixteen is a... Base: assets/price-chart-2016-2026.png",
+      "start_seconds": 35.25,
+      "end_seconds": 37.56,
+      "script_section_id": "VERDICT",
+      "framing": "none contain, desaturate 0.0",
+      "movement": "kenburns out to 1.05",
+      "transition_in": "fade 0.28s",
+      "overlay_notes": " | CITATION: Price Archaeology original chart - 11 named 55-inch models, 2016 & 2026, per-point citations; 2016 MSRPs also drawn in Jul-2026 dollars (BLS CPI-U CUUR0000SA0)",
+      "shot_language": {
+        "camera_movement": "dolly_out"
+      }
+    },
+    {
+      "id": "s17",
+      "type": "broll",
+      "description": "VERDICT: ...launch price, today's a shelf price. Base: assets/sh17-dark-blank-screen.mp4",
+      "start_seconds": 37.56,
+      "end_seconds": 39.27,
+      "script_section_id": "VERDICT",
+      "framing": "9:16 cover, desaturate 0.45",
+      "movement": "kenburns left to 1.09",
+      "transition_in": "slide 0.22s",
+      "overlay_notes": "2016 = launch price [past/body/rise]; 2026 = shelf price [present/body/rise]",
+      "shot_language": {
+        "camera_movement": "tracking_left"
+      }
+    },
+    {
+      "id": "s18",
+      "type": "broll",
+      "description": "VERDICT: Verdict: [PAUSE] Base: assets/sh18-night-road.mp4",
+      "start_seconds": 39.27,
+      "end_seconds": 40.967,
+      "script_section_id": "VERDICT",
+      "framing": "9:16 cover, desaturate 0.5",
+      "movement": "kenburns down to 1.08",
+      "transition_in": "dip 0.5s",
+      "overlay_notes": "",
+      "shot_language": {
+        "camera_movement": "crane_down"
+      }
+    },
+    {
+      "id": "s19",
+      "type": "broll",
+      "description": "VERDICT: Still cheap. Base: assets/sh19-colour-tube-closeup.mp4",
+      "start_seconds": 40.967,
+      "end_seconds": 42.9,
+      "script_section_id": "VERDICT",
+      "framing": "9:16 cover, desaturate 0.3",
+      "movement": "kenburns in to 1.1",
+      "transition_in": "fade 0.12s",
+      "overlay_notes": "STAMP 'STILL CHEAP' [present] 4deg",
+      "shot_language": {
+        "camera_movement": "dolly_in"
+      }
+    },
+    {
+      "id": "s20",
+      "type": "broll",
+      "description": "VERDICT: And today's set is QLED, with HDR. Base: assets/sh20-hand-on-remote.mp4",
+      "start_seconds": 42.9,
+      "end_seconds": 44.68,
+      "script_section_id": "VERDICT",
+      "framing": "9:16 cover, desaturate 0.3",
+      "movement": "kenburns right to 1.09",
+      "transition_in": "slide 0.24s",
+      "overlay_notes": "today's set: QLED, with HDR [present/body/pop]; TCL 55Q651G, 2026 [data/body/rise]",
+      "shot_language": {
+        "camera_movement": "tracking_right"
+      }
+    },
+    {
+      "id": "s21",
+      "type": "broll",
+      "description": "HANDOFF: What did your first four-K TV cost? Base: assets/sh21-family-floor-1950s.mp4",
+      "start_seconds": 44.68,
+      "end_seconds": 47.7,
+      "script_section_id": "HANDOFF",
+      "framing": "9:16 cover, desaturate 0.3",
+      "movement": "kenburns out to 1.12",
+      "transition_in": "fade 0.4s",
+      "overlay_notes": "What did your first 4K TV cost? [data/body/typeon]",
+      "shot_language": {
+        "camera_movement": "dolly_out"
+      }
+    }
+  ],
+  "metadata": {
+    "slug": "four-k-tv",
+    "plan_version": "2.0",
+    "total_duration_sec": 47.7,
+    "vo_duration_sec": 46.700363
+  }
+}

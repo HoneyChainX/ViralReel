@@ -1,0 +1,52 @@
+{
+  "provider": "piper",
+  "voice_model": "en_US-amy-medium",
+  "draft": true,
+  "duration_sec": 46.7,
+  "note": "ElevenLabs regeneration pending founder key. FALLBACK ENGAGED per docs/DECISIONS.md D7: ELEVENLABS_API_KEY absent in this environment, so this VO was synthesized with Piper TTS (female en_US voice, closest available to Profile A) instead of the cast ElevenLabs voice. This is a PIPER DRAFT and must be regenerated with the cast ElevenLabs voice before upload if the founder chooses. RE-PACE (2026-08-03): founder flagged the prior draft (45.19s, length_scale=0.72, sentence_silence=0.0) as 'somewhat fast' -- Piper's default sentence_silence is 0.0s, so the earlier draft had zero inter-sentence air even though its ~145wpm word rate was on target; that's why it read as rushed. Regenerated per founder spec: sentence_silence 0.0 -> 0.45 (the main fix for compressed gaps), [PAUSE] marks 0.7s -> 0.9s, loudnorm re-passed to ~-16 LUFS. CONFLICT FLAGGED: founder spec also asked for length_scale 1.08 (slower articulation), floor-adjustable down to 1.05 if the 48.0s hard cap was exceeded. At length_scale=1.08 with sentence_silence=0.45 and two 0.9s pause marks, measured total was ~67.8s -- 41% over the 48.0s cap -- and 1.05 only brings that to ~66.7s, nowhere close to fitting. This is a genuine spec conflict, not a rounding issue: with sentence_silence and PAUSE marks held at their requested values and 109 fixed spoken words, the max length_scale that keeps final duration under 48.0s (with a ~1.3s safety margin) is ~0.63 -- slightly FASTER phoneme-level articulation than the original 0.72 draft, though still substantially less rushed overall because the sentence-final and PAUSE silences (previously ~0s) are now real. Resolved by holding sentence_silence=0.45 and PAUSE=0.9s exactly as specified (these are what actually fix the founder's stated complaint about compressed gaps) and setting length_scale=0.63 (not 1.08, not 1.05) as the only value that fits the hard duration cap without cutting script words. Net effect: total-duration pace is ~140wpm (down from ~145wpm), slower than before overall, with audible breathing room at every sentence boundary and both verdict-adjacent pauses -- but per-word delivery is not slower than the prior draft. Flagging for founder/orchestrator awareness rather than silently shipping length_scale=1.08 and blowing the C9 gate, or silently shipping length_scale=1.05 and still blowing it by ~19s.",
+  "settings": {
+    "length_scale": 0.63,
+    "length_scale_note": "founder asked for 1.08 (floor 1.05); reduced further to 0.63 -- the max value that fits the 48.0s hard cap given sentence_silence=0.45 and two 0.9s PAUSE marks on this 109-word script. See note.",
+    "sentence_silence": 0.45,
+    "sentence_silence_prior": 0.0,
+    "pause_marks_synthesized_as_silence_sec": 0.9,
+    "pause_marks_synthesized_as_silence_sec_prior": 0.7,
+    "pause_count": 2,
+    "verdict_pre_silence_extra_sec": 0.0,
+    "verdict_pre_silence_note": "Not added: the script's second [PAUSE] mark sits directly before the verdict word ('Verdict: [PAUSE] still cheap.'), so the 0.9s PAUSE already covers the requested pre-verdict beat. No separate 0.3s add-on applied to avoid double-padding and to protect the duration budget."
+  },
+  "source": {
+    "model_url": "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/amy/medium/en_US-amy-medium.onnx",
+    "config_url": "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/amy/medium/en_US-amy-medium.onnx.json",
+    "local_files": [
+      "en_US-amy-medium.onnx",
+      "en_US-amy-medium.onnx.json"
+    ],
+    "local_files_note": "Not present in content/episodes/four-k-tv/ as the founder note assumed; actually resolved from /home/user/ViralReel/vendor/piper-voices/en_US-amy-medium.onnx(.json)."
+  },
+  "loudness": {
+    "target_lufs": -16,
+    "measured_input_i_lufs": -16.34,
+    "max_volume_dbfs": -4.9,
+    "true_peak_dbtp": -5.30
+  },
+  "segments": [
+    {
+      "id": "a",
+      "text": "Nine sixty-seven fifty-eight dollars, in today's money. That's VIZIO's cheapest fifty-five-inch four-K TV, twenty sixteen. It's three nineteen ninety-six now.",
+      "duration_sec": 8.69
+    },
+    {"type": "pause", "duration_sec": 0.9},
+    {
+      "id": "b",
+      "text": "Same size. Same resolution. Entry line to entry line. The receipt: VIZIO's own press release, April nineteenth. Six ninety-nine ninety-nine, MSRP. Panel makers built more capacity than the market bought. VIZIO's SEC filing names the mechanism: a capacity surge. Then retailers force prices down. Chinese fabs supplied that surge. Constant quality, BLS: televisions down seventy-six point two percent after inflation. One asterisk: twenty sixteen is a launch price, today's a shelf price. Verdict:",
+      "duration_sec": 30.53
+    },
+    {"type": "pause", "duration_sec": 0.9},
+    {
+      "id": "c",
+      "text": "Still cheap. And today's set is QLED, with HDR. What did your first four-K TV cost?",
+      "duration_sec": 5.68
+    }
+  ]
+}

@@ -1,0 +1,779 @@
+{
+  "slug": "four-k-tv",
+  "version": "2.0",
+  "profile": "price-archaeology-short",
+  "renderer": "remotion:PriceArchaeology",
+  "fps": 30,
+  "frame": {
+    "width": 1080,
+    "height": 1920
+  },
+  "vo": {
+    "file": "vo.mp3",
+    "duration_sec": 46.700363,
+    "tail_sec": 1.0
+  },
+  "total_duration_sec": 47.7,
+  "_v2_changes": "Rebuilt against the new 46.70s VO and the expanded asset pack, answering the founder's two notes. (1) 'images repeat': v1 placed 7 distinct assets across 20 scenes with one asset used 4 times; v2 places 21 distinct assets across 21 scenes, max repeat 1, and no source film reappears inside any 15s window. (2) 'motion is sparse / not documentary-grade': v1 authored asset_in offsets that the composition has no field for and silently ignored, so every archive scene actually rendered its film's opening title card - verified, 11 of the 15 films open on 0.4-2.3s of black plus a static card. v2 bakes the in-point into per-scene clips (see _clip_derivation) and uses the v2 fields - directional Ken Burns, three transition types, kinetic type, an animated evidence chart.",
+  "_clip_derivation": "assets/sh*.mp4 are scene-specific cuts of the licensed masters in the same folder, made because MediaLayer in brand/remotion/PriceArchaeology.tsx plays media from t=0 and exposes no trim/startFrom prop. Each is rendered to 1080x1920 so fit:cover does no second upscale: 'full' shots are a focus-shifted 9:16 slice of the 4:3 frame (lanczos + light unsharp), 'frame' shots keep the whole 4:3 frame at full width over a blurred, darkened bed of itself. Recipe: scratchpad build_clips.py, in-points recorded in licenses.json.",
+  "_cut_method": "Every in/out is a measured VO boundary, not a grid. Boundaries came from ffmpeg silencedetect on the new vo.mp3 at two thresholds (-40dB/0.20s for sentence gaps, -33dB/0.09s for the micro-gaps inside sentences); cuts sit at gap midpoints or at speech onsets. Three cuts are deliberately not on a sentence boundary and are noted on their scenes (s02/s03 split the 3.9s ARTIFACT sentence; s12 out-points on the word 'retailers'; s17 in-points on the word 'launch').",
+  "_cut_lengths": "Excavation shots run 1.85-2.73s inside the 1.8-2.8s band with two documented exceptions: s08 (3.07s, the receipt, no VO boundary inside the sentence) and s15 (4.57s, the animated chart, which takes the whole of the longest unbroken VO line). The verdict block runs 5.41s across four scenes and the handoff holds 3.02s - both longer than anything in the excavation.",
+  "_layering": "Archive on the bottom, desaturated 0.30-0.55 with procedural grain and vignette (grading, added by the composition, never content). Data on top: flat, sharp, tabular-lining numerals, no shadow beyond the legibility scrim. Amber #C8964B on every 2016 figure, cyan #00E5FF on every 2026 figure, hatched #8A6534 on the inflation-adjusted bar so an adjusted figure can never be mistaken for a nominal one.",
+  "_slideshow_guard": "17 of 21 scenes are moving footage (every clip measured: minimum inter-frame luma delta 1.33, median 3.4, max 13.6). The 4 stills are all held with a Ken Burns move (s04 1.12 right, s08 1.06 out, s16 1.05 out, s17 1.05 in) and none is held longer than 3.07s. Every scene except s16 and s18 carries animated type or a growing chart; s16 is the evidence artifact and s18 is the pre-verdict held frame, both of which are supposed to be quiet. No two consecutive scenes share a Ken Burns direction or a transition type.",
+  "_contrast_note": "Found on rendered frames, not on paper: every brand text token is light (#FFFFFF data, #C8964B past, #00E5FF present) and the composition's only backing is a soft drop shadow, so type over a white document is unreadable. Rule applied here: white documents carry no type layer (s08, s16); token type only ever sits on a dark bed (s17 was moved off the LG pricing PDF onto a blank console screen at mean luma 65 for exactly this reason).",
+  "_captions_note": "captions.json was regenerated VO-locked for this plan, from ffmpeg silencedetect runs on the new vo.mp3 - one chunk per spoken sentence, long sentences split proportionally, max 7 words. The previous file was built against the old VO and was drifting up to ~2.5s (verified on a rendered frame: at t=11.33s the burn-in read 'Entry line to entry line.' while the voice said 'Same resolution'). Do NOT regenerate this episode's captions with scripts/make_captions.py: it allocates chunks proportionally inside beat windows, and this plan's GAP beat deliberately starts at 7.054 (the odometer scene, where the two figures collide) rather than at the script header's 0:03, which would re-introduce the drift.",
+  "_odometer_note": "Fires once, on GAP (s04), 800ms roll on the locked ease. Not restyled, not re-timed, not reused anywhere else in the plan.",
+  "_citation_note": "C3: every scene with shows_price true carries a citation chip - s01, s04, s08, s09, s15, s16, s17. Chips enter and leave with the figure; none is faded early.",
+  "_evidence_discrepancy": "evidence.json c5 carries inflation_adjusted_value 67.4, which contradicts its own text and its quoted BLS arithmetic (-76.2%). The chart title and the VO both use 76.2%, the value the quoted series actually produce. Unchanged from v1: trend-archaeologist still owns reconciling the field.",
+  "scenes": [
+    {
+      "id": "s01",
+      "beat": "ARTIFACT",
+      "in": 0.0,
+      "out": 3.141,
+      "asset": "assets/sh01-console-lid-lift.mp4",
+      "vo_line": "Nine sixty-seven fifty-eight dollars, in today's money.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.35,
+        "push": 1.1
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.45
+      },
+      "kenburns": {
+        "dir": "in",
+        "amount": 1.1
+      },
+      "text": [
+        {
+          "content": "$967.58",
+          "token": "past",
+          "size": "hero",
+          "anim": "rise"
+        },
+        {
+          "content": "55-inch entry 4K TV, 2016 - in 2026 dollars",
+          "token": "data",
+          "size": "body",
+          "anim": "rise"
+        }
+      ],
+      "shows_price": true,
+      "citation": "VIZIO press release, 19 Apr 2016 (E55u-D0, $699.99 MSRP) x BLS CPI-U CUUR0000SA0, Apr 2016 239.261 -> Jul 2026 330.724",
+      "note": "Open inside the artifact: a 1959 colour console being opened by hand. Real in-frame motion (measured inter-frame luma delta 6.6) so the hero figure sits on a moving base, not a still."
+    },
+    {
+      "id": "s02",
+      "beat": "ARTIFACT",
+      "in": 3.141,
+      "out": 5.1,
+      "asset": "assets/sh02-showroom-row.mp4",
+      "vo_line": "That's VIZIO's cheapest fifty-five-inch...",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.4,
+        "push": 1.1
+      },
+      "transition": {
+        "type": "slide",
+        "dur": 0.28
+      },
+      "kenburns": {
+        "dir": "left",
+        "amount": 1.1
+      },
+      "text": [
+        {
+          "content": "the cheapest set in the line",
+          "token": "data",
+          "size": "body",
+          "anim": "typeon"
+        }
+      ],
+      "shows_price": false,
+      "note": "Cut lands on 'fifty-five-inch' - mid-sentence by design; a showroom row is the picture for 'cheapest in the line'."
+    },
+    {
+      "id": "s03",
+      "beat": "ARTIFACT",
+      "in": 5.1,
+      "out": 7.054,
+      "asset": "assets/sh03-console-1961-picture.mp4",
+      "vo_line": "...four-K TV, twenty sixteen.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.4,
+        "push": 1.08
+      },
+      "transition": {
+        "type": "dip",
+        "dur": 0.22
+      },
+      "kenburns": {
+        "dir": "in",
+        "amount": 1.08
+      },
+      "text": [
+        {
+          "content": "55-inch class - 4K",
+          "token": "data",
+          "size": "body",
+          "anim": "pop"
+        },
+        {
+          "content": "2016",
+          "token": "past",
+          "size": "body",
+          "anim": "pop"
+        }
+      ],
+      "shows_price": false
+    },
+    {
+      "id": "s04",
+      "beat": "GAP",
+      "in": 7.054,
+      "out": 9.6,
+      "asset": "assets/televisions-on-sale-2017.jpg",
+      "vo_line": "It's three nineteen ninety-six now. [PAUSE]",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.15,
+        "push": 1.12
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.3
+      },
+      "kenburns": {
+        "dir": "right",
+        "amount": 1.12
+      },
+      "odometer": {
+        "from": 967.58,
+        "to": 319.96,
+        "duration_ms": 800,
+        "currency": "$"
+      },
+      "text": [
+        {
+          "content": "55-inch entry 4K - 2016 to 2026",
+          "token": "data",
+          "size": "body",
+          "anim": "rise"
+        }
+      ],
+      "shows_price": true,
+      "citation": "2016: VIZIO press release 19 Apr 2016 x BLS CPI-U CUUR0000SA0 | 2026: P.C. Richard & Son + us.tcl.com, 3 Aug 2026",
+      "hero_moment": true,
+      "note": "THE ODOMETER, once per episode. Composition delays the roll 400ms from scene start, so it rolls 7.454-8.254 and settles inside 'three nineteen ninety-six'. Scene then holds PAUSE #1 (8.596-9.600) uncut. Present-day photograph, so desaturation is 0.15 not 0.40 - the bible's 40% is an archive-layer rule. Kenburns is load-bearing here: this is the only still in the beat."
+    },
+    {
+      "id": "s05",
+      "beat": "GAP",
+      "in": 9.6,
+      "out": 10.934,
+      "asset": "assets/sh05-picture-tube-screen.mp4",
+      "vo_line": "Same size.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.4,
+        "push": 1.09
+      },
+      "transition": {
+        "type": "slide",
+        "dur": 0.2
+      },
+      "kenburns": {
+        "dir": "up",
+        "amount": 1.09
+      },
+      "text": [
+        {
+          "content": "55-INCH",
+          "token": "data",
+          "size": "hero",
+          "anim": "pop"
+        },
+        {
+          "content": "same size, both years",
+          "token": "data",
+          "size": "body",
+          "anim": "rise"
+        }
+      ],
+      "shows_price": false
+    },
+    {
+      "id": "s06",
+      "beat": "GAP",
+      "in": 10.934,
+      "out": 12.404,
+      "asset": "assets/sh06-test-pattern.mp4",
+      "vo_line": "Same resolution.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.4,
+        "push": 1.09
+      },
+      "transition": {
+        "type": "dip",
+        "dur": 0.2
+      },
+      "kenburns": {
+        "dir": "down",
+        "amount": 1.09
+      },
+      "text": [
+        {
+          "content": "3840x2160",
+          "token": "data",
+          "size": "hero",
+          "anim": "pop"
+        },
+        {
+          "content": "same resolution, both years",
+          "token": "data",
+          "size": "body",
+          "anim": "rise"
+        }
+      ],
+      "shows_price": false,
+      "note": "A 1955 resolution test pattern under the word 'resolution'. Framed full-width rather than cropped so the circle survives the 9:16."
+    },
+    {
+      "id": "s07",
+      "beat": "GAP",
+      "in": 12.404,
+      "out": 14.266,
+      "asset": "assets/sh07-appliance-store-aisle.mp4",
+      "vo_line": "Entry line to entry line.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.4,
+        "push": 1.1
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.24
+      },
+      "kenburns": {
+        "dir": "left",
+        "amount": 1.1
+      },
+      "text": [
+        {
+          "content": "entry line",
+          "token": "past",
+          "size": "body",
+          "anim": "rise"
+        },
+        {
+          "content": "entry line",
+          "token": "present",
+          "size": "body",
+          "anim": "rise"
+        }
+      ],
+      "shows_price": false,
+      "note": "Same two words, amber over cyan - the token pair carries the comparison without a third word of narration."
+    },
+    {
+      "id": "s08",
+      "beat": "EXCAVATION",
+      "in": 14.266,
+      "out": 17.34,
+      "asset": "assets/2016-press-release-msrp-table.png",
+      "vo_line": "The receipt: VIZIO's own press release, April nineteenth.",
+      "transform": {
+        "crop": "none",
+        "fit": "contain",
+        "desaturate": 0.0,
+        "push": 1.06
+      },
+      "transition": {
+        "type": "dip",
+        "dur": 0.3
+      },
+      "kenburns": {
+        "dir": "out",
+        "amount": 1.06
+      },
+      "shows_price": true,
+      "citation": "VIZIO press release, 19 Apr 2016 - \"E55u-D0 MSRP $699.99\" (primary); Reviewed.com, 19 Apr 2016 (secondary)",
+      "note": "THE RECEIPT, and the one place in the episode where a viewer can read the primary source themselves: the release's own MSRP table, cropped to the price block so the 'E55u-D0 / MSRP $699.99' row is legible at 1080 wide (the full page is not - body text lands at ~8px). Deliberately carries no type layer: the page is white, and every brand token (#FFFFFF data, #C8964B past, #00E5FF present) fails contrast on it. 3.07s, above the 1.8-2.8 excavation band, because there is no VO boundary inside the sentence to cut on; held with a slow 1.06 pull-out, the largest move fit:contain allows."
+    },
+    {
+      "id": "s09",
+      "beat": "EXCAVATION",
+      "in": 17.34,
+      "out": 20.072,
+      "asset": "assets/sh09-announcement-podium.mp4",
+      "vo_line": "Six ninety-nine ninety-nine, MSRP.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.4,
+        "push": 1.1
+      },
+      "transition": {
+        "type": "slide",
+        "dur": 0.26
+      },
+      "kenburns": {
+        "dir": "right",
+        "amount": 1.1
+      },
+      "text": [
+        {
+          "content": "$699.99",
+          "token": "past",
+          "size": "hero",
+          "anim": "rise"
+        },
+        {
+          "content": "MSRP - VIZIO E55u-D0 - 19 Apr 2016",
+          "token": "data",
+          "size": "body",
+          "anim": "rise"
+        }
+      ],
+      "shows_price": true,
+      "citation": "VIZIO press release, 19 Apr 2016 - \"E55u-D0 MSRP $699.99\" (primary); Reviewed.com, 19 Apr 2016 (secondary)"
+    },
+    {
+      "id": "s10",
+      "beat": "EXCAVATION",
+      "in": 20.072,
+      "out": 22.74,
+      "asset": "assets/sh10-tube-assembly-line.mp4",
+      "vo_line": "[EMPHASIS] Panel makers built more capacity than the market bought.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.4,
+        "push": 1.1
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.26
+      },
+      "kenburns": {
+        "dir": "in",
+        "amount": 1.1
+      },
+      "text": [
+        {
+          "content": "the one cause",
+          "token": "data",
+          "size": "body",
+          "anim": "rise"
+        },
+        {
+          "content": "panel capacity outran demand",
+          "token": "data",
+          "size": "body",
+          "anim": "typeon"
+        }
+      ],
+      "shows_price": false,
+      "note": "THE ONE CAUSE lands on a tube assembly line - manufacturing scale, shown not stated."
+    },
+    {
+      "id": "s11",
+      "beat": "EXCAVATION",
+      "in": 22.74,
+      "out": 25.006,
+      "asset": "assets/sh11-filing-paper-stacks.mp4",
+      "vo_line": "VIZIO's SEC filing names the mechanism:",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.4,
+        "push": 1.09
+      },
+      "transition": {
+        "type": "dip",
+        "dur": 0.24
+      },
+      "kenburns": {
+        "dir": "down",
+        "amount": 1.09
+      },
+      "text": [
+        {
+          "content": "VIZIO 10-K FY2023 - SEC EDGAR",
+          "token": "data",
+          "size": "body",
+          "anim": "typeon"
+        }
+      ],
+      "shows_price": false,
+      "note": "Cut lands in the 0.16s micro-gap the TTS leaves at the colon (24.927-25.086)."
+    },
+    {
+      "id": "s12",
+      "beat": "EXCAVATION",
+      "in": 25.006,
+      "out": 26.86,
+      "asset": "assets/sh12-glass-envelope-blowing.mp4",
+      "vo_line": "a capacity surge.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.4,
+        "push": 1.1
+      },
+      "transition": {
+        "type": "slide",
+        "dur": 0.22
+      },
+      "kenburns": {
+        "dir": "right",
+        "amount": 1.1
+      },
+      "text": [
+        {
+          "content": "\"a surge in production capacity\"",
+          "token": "data",
+          "size": "body",
+          "anim": "pop"
+        }
+      ],
+      "shows_price": false,
+      "note": "Out-point 26.860 is not a sentence boundary - it is the word boundary between 'Then' and 'retailers', so the next picture lands exactly on 'retailers'."
+    },
+    {
+      "id": "s13",
+      "beat": "EXCAVATION",
+      "in": 26.86,
+      "out": 28.766,
+      "asset": "assets/sh13-warehouse-shelves.mp4",
+      "vo_line": "Then retailers force prices down.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.4,
+        "push": 1.06
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.2
+      },
+      "kenburns": {
+        "dir": "left",
+        "amount": 1.06
+      },
+      "text": [
+        {
+          "content": "\"retailers can exert strong downward pricing pressure\"",
+          "token": "data",
+          "size": "body",
+          "anim": "rise"
+        },
+        {
+          "content": "VIZIO 10-K FY2023",
+          "token": "data",
+          "size": "body",
+          "anim": "rise"
+        }
+      ],
+      "shows_price": false,
+      "note": "Handheld source (measured motion 13.6, the highest in the pack) so the Ken Burns amount is dialled back to 1.06 - the footage is already moving."
+    },
+    {
+      "id": "s14",
+      "beat": "EXCAVATION",
+      "in": 28.766,
+      "out": 30.68,
+      "asset": "assets/sh14-mobile-supply-units.mp4",
+      "vo_line": "Chinese fabs supplied that surge.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.4,
+        "push": 1.1
+      },
+      "transition": {
+        "type": "dip",
+        "dur": 0.22
+      },
+      "kenburns": {
+        "dir": "up",
+        "amount": 1.1
+      },
+      "text": [
+        {
+          "content": "Chinese panel fabs supplied the surge",
+          "token": "data",
+          "size": "body",
+          "anim": "typeon"
+        },
+        {
+          "content": "TrendForce, 3 Jan 2024",
+          "token": "data",
+          "size": "body",
+          "anim": "rise"
+        }
+      ],
+      "shows_price": false,
+      "note": "The archive layer here is American mid-century supply/logistics footage, not a depiction of Chinese fabs - no footage of those exists in the licensed pack. The claim is carried by the type and the cited source, per compliance Rule 6 (the archive layer is never synthesised and never stands in as evidence)."
+    },
+    {
+      "id": "s15",
+      "beat": "EXCAVATION",
+      "in": 30.68,
+      "out": 35.25,
+      "asset": "assets/sh15-studio-lamps-dark.mp4",
+      "vo_line": "Constant quality, BLS: televisions down seventy-six point two percent after inflation.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.55,
+        "push": 1.06
+      },
+      "transition": {
+        "type": "slide",
+        "dur": 0.3
+      },
+      "kenburns": {
+        "dir": "in",
+        "amount": 1.06
+      },
+      "chart": {
+        "title": "55-inch 4K, like for like - BLS constant quality: -76.2% after inflation",
+        "bars": [
+          {
+            "label": "2016 entry - MSRP",
+            "value": 699.99,
+            "color": "past",
+            "cite": "c1 - VIZIO press release, 19 Apr 2016"
+          },
+          {
+            "label": "the same 2016 MSRP, in 2026 dollars",
+            "value": 967.58,
+            "color": "pastAdj",
+            "cite": "c1 x BLS CPI-U CUUR0000SA0"
+          },
+          {
+            "label": "2026 entry - shelf price",
+            "value": 319.96,
+            "color": "present",
+            "cite": "c2 - P.C. Richard & Son, 3 Aug 2026"
+          },
+          {
+            "label": "2016 premium 4K LED",
+            "value": 1799.0,
+            "color": "past",
+            "cite": "c3 - LG Electronics USA, 10 Mar 2016"
+          },
+          {
+            "label": "2026 premium 4K LED",
+            "value": 1297.99,
+            "color": "present",
+            "cite": "c4 - Newegg, 3 Aug 2026"
+          }
+        ]
+      },
+      "shows_price": true,
+      "citation": "c1 VIZIO 19 Apr 2016 | c2 P.C. Richard & Son 3 Aug 2026 | c3 LG Electronics USA 10 Mar 2016 | c4 Newegg 3 Aug 2026 | BLS CUUR0000SA0 + CUUR0000SERA01",
+      "note": "The excavation reveal. Five bars grow and count up over 4.57s on the longest continuous VO line in the script (30.985-35.003 has no internal boundary to cut on, so the chart takes the whole line). Bars 4 and 5 are the tier-matched anti-cherry-pick pair - carried on screen only, never spoken, per script.md. Bed is the darkest clip in the pack (mean luma 43) and pushed to 0.55 desaturation so the bars read."
+    },
+    {
+      "id": "s16",
+      "beat": "VERDICT",
+      "in": 35.25,
+      "out": 37.56,
+      "asset": "assets/price-chart-2016-2026.png",
+      "vo_line": "One asterisk: twenty sixteen is a...",
+      "transform": {
+        "crop": "none",
+        "fit": "contain",
+        "desaturate": 0.0,
+        "push": 1.05
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.28
+      },
+      "kenburns": {
+        "dir": "out",
+        "amount": 1.05
+      },
+      "shows_price": true,
+      "citation": "Price Archaeology original chart - 11 named 55-inch models, 2016 & 2026, per-point citations; 2016 MSRPs also drawn in Jul-2026 dollars (BLS CPI-U CUUR0000SA0)",
+      "note": "The C1 original-research artifact, held 2.31s with a slow pull-out and no type over it. It is evidence, not decoration - anything laid on top would cover the per-point citations that make it the artifact."
+    },
+    {
+      "id": "s17",
+      "beat": "VERDICT",
+      "in": 37.56,
+      "out": 39.27,
+      "asset": "assets/sh17-dark-blank-screen.mp4",
+      "vo_line": "...launch price, today's a shelf price.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.45,
+        "push": 1.09
+      },
+      "transition": {
+        "type": "slide",
+        "dur": 0.22
+      },
+      "kenburns": {
+        "dir": "left",
+        "amount": 1.09
+      },
+      "text": [
+        {
+          "content": "2016 = launch price",
+          "token": "past",
+          "size": "body",
+          "anim": "rise"
+        },
+        {
+          "content": "2026 = shelf price",
+          "token": "present",
+          "size": "body",
+          "anim": "rise"
+        }
+      ],
+      "shows_price": false,
+      "note": "In-point 37.560 lands on the spoken word 'launch'. The amber/cyan token pair is the whole scene, so it needs a dark bed: a blank console screen, mean luma 65. An earlier pass put this pair over the LG pricing PDF and both tokens failed contrast on white paper - see the top-level _contrast_note. The concession is a stated caveat, not a figure, so no price is on screen and no chip is owed."
+    },
+    {
+      "id": "s18",
+      "beat": "VERDICT",
+      "in": 39.27,
+      "out": 40.967,
+      "asset": "assets/sh18-night-road.mp4",
+      "vo_line": "Verdict: [PAUSE]",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.5,
+        "push": 1.08
+      },
+      "transition": {
+        "type": "dip",
+        "dur": 0.5
+      },
+      "kenburns": {
+        "dir": "down",
+        "amount": 1.08
+      },
+      "shows_price": false,
+      "note": "The held frame before the stamp: a dark road at night, dipped in from black over 0.5s, no type at all. Carries PAUSE #2 (40.117-41.034) uncut except for its final two frames, which are silent and exist only to put the stamp on the exact frame of the spoken word."
+    },
+    {
+      "id": "s19",
+      "beat": "VERDICT",
+      "in": 40.967,
+      "out": 42.9,
+      "asset": "assets/sh19-colour-tube-closeup.mp4",
+      "vo_line": "Still cheap.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.3,
+        "push": 1.1
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.12
+      },
+      "kenburns": {
+        "dir": "in",
+        "amount": 1.1
+      },
+      "stamp": {
+        "word": "STILL CHEAP",
+        "token": "present",
+        "rotation_deg": 4
+      },
+      "shows_price": false,
+      "hero_moment": true,
+      "note": "THE STAMP. Scene in-point 40.967 = frame 1229 at 30fps; the composition holds the stamp back 2 frames, so it lands on frame 1231 = 41.033s, and the word 'still' begins at 41.0336s. Zero-frame sync. 4 degrees, 2px decaying shake, one flash frame - never restyled."
+    },
+    {
+      "id": "s20",
+      "beat": "VERDICT",
+      "in": 42.9,
+      "out": 44.68,
+      "asset": "assets/sh20-hand-on-remote.mp4",
+      "vo_line": "And today's set is QLED, with HDR.",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.3,
+        "push": 1.09
+      },
+      "transition": {
+        "type": "slide",
+        "dur": 0.24
+      },
+      "kenburns": {
+        "dir": "right",
+        "amount": 1.09
+      },
+      "text": [
+        {
+          "content": "today's set: QLED, with HDR",
+          "token": "present",
+          "size": "body",
+          "anim": "pop"
+        },
+        {
+          "content": "TCL 55Q651G, 2026",
+          "token": "data",
+          "size": "body",
+          "anim": "rise"
+        }
+      ],
+      "shows_price": false,
+      "note": "No price on screen, so no chip - the spec is from c2's two primary listings."
+    },
+    {
+      "id": "s21",
+      "beat": "HANDOFF",
+      "in": 44.68,
+      "out": 47.7,
+      "asset": "assets/sh21-family-floor-1950s.mp4",
+      "vo_line": "What did your first four-K TV cost?",
+      "transform": {
+        "crop": "9:16",
+        "fit": "cover",
+        "desaturate": 0.3,
+        "push": 1.12
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.4
+      },
+      "kenburns": {
+        "dir": "out",
+        "amount": 1.12
+      },
+      "text": [
+        {
+          "content": "What did your first 4K TV cost?",
+          "token": "data",
+          "size": "body",
+          "anim": "typeon"
+        }
+      ],
+      "shows_price": false,
+      "note": "Lowest-motion clip in the pack (1.33), so it carries the largest Ken Burns move (1.12 pull-out) and a type-on question. Runs 1.0s past the last word of VO as the tail."
+    }
+  ]
+}
