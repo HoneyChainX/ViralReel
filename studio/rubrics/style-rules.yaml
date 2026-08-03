@@ -1,0 +1,42 @@
+# Style rules — the mechanical half of taste (docs/11 §7, "details matter" sweep).
+# Checked by scripts/studio/style_gate.py against scripts, hooks, packaging copy.
+# The creative half lives in creative-constitution.md; this file is only what a
+# regex can catch. Add entries with a dated comment; never delete history.
+
+banned_phrases:
+  # AI-writing tells (the fastest way for copy to read synthetic)
+  - "delve"
+  - "tapestry"
+  - "in today's fast-paced world"
+  - "look no further"
+  - "game-changer"
+  - "unleash"
+  - "elevate your"
+  - "dive into"
+  - "it's important to note"
+  - "in conclusion"
+  - "whimsical"
+  - "a testament to"
+  - "seamlessly"          # ironic, given the chaining layer — banned in COPY, prized in JOINS
+  - "revolutionize"
+  - "unlock the secrets"
+
+banned_visual_tropes:
+  # Direction language that produces generic output downstream
+  - "smash cut to black"
+  - "epic drone shot"
+  - "cinematic masterpiece"
+  - "trending on artstation"
+  - "8k ultra detailed"
+  - "award-winning photo"
+
+limits:
+  max_exclamations_per_100_words: 1
+  max_all_caps_words: 2          # excluding registered format names (on-screen stamps)
+  max_sentence_words: 32         # documentary/Shorts reads breathe; long sentences drown
+
+notes: >
+  Rationale per entry class: banned_phrases are the highest-frequency "AI tells" from
+  published style research plus this studio's own review notes; banned_visual_tropes
+  produce mode-collapse imagery in generative engines; limits encode the read-aloud
+  discipline the script-editor charter already enforces by hand.

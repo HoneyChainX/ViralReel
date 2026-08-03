@@ -143,6 +143,41 @@ modules:
       detected boundary (±0.5s); extra boundaries are legitimate internal scene cuts.
       Also the honest check against dropped scenes and double-joins at splice points.
 
+  - id: fabric-patterns
+    repo: https://github.com/danielmiessler/Fabric
+    ref: 0cb6a9facc5556ca5f181a033a1d9db30efd90a0  # pinned 2026-08-03, verified install
+    profile: core
+    role: "Fabric patterns corpus (43k★, /data/patterns) — mined for critique/analysis rubrics"
+    license: MIT
+    cost: free
+    gpu: none
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/fabric-patterns }
+    notes: >
+      Reference shelf, not runtime: the creative department mines its markdown patterns
+      for critique rubrics feeding studio/rubrics/. Verified active (v1.4.447, 2026-04);
+      Gemini sweep pick, cross-verified (docs/11 §7).
+
+  - id: anthropics-skills
+    repo: https://github.com/anthropics/skills
+    ref: b29e7cf65e5cb78a5ac33d582270551bc74a14eb  # pinned 2026-08-03, verified install
+    profile: core
+    role: "Official Anthropic agent-skills corpus (SKILL.md standard, 166k★)"
+    license: "Apache-2.0 (most skills; some source-available)"
+    cost: free
+    gpu: none
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/anthropics-skills }
+    notes: >
+      The canonical SKILL.md reference for pipeline-td when authoring studio skills.
+      (Gemini cited anthropics/courses as the standard — corrected here: it's this repo.)
+
   - id: pinokio
     repo: https://github.com/pinokiocomputer/pinokio
     ref: main

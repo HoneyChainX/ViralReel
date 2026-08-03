@@ -225,3 +225,49 @@ fabricating "open" releases (a fake "Wan 2.7 open weights" among them).
 **Skills wave:** HeyGen HyperFrames (open, agent-native motion graphics — its MCP is
 connected to this session), Wan-skills, ComfyUI-Agent-Kit. Anthropic ships no official
 video skills — this repo's studio-skill work remains differentiated.
+
+---
+
+## 7. Agent-expertise sweep via Gemini, cross-verified (fifth sweep, 2026-08-03)
+
+The founder ran our authored deep-research prompt through Gemini (doc on file); this
+section is the Fable verification-and-integration pass over its results. Headline: the
+report named only real, well-known projects — and still contained three citation defects
+and one license error, which is exactly why the verify pass exists:
+
+**Corrections to Gemini's record (verified against GitHub 2026-08-03):**
+- Instructor lives at `567-labs/instructor` (not jxnl/), MIT, active, 13.7k★.
+- Outlines lives at `dottxt-ai/outlines` (not outlines-dev/), Apache, active, 15.5k★.
+- The SKILL.md standard is `anthropics/skills` (166k★), not anthropics/courses.
+- Wan2.2 flagged "HIGH RISK possibly non-commercial" — **wrong**: Apache-2.0, verified
+  at source in sweep 1. (LTX-2's custom-but-commercial-OK license was already recorded.)
+
+**Adopted:**
+- `danielmiessler/Fabric` (MIT, 43k★, v1.4.447) — patterns corpus as a reference shelf;
+  the creative department mines it for critique rubrics.
+- `anthropics/skills` — the canonical SKILL.md reference for authoring studio skills.
+- **The pattern layer, built in-repo** (Gemini's best content was patterns, not tools):
+  `studio/rubrics/creative-constitution.md` (8 articles + a bounded Self-Refine loop
+  contract for critique-and-revise) and `studio/rubrics/style-rules.yaml` +
+  `scripts/studio/style_gate.py` — the mechanical banned-cliché/AI-tell checker with a
+  selftest. Its five "techniques without tools" all validate practices this platform
+  already runs (file-based Ralph memory, two-source verification, error-injected
+  retries, mechanical pre-render QC) — independent confirmation, recorded as such.
+
+**Declined, with reasons (doctrine over fashion):**
+- LangGraph as "the structural backbone" — our backbone is Claude Code subagents +
+  file handoffs + bounded ralph loops, chosen deliberately; adopting a second
+  orchestrator repeats the ViMax decision. Catalogued for a future standalone service.
+- Mem0 / managed memory layers — file-based memory IS the studio's doctrine, and
+  Gemini's own techniques section endorses exactly that. No.
+- Instructor/Pydantic/DSPy as runtime deps — our agents are Claude Code (schema
+  enforcement already happens at the tool-call layer and in manifest validators); the
+  *pattern* (schema + bounded retry at every boundary) is adopted, the libraries wait
+  for a component that makes raw LLM API calls.
+- Outlines — GPU-phase constrained decoding for locally hosted LLMs; catalogued until
+  a local LLM exists.
+- Promptfoo / DeepEval — the honest "next infrastructure" for prompt-regression CI;
+  catalogued with a trigger: adopt when agent charters change often enough that manual
+  review misses regressions (e.g., at a second production channel).
+- CrewAI / MetaGPT / AutoGPT / BabyAGI / ChatDev — agreed with Gemini's own
+  catalog/decline calls; recorded so no future sweep re-litigates them.
