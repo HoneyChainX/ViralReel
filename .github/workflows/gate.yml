@@ -25,6 +25,10 @@ jobs:
         with:
           python-version: '3.11'
 
+      # test_platform.py validates config/platform.yaml, which needs a YAML parser.
+      - name: Install test dependencies
+        run: pip install pyyaml
+
       # ffprobe backs delivery QC (C9). Without it those checks skip, which
       # would quietly hollow out the suite — so install it explicitly.
       - name: Install ffmpeg
@@ -57,10 +61,12 @@ jobs:
 
       - name: Shell syntax
         run: |
-          for f in scripts/*.sh; do bash -n "$f" && echo "ok $f"; done
+          for f in scripts/*.sh scripts/studio/*.sh ralph/ralph.sh; do bash -n "$f" && echo "ok $f"; done
 
       - name: Python syntax
-        run: python3 -m py_compile scripts/gate.py tests/test_gate.py
+        run: |
+          python3 -m py_compile scripts/gate.py tests/test_gate.py \
+            scripts/studio/platform.py tests/test_platform.py studio/adapters/*.py
 
       - name: Makefile targets resolve
         run: make help >/dev/null && echo "ok Makefile"

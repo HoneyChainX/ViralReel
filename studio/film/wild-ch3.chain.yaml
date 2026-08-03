@@ -1,0 +1,9 @@
+# Seamless chain — WILD chapter 3: one continuous 30s shot from 3 chained segments.
+chain:
+  slug: wild-ch3
+  delivery: { width: 1920, height: 1080, fps: 30 }
+  handoff: { mode: exact, overlap_frames: 1, ssim_min: 0.97 }
+segments:
+  - { id: ch3s1, source: out/wild-chain/w-1800-2100.mp4 }
+  - { id: ch3s2, source: out/wild-chain/w-2100-2400.mp4 }
+  - { id: ch3s3, source: out/wild-chain/w-2400-2699.mp4 }

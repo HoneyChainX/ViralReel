@@ -1,0 +1,49 @@
+{
+  "slug": "desert-sea-15s",
+  "duration_s": 15.0,
+  "delivery": "1080x1920 30fps H.264 high + AAC",
+  "transitions": "xfade 0.5s x4",
+  "audio": "single ocean bed (shot 4 source), loudnorm I=-14 TP=-1, fade-in 6s (pre-lap), fade-out 1.5s",
+  "measured": {
+    "integrated_lufs": -15.3,
+    "duration_s": 15.0
+  },
+  "slate": "burned-in test slate 0.4–3.0s, Liberation Sans (DECISIONS D3 fallback face)",
+  "shots": [
+    {
+      "shot": 1,
+      "window_s": "0.0–3.4",
+      "intent": "Desert establishing — Mojave sunset, Joshua trees",
+      "source": "File:Mojave Desert Sunset (40480403760).webm",
+      "treatment": "src crop 1920x784+0+148 (baked letterbox removed), ss 2s"
+    },
+    {
+      "shot": 2,
+      "window_s": "2.9–6.3",
+      "intent": "Desert animals — camels racing, Alice Springs",
+      "source": "File:Race Nine at the 2015 Alice Springs Camel Cup.webm",
+      "treatment": "ss 6s"
+    },
+    {
+      "shot": 3,
+      "window_s": "5.8–9.2",
+      "intent": "Desert wildlife close — patch-nosed snake",
+      "source": "File:Grand Canyon National Park- Patch-nosed Snake 3126 (8614460814).webm",
+      "treatment": "ss 5s"
+    },
+    {
+      "shot": 4,
+      "window_s": "8.7–12.1",
+      "intent": "Sea — waves on black-sand coast, Iceland",
+      "source": "File:Ocean waves at Lækjavik beach, Iceland.webm",
+      "treatment": "ss 2s; also the 15s audio bed (looped, pre-lapped)"
+    },
+    {
+      "shot": 5,
+      "window_s": "11.6–15.0",
+      "intent": "Sea life — bannerfish on coral reef",
+      "source": "File:Tropical Fish Banner Fish on Coral Reef.webm",
+      "treatment": "ss 3s"
+    }
+  ]
+}

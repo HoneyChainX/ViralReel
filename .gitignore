@@ -32,3 +32,26 @@ __pycache__/
 node_modules/
 
 .DS_Store
+
+# Ralph loop runtime transcripts — machine-local, never committed (ralph/README.md)
+ralph/logs/
+
+# Cloned vendor dependencies — installed by scripts/setup.sh and scripts/studio/install.sh, never committed
+vendor/
+out/
+content/tests/*/assets/
+content/tests/kids-cartoon-60s/vo/*.wav
+content/tests/kids-cartoon-60s/audio60.m4a
+content/tests/*/audio60.m4a
+content/tests/*/remotion/node_modules/
+content/films/*/remotion/node_modules/
+content/films/*/audio/*.flac
+content/films/*/audio/*.wav
+content/films/*/audio/*.ogg
+content/films/*/audio/*.webm
+content/films/*/audio/*.m4a
+content/films/*/vo/*.wav
+content/films/*/*.m4a
+
+# Published deliverables are the one sanctioned home for tracked media
+!releases/*.mp4

@@ -1,0 +1,30 @@
+{
+  "film": "wild-3min",
+  "output": "out/wild-3min.mp4",
+  "scenes": [
+    "ch1-savanna",
+    "ch2-forest",
+    "ch3-river",
+    "ch4-mountain",
+    "ch5-ocean",
+    "ch6-night"
+  ],
+  "duration_s": 180.0,
+  "expected_s": 180.0,
+  "duration_ok": true,
+  "delivery": "1920x1080@30",
+  "delivery_ok": true,
+  "integrated_lufs": -70.0,
+  "cut_check": {
+    "expected_hard_cuts": [
+      30.0,
+      60.0,
+      90.0,
+      120.0,
+      150.0
+    ],
+    "detected_boundaries": 6,
+    "missed": [],
+    "ok": true
+  }
+}

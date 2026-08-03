@@ -1,0 +1,52 @@
+{
+  "chain": "cami-chain-demo",
+  "output": "out/cami-chain-demo.mp4",
+  "segments": [
+    "seg1",
+    "seg2",
+    "seg3",
+    "seg4",
+    "seg5"
+  ],
+  "handoff": {
+    "mode": "exact",
+    "overlap_frames": 1,
+    "ssim_min": 0.97
+  },
+  "joins": [
+    {
+      "join": "seg1\u2192seg2",
+      "ssim": 0.9954,
+      "ok": true
+    },
+    {
+      "join": "seg2\u2192seg3",
+      "ssim": 0.9944,
+      "ok": true
+    },
+    {
+      "join": "seg3\u2192seg4",
+      "ssim": 0.9959,
+      "ok": true
+    },
+    {
+      "join": "seg4\u2192seg5",
+      "ssim": 0.9952,
+      "ok": true
+    }
+  ],
+  "duration_s": 25.033,
+  "expected_s": 25.033,
+  "duration_ok": true,
+  "seam_check": {
+    "join_times": [
+      5.0,
+      10.0,
+      15.0,
+      20.0
+    ],
+    "visible_seams": [],
+    "ok": true
+  },
+  "note": "picture only by design \u2014 audio is laid over the continuous shot at film level"
+}

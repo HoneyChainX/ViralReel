@@ -1,0 +1,24 @@
+# Film manifest — the editorial source of truth for one assembled film.
+# Scenes are produced independently by any lane; conform links them (docs/12).
+#   python3 scripts/studio/conform.py validate studio/film/showcase-reel.yaml
+#   python3 scripts/studio/conform.py timeline studio/film/showcase-reel.yaml
+#   python3 scripts/studio/conform.py render   studio/film/showcase-reel.yaml
+
+slug: showcase-reel
+title: "ViralReel Studio — Platform Showcase Reel"
+
+delivery:
+  width: 1080
+  height: 1920
+  fps: 30
+  lufs: -14
+  fit: crop          # crop | pad — how off-spec scenes conform
+
+scenes:
+  - id: sourced-lane
+    source: out/desert-sea-15s.mp4      # scene from the sourced-footage lane
+    transition_out: { type: xfade, dur: 0.6 }
+
+  - id: cartoon-lane
+    source: out/kids-cartoon-60s.mp4    # scene from the programmatic-animation lane
+    # last scene — no transition_out
