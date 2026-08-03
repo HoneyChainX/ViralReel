@@ -11,6 +11,7 @@ Commands:
   platform.py list    [--profile P]      show modules and their state
   platform.py install [--profile P]      clone + install enabled modules for a profile
   platform.py doctor  [--profile P]      verify everything; exit 1 on any red check
+  platform.py pin     [--profile P]      pin each installed module's ref to its clone's SHA
 """
 from __future__ import annotations
 
@@ -180,6 +181,40 @@ def doctor(data: dict, profile: str | None) -> int:
     return 0
 
 
+# ── pin ─────────────────────────────────────────────────────────────────────
+
+def pin(data: dict, profile: str | None) -> int:
+    """Rewrite `ref:` for every selected module whose vendor clone exists, recording the
+    exact SHA that was verified on this host. `main` means "not yet verified" — after a
+    real install the difference must be visible (pipeline-td charter, rule 2)."""
+    import datetime
+    import re
+
+    today = datetime.date.today().isoformat()
+    text = MANIFEST.read_text()
+    pinned = 0
+    for m in selected(data, profile):
+        d = module_dir(m)
+        if not (d / ".git").exists():
+            continue
+        sha = subprocess.run(["git", "-C", str(d), "rev-parse", "HEAD"],
+                             capture_output=True, text=True).stdout.strip()
+        if not sha or m.get("ref") == sha:
+            continue
+        # Anchor on the module's id line, then replace the first `ref:` after it.
+        pattern = rf"(- id: {re.escape(m['id'])}\n(?:.*\n)*?\s*ref:) \S+(?:[ \t]+#[^\n]*)?"
+        new_text, n = re.subn(
+            pattern, rf"\1 {sha}  # pinned {today}, verified install", text, count=1)
+        if n:
+            text = new_text
+            pinned += 1
+            print(f"pinned {m['id']:<18} {sha[:12]}")
+    if pinned:
+        MANIFEST.write_text(text)
+    print(f"{pinned} module(s) pinned.")
+    return 0
+
+
 # ── list ────────────────────────────────────────────────────────────────────
 
 def list_modules(data: dict, profile: str | None) -> int:
@@ -193,12 +228,13 @@ def list_modules(data: dict, profile: str | None) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("command", choices=["list", "install", "doctor"])
+    ap.add_argument("command", choices=["list", "install", "doctor", "pin"])
     ap.add_argument("--profile", default=None,
                     help="core | genai | animation | distribution | all (default: manifest default)")
     args = ap.parse_args()
     data = load_manifest()
-    return {"list": list_modules, "install": install, "doctor": doctor}[args.command](data, args.profile)
+    return {"list": list_modules, "install": install, "doctor": doctor,
+            "pin": pin}[args.command](data, args.profile)
 
 
 if __name__ == "__main__":

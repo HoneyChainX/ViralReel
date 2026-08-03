@@ -30,7 +30,7 @@ modules:
   # ── core ─────────────────────────────────────────────────────────────────
   - id: openmontage
     repo: https://github.com/calesthio/OpenMontage
-    ref: main
+    ref: 4eab34c5cfcccaa4f1970554928feccce73ee930  # pinned 2026-08-03, verified install
     profile: core
     role: "Agentic video production system — the compose/render spine (hybrid pipeline)"
     license: AGPL-3.0          # copyleft: fine as a tool; matters if we ever host it as a service
@@ -49,7 +49,7 @@ modules:
 
   - id: video-shotcraft
     repo: https://github.com/Vincentwei1021/video-shotcraft
-    ref: main
+    ref: d4915443232e89527fdc9d7e79f132ba411fc440  # pinned 2026-08-03, verified install
     profile: core
     role: "106 cinematic shot recipes + motion previews as an agent skill; Remotion rendering"
     license: Apache-2.0
@@ -66,7 +66,7 @@ modules:
 
   - id: screenplain
     repo: https://github.com/vilcans/screenplain
-    ref: main
+    ref: abf0d0800ab0b9dfd5bbe780137641e746afbad4  # pinned 2026-08-03, verified install
     profile: core
     role: "Fountain screenplay → PDF/HTML/FDX as a pure CLI; scripts stay agent-editable text"
     license: MIT
@@ -85,7 +85,7 @@ modules:
 
   - id: auto-editor
     repo: https://github.com/WyattBlue/auto-editor
-    ref: main
+    ref: 0092d230a178c968d7b66ec80eb4572e3f106e02  # pinned 2026-08-03, verified install
     profile: core
     role: "Automatic silence/motion cutting with timeline export (FCPXML, v3 JSON)"
     license: Unlicense
@@ -101,7 +101,7 @@ modules:
 
   - id: otio
     repo: https://github.com/AcademySoftwareFoundation/OpenTimelineIO
-    ref: main
+    ref: 0eebd211b2055f111e2c53d04b5581adc594c1fc  # pinned 2026-08-03, verified install
     profile: core
     role: "Timeline interchange (ASWF) — the lingua franca between auto-editor, Blender, Remotion"
     license: Apache-2.0
@@ -136,7 +136,7 @@ modules:
   # ── distribution ─────────────────────────────────────────────────────────
   - id: yt-agent
     repo: https://github.com/darkzOGx/youtube-automation-agent
-    ref: main
+    ref: c7c2553c9fbeddab5db4b2f90e19504601cf4a53  # pinned 2026-08-03, verified install
     profile: distribution
     role: "YouTube publish, scheduling, SEO, analytics loop (phase 2 — see DECISIONS D1)"
     license: MIT
@@ -367,7 +367,7 @@ modules:
   # ── voice ────────────────────────────────────────────────────────────────
   - id: whisperx
     repo: https://github.com/m-bain/whisperX
-    ref: main
+    ref: 2cfd7b7c5c7bba144954364db747319b50e8232b  # pinned 2026-08-03, verified install
     profile: voice
     role: "Word-level timestamps + diarization — subtitle-grade caption alignment"
     license: BSD-2-Clause

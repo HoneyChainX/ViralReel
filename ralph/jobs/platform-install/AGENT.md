@@ -1,6 +1,17 @@
 # Operating notes — platform-install
 (Maintained by the loop. Newest lessons at the top. Keep it under ~60 lines; prune stale notes.)
 
+- **2026-08-03 (main session): installs run fine with interactive permissions.** Core +
+  distribution profiles verified (exit 0) and SHA-pinned via the new `platform.py pin`
+  command. The iteration-1 permission findings below remain TRUE for unattended
+  `claude -p --permission-mode acceptEdits` runs — until a founder adds a scoped Bash
+  allowlist to `.claude/settings.json`, this job only works driven from a session with
+  exec/network permissions. Torch-based pip installs (whisperx, comfyui) are the disk/time
+  hogs: ~5-8 GB each with nvidia wheels; check `df` before genai installs on small hosts.
+- Legacy-path gap found: the manifest's openmontage install_cmd does NOT apply
+  scripts/setup.sh's budget pin (mode=cap/$0.00). Run scripts/setup.sh after manifest
+  installs, or the vendor ships budget.mode=warn — a real cost-control hole.
+
 - **Iteration 1 (2026-08-03): environment blocker, not a code bug.** This session's Bash
   permission layer denies two things outright, with no interactive human available to
   approve them mid-run: (1) any interpreter execution — `python3 <script>`, `python3 -c`,
