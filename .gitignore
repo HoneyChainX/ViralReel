@@ -51,3 +51,4 @@ content/films/*/audio/*.ogg
 content/films/*/audio/*.webm
 content/films/*/audio/*.m4a
 content/films/*/vo/*.wav
+content/films/*/*.m4a

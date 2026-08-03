@@ -1,0 +1,86 @@
+[
+  {
+    "key": "c1a",
+    "chapter": 1,
+    "at_s": 8.0,
+    "duration_s": 7.28,
+    "text": "As dawn breaks over the savanna, the world wakes slowly, and light returns to the tall grass."
+  },
+  {
+    "key": "c1b",
+    "chapter": 1,
+    "at_s": 19.0,
+    "duration_s": 5.88,
+    "text": "The giants are already moving. For them, every day begins with a journey."
+  },
+  {
+    "key": "c2a",
+    "chapter": 2,
+    "at_s": 38.0,
+    "duration_s": 6.92,
+    "text": "In the old forest, sunlight falls in ribbons, and every shaft of light is a small stage."
+  },
+  {
+    "key": "c2b",
+    "chapter": 2,
+    "at_s": 49.0,
+    "duration_s": 5.9,
+    "text": "Here, the quiet ones make their living. Patient. Watchful. And rarely seen."
+  },
+  {
+    "key": "c3a",
+    "chapter": 3,
+    "at_s": 68.0,
+    "duration_s": 6.2,
+    "text": "All life follows the river. It carves the land, and the land leans close to drink."
+  },
+  {
+    "key": "c3b",
+    "chapter": 3,
+    "at_s": 79.0,
+    "duration_s": 4.33,
+    "text": "For the fish, the current is both home, and highway."
+  },
+  {
+    "key": "c4a",
+    "chapter": 4,
+    "at_s": 98.0,
+    "duration_s": 5.7,
+    "text": "Above the treeline the air thins, and only the boldest travellers remain."
+  },
+  {
+    "key": "c4b",
+    "chapter": 4,
+    "at_s": 109.0,
+    "duration_s": 6.25,
+    "text": "An eagle owns this silence. Her kingdom is measured in miles of empty sky."
+  },
+  {
+    "key": "c5a",
+    "chapter": 5,
+    "at_s": 128.0,
+    "duration_s": 7.22,
+    "text": "The ocean. The oldest wilderness of all. Beneath its surface, giants glide like slow music."
+  },
+  {
+    "key": "c5b",
+    "chapter": 5,
+    "at_s": 140.0,
+    "duration_s": 5.62,
+    "text": "A whale's breath hangs in the air. A flag, raised from another world."
+  },
+  {
+    "key": "c6a",
+    "chapter": 6,
+    "at_s": 158.0,
+    "duration_s": 5.72,
+    "text": "And when night falls, the wild does not sleep. It simply changes shifts."
+  },
+  {
+    "key": "c6b",
+    "chapter": 6,
+    "at_s": 168.0,
+    "duration_s": 8.75,
+    "text": "Ten thousand small lights carry on the day's unfinished business. The wild endures. And dawn... is never far away."
+  }
+]
