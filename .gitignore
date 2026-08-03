@@ -32,3 +32,6 @@ __pycache__/
 node_modules/
 
 .DS_Store
+
+# Ralph loop runtime transcripts — machine-local, never committed (ralph/README.md)
+ralph/logs/
