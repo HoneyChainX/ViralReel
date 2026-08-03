@@ -52,3 +52,6 @@ content/films/*/audio/*.webm
 content/films/*/audio/*.m4a
 content/films/*/vo/*.wav
 content/films/*/*.m4a
+
+# Published deliverables are the one sanctioned home for tracked media
+!releases/*.mp4
