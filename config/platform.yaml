@@ -329,6 +329,78 @@ modules:
     doctor: []
     notes: "The render-wrangler's growth path: one GPU → adapter; a farm → this."
 
+  - id: videox-fun
+    repo: https://github.com/aigc-apps/VideoX-Fun
+    ref: 248ab0ac0ebc48f0b4ae43ceb2d7ded24cc907bb  # pinned 2026-08-03, verified install
+    profile: genai
+    role: "Wan-Fun InP weights — first/last-frame conditioning for seamless chains (FLF2V)"
+    license: Apache-2.0
+    cost: free
+    gpu: required              # 12–24 GB by variant
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/videox-fun }
+    notes: >
+      The GPU-host engine for continuity-supervisor's keyframe-first chains: both boundary
+      frames of a segment pinned inside the diffusion. Mature, ComfyUI-native, Apache
+      (bigco research, docs/11 §6).
+
+  - id: longlive
+    repo: https://github.com/NVlabs/LongLive
+    ref: e861f2161c0668cfac54e86aa951495578643a91  # pinned 2026-08-03, verified install
+    profile: genai
+    role: "NVIDIA LongLive — Wan-lineage autoregressive long video (240s+, KV-recache joins)"
+    license: Apache-2.0
+    cost: free
+    gpu: required              # H100/Blackwell validated; FP8/NVFP4 paths
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/longlive }
+    notes: >
+      The single most chaining-relevant big-co find: frame-level autoregression with
+      KV-recache on prompt switches — a principled in-model version of our handoff
+      contract. When the GPU host arrives, chains longer than ~5 hops should compare
+      seamless.py stitching vs LongLive native generation and use whichever seams less.
+
+  - id: sam2
+    repo: https://github.com/facebookresearch/sam2
+    ref: 2b90b9f5ceec907a1c18123530e92e794ad901a4  # pinned 2026-08-03, verified install
+    profile: genai
+    role: "Meta SAM 2.1 — segmentation/masking for roto; tiny models run on CPU"
+    license: Apache-2.0
+    cost: free
+    gpu: optional              # tiny/small image modes CPU-OK; video tracking wants CUDA
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/sam2 }
+    notes: >
+      The roto/prep department (fully-automatable band, docs/11 §3). SAM 3.x is the GPU
+      upgrade path but carries the more restrictive SAM License — 2.1 stays the Apache
+      default here.
+
+  - id: comfy-workflow-templates
+    repo: https://github.com/Comfy-Org/workflow_templates
+    ref: 7653f1cdef1d92394b6ef9946018c0a8aa4136b8  # pinned 2026-08-03, verified install
+    profile: genai
+    role: "Comfy-Org official workflow templates — the canonical graph blueprints corpus"
+    license: open (Comfy-Org)
+    cost: free
+    gpu: none                  # JSON graphs; execution happens in ComfyUI
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/comfy-workflow-templates }
+    notes: >
+      gen-supervisor's reference shelf: start studio/workflows/ looks from the official
+      templates (incl. Wan FLF2V graphs) instead of folklore. Very active upstream.
+
   # ── animation ────────────────────────────────────────────────────────────
   - id: blender
     repo: https://github.com/blender/blender
@@ -462,6 +534,44 @@ modules:
       'Vox director' does not exist as a real OSS project (verified 2026-08); VoxCPM is the
       credible substitute for the implied role. ElevenLabs remains primary VO for Price
       Archaeology per DECISIONS D7 — VoxCPM serves voice-design R&D and non-flagship projects.
+
+  - id: vibevoice
+    repo: https://github.com/microsoft/VibeVoice
+    ref: 94da20d98b2fa7688e9cbfaf7692ddb4954f7600  # pinned 2026-08-03, verified install
+    profile: voice
+    role: "Microsoft VibeVoice — MIT TTS (+BitNet ASR real-time on 3 CPU threads)"
+    license: MIT (code + weights)
+    cost: free
+    gpu: optional              # ASR is CPU-real-time; 1.5B TTS small-GPU or slow-CPU
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/vibevoice }
+    notes: >
+      Top CPU-first pick of the big-co sweep (docs/11 §6): fully MIT code AND weights —
+      the cleanest-rights voice stack in the bench. Candidate to consolidate the voice
+      profile around; ElevenLabs remains primary flagship VO per D7.
+
+  - id: mediapipe
+    repo: https://github.com/google-ai-edge/mediapipe
+    ref: ad170a031f03a606141c580c7f1f99757d10a799  # pinned 2026-08-03, verified install
+    profile: core
+    role: "Google MediaPipe — CPU-native per-frame analysis (faces, pose, objects) for QC"
+    license: Apache-2.0
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install mediapipe"
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/mediapipe }
+      - { type: cmd, run: "vendor/mediapipe/.venv/bin/python -c 'import mediapipe'" }
+    notes: >
+      QC eyes that run anywhere: caption-overlap-with-face checks, subject-in-frame
+      verification at conform, thumbnail face heuristics. Serves post-supervisor and
+      film-editor on this CPU host today.
 
   # ── audio (music generation FORBIDDEN on Price Archaeology — DECISIONS D5) ─
   - id: mmaudio

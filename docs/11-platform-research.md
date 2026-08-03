@@ -170,3 +170,58 @@ premature; photon wrong target.
 **License landmines added to the map:** Remotion is source-available with a paid company
 license (free for individuals/small teams) — fine today, budget for it at company scale;
 StoryDiffusion code CC BY-NC; MovieAgent unlicensed; VideoClaw unverified.
+
+---
+
+## 6. Big-company open tools, skills & blueprints (fourth sweep, 2026-08-03)
+
+Three parallel sweeps: NVIDIA · US/EU big tech · Chinese labs + the skills/blueprints
+wave. Full verdict tables in the research transcripts; what matters:
+
+**Adopted into the manifest (verified repos, owned by a department):**
+- `NVlabs/LongLive` (Apache) — Wan-lineage autoregressive long video, 240s+, KV-recache
+  on prompt switches — the in-model counterpart of our seamless-chaining contract.
+  GPU-phase; continuity-supervisor compares it against seamless.py stitching per chain.
+- `aigc-apps/VideoX-Fun` (Apache) — Wan-Fun InP first/last-frame weights; the mature
+  FLF2V engine for keyframe-first chains.
+- `facebookresearch/sam2` (Apache) — roto/masking; tiny models CPU-viable. (SAM 3.x is
+  stronger but under the more restrictive SAM License — 2.1 stays the default.)
+- `microsoft/VibeVoice` (MIT code+weights) — cleanest-rights voice stack in the bench;
+  BitNet ASR runs real-time on 3 CPU threads.
+- `google-ai-edge/mediapipe` (Apache, CPU-native) — per-frame QC eyes for post/editorial.
+- `Comfy-Org/workflow_templates` — the canonical "blueprints" corpus for ComfyUI graphs.
+
+**NVIDIA notebook (catalog):** VSS blueprint (video→text agents; its `vss-*` agent skills
+are literally available in this session — future automated dailies-review/QC); Cosmos
+Predict2.5 video-extension conditioning (limited-maintenance, watch Cosmos 3); NeMo
+Parakeet ASR (CC-BY) for caption QC; `mudler/magpie-tts.cpp` (MIT, pure-CPU TTS, 63×
+reference speed) as a Piper-class fallback candidate; TensorRT **Model-Optimizer**
+(Apache) — the tooling behind official LTX-2 NVFP4/FP8 releases (3× faster, −60% VRAM on
+RTX 50) — first thing to apply when the GPU host lands; Audio2Face-3D (open, Apache
+training framework) for a future avatar format. Maxine: proprietary, skip. DALI: skip
+(ffmpeg owns production I/O).
+
+**US/EU notebook:** VMAF v1 models (Jun 2026) add banding/color awareness — refresh the
+QC gate when packaging; DINOv3 embeddings as continuity/drift metrics for chains
+(attribution clause); VideoPrism (Apache/CC-BY) for video retrieval-QC; Magenta RealTime
+open music gen; Stable Audio 3 (<$1M community license); FLUX.2 Klein (Apache 4B/9B) as
+GPU keyframe engine — repo name unverified at sweep time, verify before manifesting;
+Intel OpenVINO as CPU inference runtime (has an LTX-Video pipeline). License watchlist:
+CC-BY-NC blocks AudioCraft weights/CoTracker/ImageBind/FLUX.2-dev from the commercial
+path; Adobe ships nothing real (catalog C2PA/contentauth for provenance tooling).
+
+**China notebook:** the open/closed split hardened — Seedance/Kling closed, Alibaba's
+open line froze at Wan2.2, Tencent open-but-encumbered. Long video is an
+autoregressive-distillation story: Self-Forcing → Rolling Forcing (real-time, ckpt
+released; licenses need verification) — the watchlist for our chaining layer, alongside
+SkyReels-V3 V2V extension and KlingAI Research's MemFlow/ShotStream papers, all of which
+validate the plan-then-refine + frame-handoff architecture. FramePack (Apache, 6 GB VRAM)
+is the low-VRAM long-video tier. FunASR/CosyVoice3 catalogued (whisperX/Kokoro already
+hold those seats). **Territory-clause traps found:** HunyuanVideo-1.5 (no EU/UK/KR, MAU
+cap), MiniMax-H3 (excludes US/EU/UK/KR), SongGeneration (non-commercial) — manifest
+entries must carry verified license AND territory before adoption; SEO farms are
+fabricating "open" releases (a fake "Wan 2.7 open weights" among them).
+
+**Skills wave:** HeyGen HyperFrames (open, agent-native motion graphics — its MCP is
+connected to this session), Wan-skills, ComfyUI-Agent-Kit. Anthropic ships no official
+video skills — this repo's studio-skill work remains differentiated.
