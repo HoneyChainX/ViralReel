@@ -1,0 +1,14 @@
+{
+  "name": "kids-cartoon-60s",
+  "private": true,
+  "description": "ViralReel platform test — programmatic 60s kids cartoon (Cami & Finn)",
+  "scripts": {
+    "render": "remotion render src/index.ts Cartoon ../../../../out/kids-cartoon-60s-video.mp4"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.240",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.240"
+  }
+}
