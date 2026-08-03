@@ -1,0 +1,47 @@
+[
+  {
+    "asset": "File:Mojave Desert Sunset (40480403760).webm",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Mojave_Desert_Sunset_(40480403760).webm",
+    "file_url": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Mojave_Desert_Sunset_%2840480403760%29.webm",
+    "license": "Public domain",
+    "license_url": null,
+    "attribution": "blmcalifornia",
+    "attribution_required": false
+  },
+  {
+    "asset": "File:Race Nine at the 2015 Alice Springs Camel Cup.webm",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Race_Nine_at_the_2015_Alice_Springs_Camel_Cup.webm",
+    "file_url": "https://upload.wikimedia.org/wikipedia/commons/5/56/Race_Nine_at_the_2015_Alice_Springs_Camel_Cup.webm",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "attribution": "Cazz",
+    "attribution_required": false
+  },
+  {
+    "asset": "File:Grand Canyon National Park- Patch-nosed Snake 3126 (8614460814).webm",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Grand_Canyon_National_Park-_Patch-nosed_Snake_3126_(8614460814).webm",
+    "file_url": "https://upload.wikimedia.org/wikipedia/commons/3/36/Grand_Canyon_National_Park-_Patch-nosed_Snake_3126_%288614460814%29.webm",
+    "license": "Public domain",
+    "license_url": null,
+    "attribution": "Grand Canyon NPS",
+    "attribution_required": false
+  },
+  {
+    "asset": "File:Ocean waves at Lækjavik beach, Iceland.webm",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Ocean_waves_at_L%C3%A6kjavik_beach,_Iceland.webm",
+    "file_url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Ocean_waves_at_L%C3%A6kjavik_beach%2C_Iceland.webm",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0",
+    "attribution": "Alexander Grebenkov",
+    "attribution_required": true
+  },
+  {
+    "asset": "File:Tropical Fish Banner Fish on Coral Reef.webm",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Tropical_Fish_Banner_Fish_on_Coral_Reef.webm",
+    "file_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Tropical_Fish_Banner_Fish_on_Coral_Reef.webm",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0",
+    "attribution": "underwatercam",
+    "attribution_required": true
+  }
+]

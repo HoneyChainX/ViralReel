@@ -39,3 +39,4 @@ ralph/logs/
 # Cloned vendor dependencies — installed by scripts/setup.sh and scripts/studio/install.sh, never committed
 vendor/
 out/
+content/tests/*/assets/
