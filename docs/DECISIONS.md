@@ -80,3 +80,25 @@ Measured runway: worst-case ~56, typical ~95–168 episodes on the current 124,9
 balance — one episode costs ~0.6% of the pool. Shipping Piper to "save credits" spends brand
 recognition on a non-scarce resource. A dead key must degrade LOUDLY: fallback is a decision
 recorded in the episode log, not an automatic swap.
+
+## D8 — The studio platform: capability is universal, permission is per-project.
+**Decided:** 2026-08 (platform integration). **Status:** active; CI-pinned (tests/test_platform.py).
+
+The studio integrates generative engines, drama pipelines, animation suites and foley
+models via `config/platform.yaml` (docs/10) — and none of that changes one rule of Price
+Archaeology, whose doctrine (docs/04, docs/05) remains project law. Four standing terms:
+
+1. **$0 default, mechanically.** `cost: paid` modules ship `enabled: false`; both the
+   manifest loader and the test suite hard-fail otherwise. Enabling a paid module is a
+   per-project founder edit. (This is why Open-Generative-AI and higgsfield-skills sit in
+   the manifest disabled: catalogued so nobody mistakes them for free engines.)
+2. **The gate is fenced off from automation.** `ralph/ralph.sh` reverts and kills any loop
+   that touches `scripts/gate.py`, `tests/`, or `docs/05-compliance.md`.
+3. **Catalog, don't hoard.** A module enters the manifest only when a department charter
+   owns it; evaluated-and-declined tools are recorded in docs/11 with reasons.
+4. **Loops are bounded and end at human gates.** Hook choice and publish remain human;
+   no iteration budget is unbounded.
+
+**Re-evaluate when:** a second production project actually launches (revisit Kitsu/AYON
+tracking and the disabled farm/distribution modules), or a paid engine is proposed for a
+specific project (that's a per-project decision, logged here as its own entry).

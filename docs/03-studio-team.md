@@ -1,6 +1,8 @@
 # 03 — The Studio
 
-Fourteen agents: thirteen across four departments, plus the gate. Each charter is modeled on a real discipline from
+Twenty-one agents: thirteen across the four channel departments, plus the gate, plus seven
+across the three platform departments added with the studio-platform integration
+(docs/10-platform.md). Each charter is modeled on a real discipline from
 the brand-studio world — not on any particular firm's identity, but on the *job* those studios
 do well: strategy shops that decide what a brand refuses to make, format-IP houses that build
 repeatable ideas, motion studios that make one move ownable, direct-response desks that live
@@ -111,6 +113,60 @@ sources, confirms the original research artifact exists, checks asset licenses, 
 disclosure, and enforces the publish cap. **Assumes every video is non-compliant until proven
 otherwise.** Has veto over every other agent. Its failures are the only ones that end the
 company, so it is the one agent instructed to be difficult.
+
+---
+
+## The platform departments (added 2026-08)
+
+Seven further charters modeled on the roles top-tier studios actually staff — animation
+houses (layout, supervising animator, pipeline TD), VFX/post houses (CG supervisor, render
+wrangler), and modern creator studios. Research basis: docs/11-platform-research.md. Two
+things distinguish them from the channel departments above:
+
+- **Platform engineering** serves every project including Price Archaeology.
+- **Picture and Sound** activate on *non-provenance* projects (scripted, animated,
+  generative). On Price Archaeology their generative capabilities are off by charter —
+  the gate's rules (docs/05) outrank every one of them.
+
+### Platform engineering
+
+**`pipeline-td`** — *The role every studio hires first and thanks last.* Owns
+`config/platform.yaml`, vendor pins, the adapters in `studio/adapters/`, the ralph harness,
+and the studio doctor. Vendors are cloned, never forked; paid modules stay mechanically
+disabled; verified installs get pinned SHAs.
+
+**`render-wrangler`** — *Farm ops, no creative opinions.* Runs every engine headlessly —
+ComfyUI via the adapter, Remotion, tcomposer batches, Blender. VRAM budgeting by
+arithmetic, one diagnosed retry, ffprobe QC on everything, and a hard refusal to run
+generative engines against archival footage.
+
+### Picture
+
+**`previs-director`** — *Layout's front half.* Shot lists, boards, camera and blocking
+proposals before anything renders, built on video-shotcraft's 106-recipe vocabulary and
+Blender/Storypencil when 3D blocking is warranted. Every shot declares where its pixels
+come from.
+
+**`gen-supervisor`** — *CG supervisor for open-weights engines.* Picks the model per shot
+(LTX-2 for audio-synced work, Wan2.2 for permissive-license deliverables), keeps approved
+looks as committed ComfyUI graphs in `studio/workflows/`, and enforces the
+no-synthetic-archival law hardest because it is best positioned to break it.
+
+**`animation-director`** — *Humans author; the agent briefs, reviews, and drives the
+seams.* OpenToonz and Blender handoffs, Toonflow drama workflows, frame-accurate briefs,
+and a strict policy line: generative in-betweening saves wrists between authored keys,
+never generates performance from nothing.
+
+**`story-showrunner`** — *Head-of-format for fiction.* Series bibles, episode arcs,
+Fountain screenplays as the canonical substrate, and command of DramaClaw's script→film
+pipeline — whose inference gateway only a founder may point anywhere.
+
+### Sound
+
+**`sound-designer`** — *Half the picture, deliberately.* Foley via MMAudio, music via
+ACE-Step where a format permits, sound maps with chosen silences, −14 LUFS discipline.
+On Price Archaeology, D5 stands: no generated music, ever; archival sound and mix review
+only.
 
 ---
 

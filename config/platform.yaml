@@ -1,0 +1,470 @@
+# Studio platform manifest — the single source of truth for every integrated repo.
+#
+# Managed by scripts/studio/platform.py (list | install | doctor) and the
+# `platform-install` ralph loop. Vendors are cloned to vendor/<id>, never forked
+# or patched — configuration happens from outside (the scripts/setup.sh contract).
+#
+# Doctrine (docs/10-platform.md, DECISIONS D8):
+#   * cost: paid  modules MUST ship enabled: false. The manifest loader hard-fails
+#     otherwise. Paid connectors are per-project founder decisions, never defaults.
+#   * install: desktop modules are human-installed authoring tools; the installer
+#     skips them and the doctor doesn't gate on them.
+#   * refs are `main` until the platform-install loop completes a verified install,
+#     at which point it pins the exact SHA it verified.
+#
+# Identification research (licenses, VRAM, maintenance, fuzzy-name resolution):
+# docs/11-platform-research.md.
+
+version: 1
+default_profile: core
+
+profiles:
+  core:         "Provenance pipeline — what Price Archaeology ships on today. $0, no GPU."
+  distribution: "Publish, schedule, SEO, analytics."
+  genai:        "Local open-weights generation engines. GPU host. Off for provenance channels."
+  animation:    "2D/3D animation + drama pipelines. Mostly human-in-the-loop authoring tools."
+  voice:        "Speech: transcription, alignment, TTS beyond ElevenLabs."
+  audio:        "Sound design: foley + music generation. Music is FORBIDDEN on Price Archaeology (D5)."
+
+modules:
+  # ── core ─────────────────────────────────────────────────────────────────
+  - id: openmontage
+    repo: https://github.com/calesthio/OpenMontage
+    ref: main
+    profile: core
+    role: "Agentic video production system — the compose/render spine (hybrid pipeline)"
+    license: AGPL-3.0          # copyleft: fine as a tool; matters if we ever host it as a service
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "make setup && cp -n .env.example .env || true"
+    enabled: true
+    doctor:
+      - { type: dir,  path: vendor/openmontage }
+      - { type: file, path: vendor/openmontage/.env }
+    notes: >
+      Already the production backbone (docs/04). scripts/setup.sh additionally pins
+      budget.mode=cap/$0.00 and checkpoint.policy=auto_noncreative — keep using it.
+
+  - id: video-shotcraft
+    repo: https://github.com/Vincentwei1021/video-shotcraft
+    ref: main
+    profile: core
+    role: "106 cinematic shot recipes + motion previews as an agent skill; Remotion rendering"
+    license: Apache-2.0
+    cost: free
+    gpu: none
+    headless: true
+    install: clone-only        # linked into the agent's skill path; rendering via npx remotion
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/video-shotcraft }
+    notes: >
+      Feeds motion-director and the new previs role: shot vocabulary, sequence patterns,
+      beat-sync method. CPU-only Remotion rendering — fits the $0 doctrine exactly.
+
+  - id: screenplain
+    repo: https://github.com/vilcans/screenplain
+    ref: main
+    profile: core
+    role: "Fountain screenplay → PDF/HTML/FDX as a pure CLI; scripts stay agent-editable text"
+    license: MIT
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install ."
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/screenplain }
+    notes: >
+      Fountain plain text is the platform's canonical script format across every project —
+      the substrate agents and humans share. betterfountain (VS Code) is the human editor
+      for the same files; it installs from the marketplace, not here.
+
+  - id: auto-editor
+    repo: https://github.com/WyattBlue/auto-editor
+    ref: main
+    profile: core
+    role: "Automatic silence/motion cutting with timeline export (FCPXML, v3 JSON)"
+    license: Unlicense
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install auto-editor"
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/auto-editor }
+    notes: "The editorial department's rough-cut pass; feeds OTIO/Remotion, never final rhythm."
+
+  - id: otio
+    repo: https://github.com/AcademySoftwareFoundation/OpenTimelineIO
+    ref: main
+    profile: core
+    role: "Timeline interchange (ASWF) — the lingua franca between auto-editor, Blender, Remotion"
+    license: Apache-2.0
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install opentimelineio"
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/otio }
+      - { type: cmd, run: "vendor/otio/.venv/bin/python -c 'import opentimelineio'" }
+    notes: "Adopted as a file standard: cuts move between tools as .otio, not as prose."
+
+  - id: pinokio
+    repo: https://github.com/pinokiocomputer/pinokio
+    ref: main
+    profile: core
+    role: "One-click local AI app installer/launcher for the founder's workstation"
+    license: MIT
+    cost: free
+    gpu: none
+    headless: false
+    install: desktop
+    enabled: false
+    doctor: []
+    notes: >
+      Human tool, not a pipeline component — DramaClaw and OpenMontage both ship as
+      Pinokio apps, so it's the easiest GUI path onto a founder machine. The server
+      side of this platform never depends on it.
+
+  # ── distribution ─────────────────────────────────────────────────────────
+  - id: yt-agent
+    repo: https://github.com/darkzOGx/youtube-automation-agent
+    ref: main
+    profile: distribution
+    role: "YouTube publish, scheduling, SEO, analytics loop (phase 2 — see DECISIONS D1)"
+    license: MIT
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "npm install"
+    enabled: true
+    doctor:
+      - { type: dir,  path: vendor/yt-agent }
+      - { type: file, path: vendor/yt-agent/package.json }
+    notes: "Distribution stays manual-first until D1 is re-evaluated; installed but idle."
+
+  - id: postiz
+    repo: https://github.com/gitroomhq/postiz-app
+    ref: main
+    profile: distribution
+    role: "Self-hosted multi-platform scheduler/publisher (YouTube, TikTok, IG, X, …) with API"
+    license: AGPL-3.0
+    cost: free
+    gpu: none
+    headless: true
+    install: clone-only        # runs via Docker when a founder decides to stand it up
+    enabled: false             # DECISIONS D1 (manual-first) and D2 (no TikTok) both bind here
+    doctor: []
+    notes: >
+      The multi-platform future when D1/D2 are re-evaluated: 30+ platforms, public API,
+      self-hosted. Until then it is catalogued and off — enabling it does not repeal D2.
+
+  # ── genai (GPU host; off for provenance channels by charter) ─────────────
+  - id: comfyui
+    repo: https://github.com/Comfy-Org/ComfyUI
+    ref: main
+    profile: genai
+    role: "Node-graph inference engine — the automation backbone every open model plugs into"
+    license: GPL-3.0
+    cost: free
+    gpu: required
+    headless: true             # REST /prompt + WebSocket; workflows are JSON graphs
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install -r requirements.txt"
+    enabled: true
+    doctor:
+      - { type: file, path: vendor/comfyui/main.py }
+      - { type: dir,  path: vendor/comfyui/.venv }
+      - { type: cmd,  run: "python3 studio/adapters/comfyui_client.py --selftest", needs_gpu: true }
+    notes: "Driven exclusively through studio/adapters/comfyui_client.py in this platform."
+
+  - id: ltx-2
+    repo: https://github.com/Lightricks/LTX-2
+    ref: main
+    profile: genai
+    role: "LTX-2.3 22B open-weights joint audio+video generation (native 4K, T2V/I2V)"
+    license: "LTX-2 custom (open weights, commercial OK, not OSI)"
+    cost: free
+    gpu: required              # ~24 GB comfortable; fp8 + cpu/disk offload lowers it
+    headless: true
+    install: clone-only        # runs via uv, not pip: `uv run python -m ltx_pipelines.distilled`
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/ltx-2 }
+    notes: >
+      Preferred first engine for generative projects: open weights AND synchronized audio.
+      Also reachable through ComfyUI (Lightricks/ComfyUI-LTXVideo + core support), which is
+      how the adapter drives it. There is no "LTX-2.5" — 2.3 is current open weights.
+
+  - id: wan2-2
+    repo: https://github.com/Wan-Video/Wan2.2
+    ref: main
+    profile: genai
+    role: "Alibaba Wan2.2 open T2V/I2V (MoE A14B + TI2V-5B, 720p24)"
+    license: Apache-2.0
+    cost: free
+    gpu: required              # TI2V-5B fits one 24 GB card; A14B wants 80 GB-class/multi-GPU
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/wan2-2 }
+    notes: >
+      Wan 2.5/2.6/2.7 are API-only, no open weights — 2.2 is the newest open release and
+      the permissively-licensed counterweight to LTX-2's custom license.
+
+  - id: dramaclaw
+    repo: https://github.com/dramaclaw/dramaclaw
+    ref: main
+    profile: genai
+    role: "Script→finished-film AIGC drama engine (characters, episodes, storyboards, VO, cut)"
+    license: Elastic-2.0       # source-available; cannot be resold as a managed service
+    cost: freemium             # self-hosted Docker; inference goes to a configurable
+                               # OpenAI-compatible gateway — point it at local vLLM for $0
+    gpu: none
+    headless: true             # FastAPI backend + dramaclaw-skills for agent driving
+    install: clone-only        # `docker compose up` is a founder action, not an installer step
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/dramaclaw }
+    notes: >
+      The narrative-format engine for scripted projects (dramas, ads, otome). Its gateway
+      URL is the cost control: unset = nothing billable. Never pointed at paid APIs by a loop.
+
+  - id: open-generative-ai
+    repo: https://github.com/Anil-matcha/Open-Generative-AI
+    ref: main
+    profile: genai
+    role: "Multi-model gen-media frontend (ex 'Open-Higgsfield-AI'; 500+ models via Muapi cloud)"
+    license: MIT
+    cost: paid                 # the app is MIT but every generation call bills cloud credits
+    gpu: none
+    headless: false
+    install: desktop
+    enabled: false             # paid ⇒ must stay disabled by default (loader enforces this)
+    doctor: []
+    notes: >
+      This is what "open Higgsfield ai" resolves to — a community frontend, not open weights.
+      Higgsfield-the-company has open-sourced no models; its official repos are API clients.
+      Kept catalogued so nobody mistakes it for a free engine.
+
+  - id: higgsfield-skills
+    repo: https://github.com/higgsfield-ai/skills
+    ref: main
+    profile: genai
+    role: "Official Higgsfield agent skills/CLI — thin client over the paid Higgsfield API"
+    license: MIT
+    cost: paid                 # every call bills founder credits (docs/04 already flags the MCP)
+    gpu: none
+    headless: true
+    install: clone-only
+    enabled: false             # paid ⇒ disabled; enabling is a per-project founder decision
+    doctor: []
+    notes: "Same billing path as the connected Higgsfield MCP. Catalogued, gated, off."
+
+  - id: practical-rife
+    repo: https://github.com/hzwer/Practical-RIFE
+    ref: main
+    profile: genai
+    role: "Frame interpolation (24→48/60fps, slow-mo) — standard fps-doubling for gen output"
+    license: MIT
+    cost: free
+    gpu: required              # ~4 GB — the lightest GPU module here
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/practical-rife }
+    notes: "Never pointed at archival footage on provenance channels — interpolation is synthesis."
+
+  - id: comfyui-api
+    repo: https://github.com/SaladTechnologies/comfyui-api
+    ref: main
+    profile: genai
+    role: "Stateless scale-out REST wrapper over ComfyUI (sync responses, webhooks, S3)"
+    license: MIT
+    cost: free
+    gpu: none                  # wraps ComfyUI's GPUs; adds none of its own
+    headless: true
+    install: clone-only
+    enabled: false             # single-host studios drive ComfyUI directly via the adapter;
+                               # enable when there is more than one GPU worker to schedule
+    doctor: []
+    notes: "The render-wrangler's growth path: one GPU → adapter; a farm → this."
+
+  # ── animation ────────────────────────────────────────────────────────────
+  - id: blender
+    repo: https://github.com/blender/blender
+    ref: main
+    profile: animation
+    role: "3D backbone: layout, previs (Storypencil), grease pencil, VSE, headless rendering"
+    license: GPL-3.0
+    cost: free
+    gpu: optional              # Cycles wants one; Eevee/GP work without
+    headless: true             # blender -b -P script.py — full Python API
+    install: desktop           # install the official binary, not a source build
+    enabled: false
+    doctor: []
+    notes: >
+      Installed from blender.org per host (a source build is a day of CPU for nothing).
+      Once present, it is fully agent-drivable headlessly — see blender-mcp below.
+
+  - id: blender-mcp
+    repo: https://github.com/ahujasid/blender-mcp
+    ref: main
+    profile: animation
+    role: "MCP server that lets agents drive Blender directly (scenes, materials, assets)"
+    license: MIT
+    cost: free
+    gpu: none
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/blender-mcp }
+    notes: "The seam that turns the animation department agent-drivable; useless until Blender exists."
+
+  - id: opentoonz
+    repo: https://github.com/opentoonz/opentoonz
+    ref: main
+    profile: animation
+    role: "Professional 2D animation suite (Ghibli-lineage Toonz): drawing, x-sheet, fx, render"
+    license: BSD-3-Clause (modified)
+    cost: free
+    gpu: none
+    headless: false            # GUI-first; tcomposer gives batch scene rendering only
+    install: desktop
+    enabled: false
+    doctor: []
+    notes: >
+      Authoring tool for the animation-director role. The automatable seam is tcomposer:
+      humans author scenes, the pipeline batch-renders them. Not a generation service.
+
+  - id: toonflow
+    repo: https://github.com/HBAI-Ltd/Toonflow-app
+    ref: main
+    profile: animation
+    role: "Novel/script→animated short-drama workstation (planning→script→storyboard→output)"
+    license: Apache-2.0
+    cost: free                 # app is free; its model calls go to configurable providers
+    gpu: none
+    headless: false            # Electron desktop, infinite-canvas workbench
+    install: desktop
+    enabled: false
+    doctor: []
+    notes: >
+      Founder-facing authoring environment for animated formats; provider config decides
+      cost, so the $0 posture is: local/free providers only.
+
+  # ── voice ────────────────────────────────────────────────────────────────
+  - id: whisperx
+    repo: https://github.com/m-bain/whisperX
+    ref: main
+    profile: voice
+    role: "Word-level timestamps + diarization — subtitle-grade caption alignment"
+    license: BSD-2-Clause
+    cost: free
+    gpu: optional              # CPU works; GPU recommended
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install whisperx"
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/whisperx }
+    notes: "Caption burn-in accuracy is a delivery-spec item (post-supervisor); this is how it's earned."
+
+  - id: kokoro
+    repo: https://github.com/hexgrad/kokoro
+    ref: main
+    profile: voice
+    role: "82M-param permissive production TTS, CPU-viable — Piper's successor as the free fallback"
+    license: Apache-2.0
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install kokoro soundfile"
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/kokoro }
+    notes: >
+      Candidate replacement for Piper in the VO fallback chain. DECISIONS D7 still holds:
+      ElevenLabs is primary, any fallback is per-episode, recorded, and never silent.
+
+  - id: chatterbox
+    repo: https://github.com/resemble-ai/chatterbox
+    ref: main
+    profile: voice
+    role: "Expressive zero-shot voice cloning TTS with emotion control (MIT code + weights)"
+    license: MIT
+    cost: free
+    gpu: required              # ~8 GB
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/chatterbox }
+    notes: >
+      The local answer to ElevenLabs for non-flagship projects. Voice cloning of real people
+      requires their documented consent — that is a compliance rule, not a suggestion.
+
+  - id: voxcpm
+    repo: https://github.com/OpenBMB/VoxCPM
+    ref: main
+    profile: voice
+    role: "Tokenizer-free TTS with promptable voice design — the open 'voice director' engine"
+    license: Apache-2.0
+    cost: free
+    gpu: required              # single consumer GPU
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/voxcpm }
+    notes: >
+      'Vox director' does not exist as a real OSS project (verified 2026-08); VoxCPM is the
+      credible substitute for the implied role. ElevenLabs remains primary VO for Price
+      Archaeology per DECISIONS D7 — VoxCPM serves voice-design R&D and non-flagship projects.
+
+  # ── audio (music generation FORBIDDEN on Price Archaeology — DECISIONS D5) ─
+  - id: mmaudio
+    repo: https://github.com/hkchengrex/MMAudio
+    ref: main
+    profile: audio
+    role: "Video-to-audio foley — synchronized SFX from picture (the missing foley department)"
+    license: MIT
+    cost: free
+    gpu: required              # ~6 GB
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/mmaudio }
+    notes: >
+      Foley for generative projects. On provenance channels, synthesized sound over archival
+      footage must never be presented as period audio — same falsification rule as imagery.
+
+  - id: ace-step
+    repo: https://github.com/ace-step/ACE-Step
+    ref: main
+    profile: audio
+    role: "Full-song music generation foundation model (Apache code + weights)"
+    license: Apache-2.0
+    cost: free
+    gpu: required              # ~8 GB
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/ace-step }
+    notes: >
+      For projects whose format wants score. Price Archaeology's does not and D5 forbids it
+      there — the profile split is exactly so this can exist without touching that rule.

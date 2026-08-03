@@ -36,8 +36,9 @@ against the slop crackdown isn't a promise. It's a gate.
 
 ## The studio
 
-Thirteen agents in four departments, each modeled on a discipline from the brand-studio world —
-strategy shops, format-IP houses, motion studios, direct-response copy desks.
+Twenty-one agents in seven departments, each modeled on a discipline from the studio world —
+strategy shops, format-IP houses, motion studios, direct-response copy desks, and (since the
+platform integration) the roles animation houses and VFX shops actually staff.
 
 | Dept | Agents |
 |---|---|
@@ -45,10 +46,15 @@ strategy shops, format-IP houses, motion studios, direct-response copy desks.
 | **Creative** | `hook-writer` · `script-editor` · `brand-designer` · `voice-director` |
 | **Production** | `archive-sourcer` · `motion-director` · `post-supervisor` |
 | **Growth** | `seo-packager` · `growth-analyst` · `monetization-lead` |
+| **Platform** | `pipeline-td` · `render-wrangler` |
+| **Picture** | `previs-director` · `gen-supervisor` · `animation-director` · `story-showrunner` |
+| **Sound** | `sound-designer` |
 | **Gate** | `compliance-officer` — can veto any department, including me |
 
 Full charters and reporting lines: [`docs/03-studio-team.md`](docs/03-studio-team.md).
 The agents are real, invocable Claude Code subagents in [`.claude/agents/`](.claude/agents/).
+Picture and Sound's generative powers are off on this channel by charter — see the platform
+doctrine below.
 
 ---
 
@@ -70,6 +76,28 @@ No Higgsfield credits, no Veo, no Kling, no paid video models. Wiring:
 
 ---
 
+## The platform (beyond this channel)
+
+Since 2026-08 the repo also carries a **studio platform** layer
+([`docs/10-platform.md`](docs/10-platform.md)): 26 integrated open-source modules in
+[`config/platform.yaml`](config/platform.yaml) — ComfyUI, LTX-2, Wan2.2, DramaClaw,
+Toonflow, OpenToonz, Blender, video-shotcraft, whisperX, Kokoro, MMAudio, ACE-Step and
+more — plus seven platform agents modeled on real studio roles, and bounded
+[ralph loops](ralph/README.md) that do the unattended work.
+
+The doctrine (DECISIONS D8): **capability is universal, permission is per-project.** The
+generative lane exists for future scripted/animated projects; Price Archaeology's rules
+above don't move. Paid modules are mechanically locked off; the compliance gate is fenced
+from every loop.
+
+```bash
+make platform PROFILE=core        # install a profile's modules
+make platform-doctor PROFILE=core # verify — loud on purpose
+make ralph JOB=platform-install   # let the loop finish the job
+```
+
+---
+
 ## Read in this order
 
 1. [`docs/01-strategy.md`](docs/01-strategy.md) — the thesis, the money math, and the risks I'd bet against
@@ -80,6 +108,8 @@ No Higgsfield credits, no Veo, no Kling, no paid video models. Wiring:
 6. [`docs/06-runbook.md`](docs/06-runbook.md) — day 0 → day 90
 7. [`docs/07-credentials-handoff.md`](docs/07-credentials-handoff.md) — YouTube OAuth + Gemini keys, as a browser-agent prompt
 8. [`content/episodes/`](content/episodes/) — the 10-episode launch slate
+9. [`docs/10-platform.md`](docs/10-platform.md) — the studio platform: manifest, adapters, agents, loops
+10. [`docs/11-platform-research.md`](docs/11-platform-research.md) — the research behind every platform choice
 
 ## Start
 

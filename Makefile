@@ -1,4 +1,5 @@
-.PHONY: help setup doctor test episode gate publish published clean-vendor
+.PHONY: help setup doctor test episode gate publish published clean-vendor \
+        platform platform-doctor ralph
 
 SHELL := /bin/bash
 ROOT  := $(shell pwd)
@@ -13,6 +14,10 @@ help:
 	@echo "  make episode SLUG=<slug>    research -> script -> assets -> render"
 	@echo "  make gate SLUG=<slug>       run the 10 compliance checks (required before publish)"
 	@echo "  make publish SLUG=<slug>    upload PRIVATE via youtube-automation-agent"
+	@echo ""
+	@echo "  make platform PROFILE=core        install studio-platform modules (docs/10)"
+	@echo "  make platform-doctor PROFILE=core verify the platform; exit 1 on any red check"
+	@echo "  make ralph JOB=<job>              run a bounded ralph loop (ralph/README.md)"
 	@echo ""
 	@echo "Stages 3 (hook selection) and 11 (publish) stop for a human. See docs/06-runbook.md."
 
@@ -69,6 +74,18 @@ publish:
 published:
 	@test -n "$(SLUG)" || (echo "usage: make published SLUG=<slug>"; exit 1)
 	@python3 scripts/log_publish.py --slug $(SLUG)
+
+# Studio platform (docs/10-platform.md). PROFILE defaults to the manifest's
+# default (core). The doctor is loud on purpose — never pipe it to /dev/null.
+platform:
+	@bash scripts/studio/install.sh $(if $(PROFILE),--profile $(PROFILE),)
+
+platform-doctor:
+	@bash scripts/studio/doctor.sh $(if $(PROFILE),--profile $(PROFILE),)
+
+# Bounded autonomous loops (ralph/README.md). Lists jobs when JOB is omitted.
+ralph:
+	@bash ralph/ralph.sh $(JOB) $(if $(MAX),--max $(MAX),)
 
 clean-vendor:
 	rm -rf vendor
