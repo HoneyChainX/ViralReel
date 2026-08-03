@@ -86,3 +86,38 @@ lane's desert-sea piece and the programmatic-animation lane's kids cartoon — i
 | Character/look continuity across scenes | `gen-supervisor` |
 | Running the conform render + farm mechanics | `render-wrangler` |
 | Final assembly QC bar | `film-editor` (report) + gate if publishing |
+
+---
+
+## Seamless chaining — the long-video fix
+
+Engines generate short segments; films are long. The platform's answer is a dedicated
+layer (`scripts/studio/seamless.py` + `studio/film/*.chain.yaml`, owned by
+`continuity-supervisor`) built on one contract:
+
+> **The last frame of segment N is exactly the first frame of segment N+1.**
+
+With the contract held, N independent 5-second videos butt-join into one continuous shot:
+the duplicated boundary frame is dropped at stitch, no transition exists at the join, and
+seamlessness is *measured*, not hoped for:
+
+- `verify` — SSIM between every segment's last frame and its successor's first frame
+  (contract threshold, default ≥ 0.97; deterministic renders score ≈ 1.0).
+- `stitch` — dedupe overlaps, concat, then the **inverted cut-check**: PySceneDetect must
+  find NO boundary at any join time. A conform QC asserts cuts exist; a chain QC asserts
+  they don't. Both are the same honesty pointed in opposite directions.
+
+How boundary frames are produced per lane: deterministic renders overlap frame ranges by
+one; generative segments condition on the previous last frame (`seamless.py handoff` →
+I2V init), or — strongest — plan **keyframe-first with Wan FLF2V**: author all boundary
+frames before any video, then fill each segment between its pinned ends, so joins cannot
+drift. Splitting doctrine (motion valleys, drift budgets, re-anchoring) lives in the
+continuity-supervisor charter.
+
+Chains deliver picture only; audio is laid over the whole continuous shot at film level.
+A chain's output enters a film manifest as one ordinary scene — film-editor cuts between
+scenes, continuity-supervisor makes the inside of a scene continuous.
+
+Proven in-repo: `studio/film/cami-chain-demo.chain.yaml` — five independently rendered
+5-second videos of the cartoon, chained by 1-frame overlap, stitched to one 25-second
+continuous shot with per-join SSIM and a clean seam check (report committed alongside).

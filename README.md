@@ -36,7 +36,7 @@ against the slop crackdown isn't a promise. It's a gate.
 
 ## The studio
 
-Twenty-two agents in eight departments, each modeled on a discipline from the studio world —
+Twenty-three agents in eight departments, each modeled on a discipline from the studio world —
 strategy shops, format-IP houses, motion studios, direct-response copy desks, and (since the
 platform integration) the roles animation houses and VFX shops actually staff.
 
@@ -48,7 +48,7 @@ platform integration) the roles animation houses and VFX shops actually staff.
 | **Growth** | `seo-packager` · `growth-analyst` · `monetization-lead` |
 | **Platform** | `pipeline-td` · `render-wrangler` |
 | **Picture** | `previs-director` · `gen-supervisor` · `animation-director` · `story-showrunner` |
-| **Editorial** | `film-editor` — multi-scene assembly: manifests, conform, the cut (docs/12) |
+| **Editorial** | `film-editor` · `continuity-supervisor` — assembly, the cut, and seamless chains (docs/12) |
 | **Sound** | `sound-designer` |
 | **Gate** | `compliance-officer` — can veto any department, including me |
 

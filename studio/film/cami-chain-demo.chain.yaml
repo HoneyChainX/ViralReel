@@ -1,0 +1,20 @@
+# Seamless chain manifest — five independent 5s videos that play as one continuous shot.
+# The handoff contract: each segment's LAST frame is exactly the next segment's FIRST
+# frame (here by deterministic 1-frame-overlap rendering; on a GPU host, by I2V/FLF2V
+# conditioning on the previous segment's last frame). scripts/studio/seamless.py enforces
+# it: verify (SSIM per join) → stitch (dedupe overlaps, butt-join) → QC (no visible seam).
+
+chain:
+  slug: cami-chain-demo
+  delivery: { width: 1080, height: 1920, fps: 30 }
+  handoff:
+    mode: exact          # exact (deterministic renders) | i2v (generated continuation)
+    overlap_frames: 1
+    ssim_min: 0.97
+
+segments:
+  - { id: seg1, source: out/chain/seg-300-450.mp4 }
+  - { id: seg2, source: out/chain/seg-450-600.mp4 }
+  - { id: seg3, source: out/chain/seg-600-750.mp4 }
+  - { id: seg4, source: out/chain/seg-750-900.mp4 }
+  - { id: seg5, source: out/chain/seg-900-1050.mp4 }

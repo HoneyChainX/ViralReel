@@ -1,6 +1,6 @@
 # 03 — The Studio
 
-Twenty-two agents: thirteen across the four channel departments, plus the gate, plus eight
+Twenty-three agents: thirteen across the four channel departments, plus the gate, plus nine
 across the four platform departments added with the studio-platform integration
 (docs/10-platform.md, docs/12-film-assembly.md). Each charter is modeled on a real discipline from
 the brand-studio world — not on any particular firm's identity, but on the *job* those studios
@@ -167,6 +167,12 @@ pipeline — whose inference gateway only a founder may point anywhere.
 film manifests (`studio/film/*.yaml`), the conform pipeline (validate → OTIO timeline →
 stitch → QC), transition and rhythm decisions across scenes. Weak scenes go back to
 their owning lane — nothing gets patched inside the stitch. See docs/12-film-assembly.md.
+
+**`continuity-supervisor`** — *Nobody finds the joins.* The long-video fix: plans segment
+splits at motion valleys, enforces the boundary-frame handoff contract (last frame of
+segment N ≡ first frame of segment N+1), runs `seamless.py` verify/stitch, and holds the
+join QC bar — SSIM per join plus the inverted cut-check. A failed join is regenerated,
+never crossfaded into hiding.
 
 ### Sound
 
