@@ -48,3 +48,13 @@ Here the cut is explicit and versioned: a film manifest in `studio/film/<slug>.y
 - On Price Archaeology, episodes remain single-scene productions under the existing
   pipeline and gate — this department serves multi-scene projects.
 - `conform.py` QC failure blocks delivery, period. The report says why; fix the cause.
+
+## Amendment (sixth sweep, 2026-08): cut the reel before the frames exist
+
+The animation-editorial discipline is now charter law: build the **animatic/story reel
+first** — an OTIO timeline of boards/stills/scratch VO before any expensive generation
+or render — and let the reel gate what gets made. Editorial decisions are cheap on the
+reel and ruinous after rendering; on a CPU-first platform this is the single highest-
+leverage studio practice. Turnover discipline rides with it: sound-designer receives
+defined picture-lock turnovers, not ad-hoc requests, and script-editor should expect
+re-writes back from your cut reviews — the script stays live through screening cycles.

@@ -178,6 +178,111 @@ modules:
       The canonical SKILL.md reference for pipeline-td when authoring studio skills.
       (Gemini cited anthropics/courses as the standard — corrected here: it's this repo.)
 
+  - id: ocio
+    repo: https://github.com/AcademySoftwareFoundation/OpenColorIO
+    ref: main
+    profile: core
+    role: "Color management (ASWF) — show LUT baking (ociobakelut), color-space transforms"
+    license: BSD-3-Clause
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install opencolorio"
+    enabled: true
+    doctor:
+      - { type: cmd, run: "vendor/ocio/.venv/bin/python -c 'import PyOpenColorIO'" }
+    notes: "The colorist's backbone (sixth sweep, docs/11 §8). Applied per shot via ffmpeg lut3d."
+
+  - id: colour-science
+    repo: https://github.com/colour-science/colour
+    ref: main
+    profile: core
+    role: "Scriptable color math + LUT authoring (.cube/.3dl/CLF read-write) for the colorist"
+    license: BSD-3-Clause
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install colour-science"
+    enabled: true
+    doctor:
+      - { type: cmd, run: "vendor/colour-science/.venv/bin/python -c 'import colour'" }
+    notes: "Pairs with ocio: colour authors/inspects LUTs, OCIO/ffmpeg apply them."
+
+  - id: argos-translate
+    repo: https://github.com/argosopentech/argos-translate
+    ref: main
+    profile: distribution
+    role: "Offline CPU machine translation (CTranslate2 int8, OPUS-MT models) — subtitle localization"
+    license: MIT
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install argostranslate"
+    enabled: true
+    doctor:
+      - { type: cmd, run: "vendor/argos-translate/.venv/bin/python -c 'import argostranslate'" }
+    notes: >
+      localization-director's engine: whisperX timings → argos translation → per-language
+      .srt. Language packs download per pair on first use (not vendored). MT output ships
+      disclosed as machine-translated subtitles; numbers/prices verified against evidence.
+
+  - id: openimageio
+    repo: https://github.com/AcademySoftwareFoundation/OpenImageIO
+    ref: main
+    profile: core
+    role: "Headless imaging (oiiotool): crops, composites, text, contact sheets — key-art pipeline"
+    license: Apache-2.0
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install openimageio"
+    enabled: true
+    doctor:
+      - { type: cmd, run: "vendor/openimageio/.venv/bin/python -c 'import OpenImageIO'" }
+    notes: "key-art-director's compositor for AVA-lite thumbnail/poster deliverables."
+
+  - id: beets
+    repo: https://github.com/beetbox/beets
+    ref: main
+    profile: audio
+    role: "Headless music library manager — catalogs the PD/CC music shelf with license metadata"
+    license: MIT
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install beets"
+    enabled: true
+    doctor:
+      - { type: cmd, run: "vendor/beets/.venv/bin/beet --version" }
+    notes: >
+      sound-designer's music-supervision backbone: every sourced cue (like WILD's Satie
+      recordings) gets cataloged with license + source URL — the cue-sheet ledger that
+      feeds licenses.json and the clearance record.
+
+  - id: gazu
+    repo: https://github.com/cgwire/gazu
+    ref: main
+    profile: core
+    role: "Kitsu/Zou API client (pip) — line-producer's bridge when file ledgers scale to a tracking server"
+    license: LGPL-3.0
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install gazu"
+    enabled: true
+    doctor:
+      - { type: cmd, run: "vendor/gazu/.venv/bin/python -c 'import gazu'" }
+    notes: >
+      Production tracking is file-based today (studio/production/*.ledger.yaml) by the
+      same doctrine as ralph memory. Kitsu/Zou server (AGPL) is the human-team scale-up
+      path — catalogued docs/11 §8; gazu keeps the bridge installed and tested.
+
   - id: pinokio
     repo: https://github.com/pinokiocomputer/pinokio
     ref: main

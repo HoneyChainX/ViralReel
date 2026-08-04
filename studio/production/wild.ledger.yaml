@@ -1,0 +1,15 @@
+# Retroactive ledger for the first film — the schema's reference instance.
+project: wild
+status: delivered
+milestones:
+  - { id: script-locked,   due: 2026-08-03, done: true }
+  - { id: picture-locked,  due: 2026-08-03, done: true }
+  - { id: delivered,       due: 2026-08-04, done: true }
+tasks:
+  - { id: comp-authoring,   owner: motion-director,       state: done, blocked_on: null }
+  - { id: segment-renders,  owner: render-wrangler,       state: done, blocked_on: null }
+  - { id: chain-stitching,  owner: continuity-supervisor, state: done, blocked_on: null }
+  - { id: conform,          owner: film-editor,           state: done, blocked_on: null }
+  - { id: vo-music-mix,     owner: sound-designer,        state: done, blocked_on: null }
+  - { id: release,          owner: post-supervisor,       state: done, blocked_on: null }
+verdict: iterate   # proved the chain layer end-to-end; next film adds colorist grade + key-art pass

@@ -1,7 +1,7 @@
 # 03 — The Studio
 
-Twenty-three agents: thirteen across the four channel departments, plus the gate, plus nine
-across the four platform departments added with the studio-platform integration
+Twenty-seven agents: thirteen across the four channel departments, plus the gate, plus
+thirteen across the six platform departments added with the studio-platform integration
 (docs/10-platform.md, docs/12-film-assembly.md). Each charter is modeled on a real discipline from
 the brand-studio world — not on any particular firm's identity, but on the *job* those studios
 do well: strategy shops that decide what a brand refuses to make, format-IP houses that build
@@ -118,9 +118,10 @@ company, so it is the one agent instructed to be difficult.
 
 ## The platform departments (added 2026-08)
 
-Seven further charters modeled on the roles top-tier studios actually staff — animation
+Eleven further charters modeled on the roles top-tier studios actually staff — animation
 houses (layout, supervising animator, pipeline TD), VFX/post houses (CG supervisor, render
-wrangler), and modern creator studios. Research basis: docs/11-platform-research.md. Two
+wrangler), Netflix's finishing/localization/artwork disciplines, and modern creator
+studios. Research basis: docs/11-platform-research.md (sweeps 1–6). Two
 things distinguish them from the channel departments above:
 
 - **Platform engineering** serves every project including Price Archaeology.
@@ -179,7 +180,41 @@ never crossfaded into hiding.
 **`sound-designer`** — *Half the picture, deliberately.* Foley via MMAudio, music via
 ACE-Step where a format permits, sound maps with chosen silences, −14 LUFS discipline.
 On Price Archaeology, D5 stands: no generated music, ever; archival sound and mix review
-only.
+only. Music supervision rides here too: every sourced cue gets a licenses entry and a
+Content-ID risk note — a one-line cue sheet, cataloged in the beets library.
+
+### Finishing & delivery (sixth sweep, 2026-08)
+
+The Netflix-shaped chairs: the roles between picture-lock and the audience, staffed the
+moment WILD proved the film lane ships real work. Research: docs/11 §8.
+
+**`colorist`** — *The DI room.* Show LUTs (OCIO + colour-science, applied via ffmpeg
+`lut3d`), measured shot-to-shot grade matching at every cut and join (`signalstats`, not
+eyeballs), and the color-managed delivery spec. Exists because mixed engines are the norm
+and grade mismatch is the most visible AI tell. On provenance projects, archival evidence
+passes through ungraded — the price tag's color is evidence.
+
+**`localization-director`** — *Timed text as craft.* The caption style guide
+(`studio/localization/style-guide.md`): reading-speed and line-treatment law, SDH
+variants, sync tolerances, face/evidence-clear placement — then multi-language subtitle
+tracks via whisperX timings + Argos Translate (disclosed as MT; numbers verified against
+evidence per language). The cheapest audience multiplier once a format works.
+
+**`key-art-director`** — *The AVA-lite artwork lab.* Harvests candidate stills from
+finished picture (PySceneDetect boundaries + sharpness/face/contrast scoring), composites
+variants with oiiotool under brand-designer's system, delivers exactly three per episode
+into YouTube Test & Compare, and keeps a patterns file of what wins with numbers. The
+missing middle between brand system, packaging text, and analytics.
+
+### Production management (sixth sweep, 2026-08)
+
+**`line-producer`** — *The role every studio treats as load-bearing and AI studios
+forget.* Owns the production ledger (`studio/production/*.ledger.yaml` — file-based by
+the same doctrine as ralph memory), milestone health, blocker chasing, the weekly
+production report, and Netflix-style per-title verdicts (renew/iterate/kill recorded for
+every delivered episode). Tracks work, never does other departments' work; escalates
+conflicts to strategy-lead with both sides stated fairly. Kitsu/Zou is the catalogued
+scale-up path (gazu client installed and tested).
 
 ---
 

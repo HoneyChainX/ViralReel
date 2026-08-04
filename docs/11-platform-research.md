@@ -271,3 +271,47 @@ and one license error, which is exactly why the verify pass exists:
   review misses regressions (e.g., at a second production channel).
 - CrewAI / MetaGPT / AutoGPT / BabyAGI / ChatDev — agreed with Gemini's own
   catalog/decline calls; recorded so no future sweep re-litigates them.
+
+---
+
+## 8. The missing-roles sweep: Netflix/Pixar/Disney org charts vs the roster (sixth sweep, 2026-08-04)
+
+Three parallel researchers: the Pixar/Disney/DreamWorks feature pipeline (24 roles, from
+studio job postings and Animation Guild classifications), Netflix + creator-studio roles
+(17 roles, from the Netflix Tech Blog, Partner Help specs, and the MrBeast onboarding
+doc), and live GitHub verification of tools for the candidate chairs (17 repos, licenses
+read from source).
+
+**Net assessment:** the 23-agent roster mapped the studio org well — editorial's design
+(film-editor + continuity-supervisor) matches how feature animation actually staffs
+continuity, growth-analyst is "genuinely MrBeast-grade", and compliance-officer is a
+properly S&P-shaped gate. Four chairs were real gaps; all four are now staffed:
+
+| New agent | Studio precedent | Tools adopted |
+|---|---|---|
+| line-producer | Pixar PM/line producer — "the most real gap in the roster" | file ledgers now; cgwire/gazu (LGPL, pip) installed as the Kitsu/Zou bridge |
+| colorist | Netflix color-managed DI mandate; grade mismatch = the AI tell | OpenColorIO (BSD-3, pip) + colour-science (BSD-3, pip) |
+| localization-director | Netflix Timed Text guides; MrBeast dubbed channels | argos-translate (MIT, pip, CTranslate2 CPU) + whisperX (already ours) |
+| key-art-director | Netflix AVA artwork pipeline; thumbnail-half-the-video culture | OpenImageIO (Apache, pip); dedicated thumbnail repos surveyed and SKIPPED (nothing worth vendoring) |
+
+Plus beets (MIT, pip) as sound-designer's music-supervision backbone (cue-sheet ledger).
+
+**Folded, not staffed** (recorded so no future sweep re-litigates): story supervisor →
+story-showrunner; story artist + virtual DP → previs-director (cinematography bible
+amendment); character designer/casting → gen-supervisor (casting-sheet amendment);
+animatic-first editorial → film-editor amendment; music supervision → sound-designer
+amendment; per-title encode recipes + VMAF gate → render-wrangler/post-supervisor duty;
+production coordinator → line-producer (two management agents for one founder is
+over-staffing). **Correctly missing, do not staff:** character TDs/rigging, FX TDs,
+lighting TDs (no rig, no sim, no 3D lighting stage exists — revisit only with a Blender
+render stage), and the gaffer — the canary role: any proposed agent whose whole job is
+applying another agent's spec with no judgment of its own is a checklist, not a seat.
+
+**Catalogued with triggers:** cgwire/kitsu + cgwire/zou (AGPL, fine internally) when a
+human team joins; ynput/AYON declined for now (FSL-1.1 backend — not OSI open source
+until its 2-year conversion — and aimed at multi-DCC studios); OpenRV (mature) over
+xStudio if a desktop dailies player is ever wanted; usd-core (pip) when a 3D
+layout/sets role appears; libplacebo at GPU phase for HDR/tone-map finishing;
+ComfyUI_IPAdapter_plus (GPL — isolate inside ComfyUI runtime; maintainer-hiatus, pin a
+commit) for character identity at GPU phase; Freesound API client when a CC-vetting
+policy exists; Helsinki-NLP/Opus-MT credited as Argos's model source and fallback.
