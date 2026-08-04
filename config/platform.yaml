@@ -180,7 +180,7 @@ modules:
 
   - id: ocio
     repo: https://github.com/AcademySoftwareFoundation/OpenColorIO
-    ref: main
+    ref: 5a808fb57a94c7229640a97835c420c9a1fbd1fe  # pinned 2026-08-04, verified install
     profile: core
     role: "Color management (ASWF) — show LUT baking (ociobakelut), color-space transforms"
     license: BSD-3-Clause
@@ -196,7 +196,7 @@ modules:
 
   - id: colour-science
     repo: https://github.com/colour-science/colour
-    ref: main
+    ref: c167aa6f56e8fbad99cd12abf4d43bf36ea2b20b  # pinned 2026-08-04, verified install
     profile: core
     role: "Scriptable color math + LUT authoring (.cube/.3dl/CLF read-write) for the colorist"
     license: BSD-3-Clause
@@ -212,7 +212,7 @@ modules:
 
   - id: argos-translate
     repo: https://github.com/argosopentech/argos-translate
-    ref: main
+    ref: c72ec9040a580bc5f9ad4272f2c8a685d9bc66dd  # pinned 2026-08-04, verified install
     profile: distribution
     role: "Offline CPU machine translation (CTranslate2 int8, OPUS-MT models) — subtitle localization"
     license: MIT
@@ -220,7 +220,7 @@ modules:
     gpu: none
     headless: true
     install: script
-    install_cmd: "python3 -m venv .venv && .venv/bin/pip install argostranslate"
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu && .venv/bin/pip install argostranslate"
     enabled: true
     doctor:
       - { type: cmd, run: "vendor/argos-translate/.venv/bin/python -c 'import argostranslate'" }
@@ -231,7 +231,7 @@ modules:
 
   - id: openimageio
     repo: https://github.com/AcademySoftwareFoundation/OpenImageIO
-    ref: main
+    ref: 1d9d0cad60a9f0dd184249ea29a86c4eae40a1f2  # pinned 2026-08-04, verified install
     profile: core
     role: "Headless imaging (oiiotool): crops, composites, text, contact sheets — key-art pipeline"
     license: Apache-2.0
@@ -247,7 +247,7 @@ modules:
 
   - id: beets
     repo: https://github.com/beetbox/beets
-    ref: main
+    ref: b9c7c13749de8c52e14325b448041ab8e0c8d21b  # pinned 2026-08-04, verified install
     profile: audio
     role: "Headless music library manager — catalogs the PD/CC music shelf with license metadata"
     license: MIT
@@ -266,7 +266,7 @@ modules:
 
   - id: gazu
     repo: https://github.com/cgwire/gazu
-    ref: main
+    ref: 443e4d752c18ddd15c37041838613baa59800cea  # pinned 2026-08-04, verified install
     profile: core
     role: "Kitsu/Zou API client (pip) — line-producer's bridge when file ledgers scale to a tracking server"
     license: LGPL-3.0
