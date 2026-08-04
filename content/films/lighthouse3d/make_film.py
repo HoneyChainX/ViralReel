@@ -270,6 +270,8 @@ def main():
     setup_render(mode, f"/home/user/ViralReel/out/lighthouse3d/{mode}/f", frames)
     if len(args) > 1:                     # resume: render [start..end] only
         bpy.context.scene.frame_start = int(args[1])
+    if len(args) > 2:
+        bpy.context.scene.frame_end = min(int(args[2]), frames)
     bpy.ops.render.render(animation=True)
     print(f"SHOT_OK {mode} {frames}f")
 
