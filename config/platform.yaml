@@ -616,7 +616,7 @@ modules:
     gpu: optional              # CPU works; GPU recommended
     headless: true
     install: script
-    install_cmd: "python3 -m venv .venv && .venv/bin/pip install whisperx"
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu && .venv/bin/pip install whisperx"
     enabled: true
     doctor:
       - { type: dir, path: vendor/whisperx }
@@ -632,7 +632,7 @@ modules:
     gpu: none
     headless: true
     install: script
-    install_cmd: "python3 -m venv .venv && .venv/bin/pip install kokoro soundfile"
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu && .venv/bin/pip install kokoro soundfile"
     enabled: true
     doctor:
       - { type: dir, path: vendor/kokoro }
