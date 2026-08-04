@@ -80,7 +80,7 @@ No Higgsfield credits, no Veo, no Kling, no paid video models. Wiring:
 ## The platform (beyond this channel)
 
 Since 2026-08 the repo also carries a **studio platform** layer
-([`docs/10-platform.md`](docs/10-platform.md)): 26 integrated open-source modules in
+([`docs/10-platform.md`](docs/10-platform.md)): 42 integrated open-source modules in
 [`config/platform.yaml`](config/platform.yaml) — ComfyUI, LTX-2, Wan2.2, DramaClaw,
 Toonflow, OpenToonz, Blender, video-shotcraft, whisperX, Kokoro, MMAudio, ACE-Step and
 more — plus fourteen platform agents modeled on real studio roles, and bounded

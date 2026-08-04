@@ -118,10 +118,10 @@ company, so it is the one agent instructed to be difficult.
 
 ## The platform departments (added 2026-08)
 
-Eleven further charters modeled on the roles top-tier studios actually staff — animation
+Fourteen further charters modeled on the roles top-tier studios actually staff — animation
 houses (layout, supervising animator, pipeline TD), VFX/post houses (CG supervisor, render
 wrangler), Netflix's finishing/localization/artwork disciplines, and modern creator
-studios. Research basis: docs/11-platform-research.md (sweeps 1–6). Two
+studios. Research basis: docs/11-platform-research.md (sweeps 1–7). Two
 things distinguish them from the channel departments above:
 
 - **Platform engineering** serves every project including Price Archaeology.
