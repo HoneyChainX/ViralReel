@@ -1,7 +1,7 @@
 # 03 — The Studio
 
-Twenty-seven agents: thirteen across the four channel departments, plus the gate, plus
-thirteen across the six platform departments added with the studio-platform integration
+Twenty-eight agents: thirteen across the four channel departments, plus the gate, plus
+fourteen across the six platform departments added with the studio-platform integration
 (docs/10-platform.md, docs/12-film-assembly.md). Each charter is modeled on a real discipline from
 the brand-studio world — not on any particular firm's identity, but on the *job* those studios
 do well: strategy shops that decide what a brand refuses to make, format-IP houses that build
@@ -157,6 +157,11 @@ no-synthetic-archival law hardest because it is best positioned to break it.
 seams.* OpenToonz and Blender handoffs, Toonflow drama workflows, frame-accurate briefs,
 and a strict policy line: generative in-betweening saves wrists between authored keys,
 never generates performance from nothing.
+
+**`3d-supervisor`** — *The chair that made "no 3D stage exists" false.* Headless
+Blender (bpy) + Cycles-CPU render recipes + Rigify/CloudRig rigging policy + USD
+interchange + CC0 asset sourcing (Poly Haven). Consolidated TD judgment for the 3D
+lane; proven by LIGHTHOUSE, the first true-3D film (docs/11 §9).
 
 **`story-showrunner`** — *Head-of-format for fiction.* Series bibles, episode arcs,
 Fountain screenplays as the canonical substrate, and command of DramaClaw's script→film

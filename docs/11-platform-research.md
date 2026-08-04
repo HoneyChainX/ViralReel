@@ -315,3 +315,61 @@ layout/sets role appears; libplacebo at GPU phase for HDR/tone-map finishing;
 ComfyUI_IPAdapter_plus (GPL — isolate inside ComfyUI runtime; maintainer-hiatus, pin a
 commit) for character identity at GPU phase; Freesound API client when a CC-vetting
 policy exists; Helsinki-NLP/Opus-MT credited as Argos's model source and fallback.
+
+---
+
+## 9. The 3D lane: from "correctly missing" to live (seventh sweep, 2026-08-04)
+
+Founder direction: don't exclude 3D. §8's "no 3D stage exists" was a self-fulfilling
+verdict — the stage didn't exist because nothing had built it. Two research agents (one
+running EMPIRICAL tests on this host, one auditing Blender Studio's shipped pipeline)
+plus an internal audit of prior dev closed it:
+
+**Audit of previous dev:** 3D was doctrine-present, mechanically absent — Blender named
+in five charters, blender-mcp/Flamenco/usd-core catalogued, but the `blender` module was
+desktop-only/disabled and nothing 3D was installed or proven.
+
+**Now live (verified by running it):**
+- `blender-headless` (pip bpy wheel, GPL) — full Blender headless; Cycles CPU renders
+  confirmed on this host (~20–25s/frame at 720p stylized); Rigify generates production
+  rigs headless (empirically: 159-bone human metarig → rig in 4.5s, no display).
+- `usd-core` (Pixar, TOST-1.0 permissive) — USD authoring verified; no GPU imaging in
+  the wheel (UsdImagingGL ImportError confirmed — that's expected and fine).
+- **LIGHTHOUSE**: first true-3D production — 15s, 3 shots, fully procedural Cycles film.
+- Version intelligence: cp311 wheels live on the bpy 4.5 LTS line (monthly releases);
+  5.1+ is cp313-only. We run 5.0.1/cp311 (proven); revisit at python upgrade.
+- Blender 5 API breaks handled in production: NISHITA→MULTIPLE_SCATTERING sky, slotted
+  actions (Action.fcurves gone), EEVEE blend_method removed, no ffmpeg encoder in the
+  pip wheel (PNG frames + vendored ffmpeg assembly — the farm shape anyway).
+
+**Engine ruling (decide-now, verified):** EEVEE — including EEVEE-Next — is a GPU
+rasterizer (GL 4.3+/Vulkan required) and cannot render on this host. Cycles CPU with
+bounded samples + OpenImageDenoise is the committed final-frame engine; EEVEE previews
+are a future Flamenco GPU-worker job.
+
+**Catalogued with triggers (all verified active, licenses read):**
+- Flamenco (Blender Studio, GPL-3.0, Go manager+worker, v3.9.3, single-machine
+  supported) — adopt when renders outgrow render_all.sh's resumable-runner pattern.
+- CloudRig (studio rigger-maintained, GPL, tracks Blender 5.0 with a 4.5 tag) — first
+  component-rigged character project. Rigify meanwhile ships inside bpy: adopted.
+- blender-studio-tools (GPL): blender_kitsu, asset_pipeline, naming/folder conventions
+  (copy the docs verbatim when the 3D lane scales), lighting_overrider.
+- Storypencil: alive but thin bus factor — treat boards as GP3 scenes + VSE conventions
+  scripted directly; Storypencil is optional human convenience.
+- Grease Pencil 3: the 2D-in-3D system (geometry-nodes capable) — adopt for hybrid
+  2D/3D formats when one appears.
+- ahujasid/blender-mcp (MIT, active) — the agent-drives-desktop-Blender seam for
+  human+agent co-authoring sessions.
+- Poly Haven API (assets CC0, keyless, verified reachable) — the house 3D asset source.
+  Objaverse (ODC-By dataset, per-object licenses) and Sketchfab (CC filterable, token
+  for downloads) require per-object vetting — catalogued behind license policy.
+- glTF-Validator (Khronos, Apache) — asset QC CLI when external models enter scenes.
+- colmap (BSD-3): sparse SfM is CPU-viable today; dense reconstruction at GPU phase.
+  Meshroom: CUDA-gated full pipeline → desktop/GPU catalog.
+- GPU-phase generation: TRELLIS (MIT, 16GB — audit two vendored submodule licenses at
+  adoption), TripoSR (MIT, 6GB), UniRig (MIT, 8GB auto-rig). shap-e: dormant, SKIP.
+
+**Roles:** one consolidated `3d-supervisor` chair (layout+lighting+rigging+sets
+policy) — Blender Studio's ~10-artist open movies show which TD chairs carry judgment
+at small scale; the split TD roles arrive with the GPU farm, if ever. §8's gaffer-canary
+rule applied to 3D: farm execution stays render-wrangler's checklist, not a new seat.
