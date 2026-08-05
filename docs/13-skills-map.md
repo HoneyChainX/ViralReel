@@ -124,3 +124,27 @@ skills — every future session loads them natively. 31 MB of markdown, invocabl
 - **Provenance law unchanged**: none of the generation fleets touch Price Archaeology's
   archival layer; the gate outranks every skill, and generated imagery in thumbnails
   stays banned for archival-evidence episodes.
+
+---
+
+## Tenth sweep (2026-08-05): the "Adobe/Disney/NVIDIA skills" verification pass
+
+The founder supplied a listicle of seven named skills (Palmier Pro Timeline Editor,
+Smart Silence Remover, Automated Color Finish Agent, Disney 12 Principles Guide, USD
+Orchestrator, RTX Spark Compute Router, Render Farm Cost Optimizer) sourced from
+aggregator articles. Verification against the skills registry — the same discipline
+that caught SEO-fabricated model releases in sweep 4 — found the exact names mostly
+fictional or unvetted, but REAL equivalents exist for every genuine capability:
+
+| Listicle claim | Verdict | What we actually integrated |
+|---|---|---|
+| "Palmier Pro Timeline Editor" | exists as a 1-install personal-repo clone — SKIPPED (supply-chain hygiene; skills run with full agent permissions) | `premiere-pro-mcp` (412 installs) + `flue@premiere`/`@adobe` (1.8K — shell→ExtendScript control of Adobe apps, no MCP server needed) → film-editor/post-supervisor at DESKTOP phase; our OTIO layer remains the timeline interchange |
+| "Smart Silence Remover" | capability ALREADY OURS since sweep 1 (auto-editor, vendored+pinned) | added `auto-editor-export` — from auto-editor's own author — exporting cuts to Premiere/Resolve/FCP timelines; plus `raw-video-processing` (2.8K installs, ffmpeg silence-cut) |
+| "Automated Color Finish Agent" | capability ALREADY OURS (colorist chair, sweep 6: OCIO + colour-science + lut3d) | added `ffmpeg-color-grading-chromakey` (CPU, colorist's implementation grammar) + `video-color-grading` (each::sense AI — PAID, founder-gated per D8) |
+| "Disney 12 Principles Guide" | registry copy failed to install (1.3M-file host repo hit disk) — and one page of doctrine shouldn't cost a giant dependency | AUTHORED in-repo: `/animation-principles` — the twelve as a diagnostic review rubric wired to the creative constitution's critique contract → animation-director |
+| "USD Orchestrator" | no such skill; capability partially ours (usd-core, sweep 7) | added `omniverse-usd-performance-tuning` (NVIDIA official, 1.9K installs) → 3d-supervisor; isaac-sim USD skills noted robotics-only, catalogued |
+| "RTX Spark / Blackwell Compute Router" | FICTION as an installable skill (registry: crypto/CAD noise) | the described capability IS render-wrangler's charter (VRAM budgeting by arithmetic) — activates with the GPU host, no skill needed |
+| "Render Farm Cost Optimizer" | FICTION as an installable skill | capability = our bounded-chunk runner's frame-time logs + Flamenco (catalogued, sweep 7); a log-analyzer script joins render-wrangler's backlog when farm scale exists |
+
+Security note: all newly installed packs grep-scanned for exec/exfil patterns (clean);
+the skip-on-1-install rule and read-before-trust discipline are now precedent.

@@ -1,6 +1,18 @@
 {
   "version": 1,
   "skills": {
+    "Adobe": {
+      "source": "sfkislev/flue",
+      "sourceType": "github",
+      "skillPath": "skills/adobe/SKILL.md",
+      "computedHash": "a3547759bb9b7bca09639d51aa211ebecc83050068511cb1063da03847996110"
+    },
+    "Premiere": {
+      "source": "sfkislev/flue",
+      "sourceType": "github",
+      "skillPath": "skills/premiere/SKILL.md",
+      "computedHash": "2e3dde979780a2f9f8f5e093eecf3babe1776b863dc3ed3e2d1727e532611d26"
+    },
     "affirmations": {
       "source": "inference-sh/skills",
       "sourceType": "github",
@@ -108,6 +120,12 @@
       "sourceType": "github",
       "skillPath": "guides/design/app-store-screenshots/SKILL.md",
       "computedHash": "528a965bb79118a30c52f82c781cc45b4c27b7cfb9e37fa300c1a4f086cfcd1c"
+    },
+    "auto-editor-export": {
+      "source": "wyattblue/auto-editor",
+      "sourceType": "github",
+      "skillPath": "skills/auto-editor-export/SKILL.md",
+      "computedHash": "814775a7abfe0cd028b8acf47bcc3b59d98955c0fd28c18078d8c70b0d7c6ce1"
     },
     "background-removal": {
       "source": "inference-sh/skills",
@@ -324,6 +342,12 @@
       "sourceType": "github",
       "skillPath": "skills/faceless-explainer/SKILL.md",
       "computedHash": "cb848eb3338859f3a5e5a3f5cc6cdc0e982b41a881c38a60014512d1beefbdb0"
+    },
+    "ffmpeg-color-grading-chromakey": {
+      "source": "josiahsiegel/claude-plugin-marketplace",
+      "sourceType": "github",
+      "skillPath": "plugins/ffmpeg-effects/skills/ffmpeg-color-grading-chromakey/SKILL.md",
+      "computedHash": "7c2638096e68b584ef495ae0a2b284375c5ef354004a4f9e096160bd049e6b5b"
     },
     "figma": {
       "source": "heygen-com/hyperframes",
@@ -655,6 +679,12 @@
       "skillPath": "guides/design/og-image-design/SKILL.md",
       "computedHash": "100e68e3ddd077c497e03616f1991fd88fc84c567786cda188e7b42ec0608911"
     },
+    "omniverse-usd-performance-tuning": {
+      "source": "nvidia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/omniverse-usd-performance-tuning/SKILL.md",
+      "computedHash": "58dec95ec245b9b3be025acde2a33ec8b36f68f1083d82965d45e35737ac075d"
+    },
     "oversized-cursor": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
@@ -702,6 +732,12 @@
       "sourceType": "github",
       "skillPath": "skills/pr-to-video/SKILL.md",
       "computedHash": "77b0d577f18ebdfda7db1330c6161ba06b83c25700d9357e3d208db15b63e039"
+    },
+    "premiere-pro-mcp": {
+      "source": "hetpatel-11/adobe_premiere_pro_mcp",
+      "sourceType": "github",
+      "skillPath": "skills/premiere-pro-mcp/SKILL.md",
+      "computedHash": "aa99467d6ee0dccff294c368308c408acd723b8d0f6e1e3e708f8513e9aec127"
     },
     "press-release-writing": {
       "source": "inference-sh/skills",
@@ -768,6 +804,12 @@
       "sourceType": "github",
       "skillPath": "tools/image/qwen-image-2-pro/SKILL.md",
       "computedHash": "3066ea080373d00cd45581263b5ebb917009838536bcefa27b7f1d30556cfb53"
+    },
+    "raw-video-processing": {
+      "source": "zc277584121/marketing-skills",
+      "sourceType": "github",
+      "skillPath": "skills/raw-video-processing/SKILL.md",
+      "computedHash": "109bbd733ef5011dc8e519b802fde44173216c64a71fccbb4894ffabd96185ce"
     },
     "related-skill": {
       "source": "inference-sh/skills",
@@ -1074,6 +1116,12 @@
       "sourceType": "github",
       "skillPath": "guides/video/video-ad-specs/SKILL.md",
       "computedHash": "ca5bec9f5b90f2d7caab06b7a30a6b3497c25d585412b3aeb1ab981488f828ab"
+    },
+    "video-color-grading": {
+      "source": "eachlabs/skills",
+      "sourceType": "github",
+      "skillPath": "skills/video-color-grading/SKILL.md",
+      "computedHash": "86dfa0076583732e8fd4a0bb1054bc931fa13b3c13d92370a546e17a2bcb138e"
     },
     "video-prompting-guide": {
       "source": "inference-sh/skills",
