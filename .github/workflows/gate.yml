@@ -120,7 +120,9 @@ jobs:
           PLACEHOLDERS = {"your-key", "your-api-key", "xxx", "changeme", "<key>", "..."}
           bad = []
           for p in pathlib.Path('.').rglob('*'):
-              if not p.is_file() or '.git' in p.parts or 'vendor' in p.parts:
+              # .agents = vendored third-party skill packs (docs with example
+              # env lines like FAL_KEY=your_key) — same trust class as vendor/
+              if not p.is_file() or '.git' in p.parts or 'vendor' in p.parts or '.agents' in p.parts:
                   continue
               try:
                   text = p.read_text(errors='ignore')
@@ -134,7 +136,7 @@ jobs:
           # They are gitignored, but a `git add -f` or a moved copy would slip past that.
           for name in ("credentials.json", "tokens.json", "token.json"):
               for hit in pathlib.Path('.').rglob(name):
-                  if '.git' in hit.parts or 'vendor' in hit.parts:
+                  if '.git' in hit.parts or 'vendor' in hit.parts or '.agents' in hit.parts:
                       continue
                   bad.append(f"{hit}: OAuth credential file must never be committed")
           if bad:
