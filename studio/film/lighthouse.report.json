@@ -1,0 +1,23 @@
+{
+  "film": "lighthouse-15s",
+  "output": "out/lighthouse-15s.mp4",
+  "scenes": [
+    "s1-orbit",
+    "s2-sunset",
+    "s3-lamp"
+  ],
+  "duration_s": 14.5,
+  "expected_s": 14.5,
+  "duration_ok": true,
+  "delivery": "1280x720@24",
+  "delivery_ok": true,
+  "integrated_lufs": -70.0,
+  "cut_check": {
+    "expected_hard_cuts": [
+      8.5
+    ],
+    "detected_boundaries": 3,
+    "missed": [],
+    "ok": true
+  }
+}
