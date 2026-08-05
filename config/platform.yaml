@@ -343,6 +343,30 @@ modules:
       could activate the genai lane before local GPU hardware exists (D8: paid is
       per-project, never default).
 
+  - id: fastsdcpu
+    repo: https://github.com/rupeshs/fastsdcpu
+    ref: b5e5cab5c2ad369c56f52b34cd61d010efa489f1  # pinned 2026-08-05, verified install
+    profile: genai
+    role: "CPU image generation (MIT, 2.1k★): LCM/SDXS OpenVINO int8 — the genai lane's first CPU-native engine"
+    license: MIT
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu && .venv/bin/pip install -r requirements.txt"
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/fastsdcpu }
+    notes: >
+      Fourteenth sweep (docs/13): breaks the 'generation needs a GPU' assumption for
+      IMAGES — LCM/SDXS at 512px in seconds-to-a-minute on this 4-core host. Owners:
+      gen-supervisor (concept/reference stills, casting-sheet reference images) and
+      key-art-director (art elements). HONESTY: the FLUX-schnell-int4 path needs ~30GB
+      RAM — this host has 15GB, so FLUX stays out of reach here; LCM/SDXS is the lane.
+      Models download on first use (~1GB each). Video generation on CPU remains
+      impractical (minutes per frame) — that verdict stands; provenance-channel bans
+      unchanged.
+
   - id: pinokio
     repo: https://github.com/pinokiocomputer/pinokio
     ref: main

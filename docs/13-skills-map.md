@@ -236,3 +236,18 @@ with zero installs.
 trend-archaeologist, growth-analyst + the morning brief); skill.md spec (our standard
 since sweep 8); SoraWebui (UI over a paid API we don't hold). **Correction recorded:**
 Manus is a proprietary product, not open-source — listicle error.
+
+---
+
+## Fourteenth sweep (2026-08-05): CPU-generation listicle — the one that fits the doctrine
+
+This batch targets our exact constraint ($0, CPU-first). Verified at source:
+
+| Item | Verdict |
+|---|---|
+| **rupeshs/fastsdcpu** (MIT, 2.1k★, active Jul 2026) | **ADOPTED** as the genai lane's first CPU-native engine: LCM/SDXS OpenVINO int8 images in seconds-to-a-minute on this 4-core host → gen-supervisor (concept stills, casting-sheet references) + key-art-director (art elements). Honesty: FLUX-int4 needs ~30GB RAM; this host has 15GB — LCM/SDXS is the lane, FLUX is not |
+| **pierotofy/OpenSplat** (AGPL, 2.1k★) | REAL, truly CPU-capable (~100x slower — fine for small offline jobs, same economics as our Cycles renders). CATALOGUED with trigger: first project needing real-location 3D capture; pairs with colmap's CPU-viable sparse SfM (already catalogued) → 3d-supervisor |
+| MrSecant/diff-gaussian-rasterization + Numba-JIT paper | niche research forks — recorded as the 3DGS-on-CPU evidence base, no adoption |
+| vladmandic/sdnext | real and large, but redundant: a second webui when ComfyUI is already vendored (and has its own --cpu flag) — the duplicate-routing rule applies |
+| freddyjose/ComfyUI-CPU | redundant fork — official ComfyUI --cpu covers it |
+| "GGUF video generation on CPU" (Wan2GP etc.) | OVERSTATED: Wan2GP targets low-VRAM GPUs, not no-GPU; CPU video diffusion runs minutes per frame — the video-generation-is-GPU-phase verdict stands |
