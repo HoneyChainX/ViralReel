@@ -170,3 +170,33 @@ at source:
 "Dynamic Light-Rig Scripter" (Hydra): no such skill exists; the capability is bpy
 lighting scripting, already 3d-supervisor's lane. A USD broken-reference auditor script
 (pxr-based) joins 3d-supervisor's backlog — small, real, buildable on usd-core.
+
+---
+
+## Twelfth sweep (2026-08-05): character bibles + the Netflix Vera/VOID verification
+
+Third founder-supplied playbook. Verdicts:
+
+**Adopted and built — `/character-bible`** (in-repo skill #6): the structured
+asset-seed pattern is genuinely good prompt engineering and is exactly the operational
+form of gen-supervisor's casting-sheet charter (sweep 6 amendment). Now packaged:
+permanent CHARACTER_IDs, JSON casting sheets under `studio/casting/` with canon-phrase
+locking (micro-details as drift anchors), the 5-part scene-composer frame, and spatial
+separation + shared-anchor for multi-character shots (anti prompt-bleeding, two-character
+ceiling with cut-around guidance). Locks at previs like voice IDs; chains inherit it.
+
+**Verified REAL — Netflix's pair, catalogued with triggers:**
+- **VOID** (Video Object & Interaction Deletion): open-sourced 2026-04, Apache-2.0,
+  netflix/void-model on HF — physics-aware object removal on CogVideoX, using SAM2
+  (already vendored) for segmentation; beat Runway 64.8% vs 18.4% in preference study.
+  Trigger: GPU host + a real removal need; ~40GB VRAM raw means FP8/offload work on a
+  24GB card → render-wrangler + film-editor. The listicle's Python API sample remains
+  unverified paste — integrate from the actual repo docs, not the article.
+- **Vera** (layered diffusion, content-preserving edits — edit layer + alpha matte,
+  MoT architecture): research + papers published 2026-06, no released weights found.
+  Watchlist: if weights ship, it's the surgical-edit tool for film-editor's lane.
+
+**Recycled/fluff, already covered**: Agentic Council (the roster), MFA + Sonix (sweep
+11 verdicts), "SSS locks"/"Kelvin templates" (colorist + cinematography bible),
+"taste vectors" (creative constitution + growth-analyst), "sonic identity" (sound-
+designer's charter), montage/pacing agents (film-editor + conform).
