@@ -322,6 +322,27 @@ modules:
       to editorial — the interchange every 3D tool speaks. No Hydra GPU imaging in the
       pip core; rendering is bpy/Cycles' job.
 
+  - id: cc-video-toolkit
+    repo: https://github.com/digitalsamba/claude-code-video-toolkit
+    ref: 9826feb491cffe18367e85f6f759bffcfb93d3da  # pinned 2026-08-05, verified install
+    profile: core
+    role: "Sibling platform (1.9k★, MIT): Remotion + open-model video patterns, Modal/RunPod cloud-GPU recipes — reference shelf"
+    license: MIT
+    cost: free
+    gpu: none
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/cc-video-toolkit }
+    notes: >
+      Eleventh sweep (docs/13): independently converged on our architecture (Remotion +
+      LTX + ACE-Step + skills), which makes it the best external reference for
+      motion-director's Remotion patterns and pipeline-td's model-routing recipes. Its
+      Modal path (~$0.23/clip, $30 free tier) is a founder-gated cloud-GPU option that
+      could activate the genai lane before local GPU hardware exists (D8: paid is
+      per-project, never default).
+
   - id: pinokio
     repo: https://github.com/pinokiocomputer/pinokio
     ref: main

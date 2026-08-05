@@ -148,3 +148,25 @@ fictional or unvetted, but REAL equivalents exist for every genuine capability:
 
 Security note: all newly installed packs grep-scanned for exec/exfil patterns (clean);
 the skip-on-1-install rule and read-before-trust discipline are now precedent.
+
+---
+
+## Eleventh sweep (2026-08-05): the "Agentic Council" listicle — deep-dive verification
+
+Second founder-supplied listicle, same genre as the tenth. Most of it re-describes what
+this platform already runs — the "Agentic Council" (creative-director/DOP/technical-
+director agents) IS the 28-agent roster with sharper charters; "Open Montage" has been
+the vendored production backbone since sweep 1; the Palmier/12-principles/RTX/
+Threadripper items carry tenth-sweep verdicts. The four NEW checkable claims, verified
+at source:
+
+| Claim | Verdict |
+|---|---|
+| JossBen/mcp-video-editing-assistant | REAL but embryonic (MIT, 2 commits, 1★, Resolve 17+ behavior-tracking MCP) — skip-on-1-install precedent applies; the mature Resolve path remains Resolve's own Python scripting API at desktop phase |
+| digitalsamba/claude-code-video-toolkit | REAL AND ADOPTED (MIT, 1.9k★, active): a sibling platform that independently converged on our architecture (Remotion + LTX + ACE-Step + skills). Vendored as `cc-video-toolkit` reference module. Its Modal cloud-GPU path (~$0.23/clip) is a founder-gated option to activate the genai lane BEFORE local GPU hardware — recorded, not enabled (D8) |
+| Sonix Transcription MCP | real product, paid SaaS — skipped; whisperX covers transcription at $0 |
+| Montreal Forced Aligner | REAL (MIT, Kaldi-based, conda, CPU, 900+ commits, active) — CATALOGUED with trigger: adopt when phoneme-grade alignment is needed (lip-sync for dubbing, animation mouth-shapes) beyond whisperX's word-level timing → localization-director/animation-director |
+
+"Dynamic Light-Rig Scripter" (Hydra): no such skill exists; the capability is bpy
+lighting scripting, already 3d-supervisor's lane. A USD broken-reference auditor script
+(pxr-based) joins 3d-supervisor's backlog — small, real, buildable on usd-core.
