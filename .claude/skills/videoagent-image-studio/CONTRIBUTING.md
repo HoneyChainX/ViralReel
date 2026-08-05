@@ -36,7 +36,7 @@ cp .env.example .env
 
 ```bash
 # Test Flux Dev (fast, only needs FAL_KEY)
-FAL_KEY=your_key node tools/generate.js \
+FAL_KEY=your-api-key node tools/generate.js \
   --model flux-dev \
   --prompt "a cute cat, photorealistic" \
   --aspect-ratio 1:1

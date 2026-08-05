@@ -115,7 +115,7 @@ Async job status placeholder. Returns 501 — this proxy waits for completion an
 
 ```bash
 cd proxy && npm install
-FAL_KEY=your_key node ../scripts/local-server.cjs 3777
+FAL_KEY=your-api-key node ../scripts/local-server.cjs 3777
 
 # In another terminal:
 export VIDEO_STUDIO_PROXY_URL=http://localhost:3777
