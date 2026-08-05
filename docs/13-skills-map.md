@@ -200,3 +200,39 @@ ceiling with cut-around guidance). Locks at previs like voice IDs; chains inheri
 11 verdicts), "SSS locks"/"Kelvin templates" (colorist + cinematography bible),
 "taste vectors" (creative constitution + growth-analyst), "sonic identity" (sound-
 designer's charter), montage/pacing agents (film-editor + conform).
+
+---
+
+## Thirteenth sweep (2026-08-05): Google/OpenAI/Netflix ecosystem listicle — verified
+
+**Mechanically actionable finding:** Netflix **VMAF is already inside our vendored
+ffmpeg** (`libvmaf` filter confirmed present) — post-supervisor's sweep-6 encode-QC duty
+(per-format encode recipe + minimum VMAF score vs render master) is now activatable
+with zero installs.
+
+**Verified real, catalogued with gates:**
+- **google-marketing-solutions/gen-v** (official, Apache, active): Veo ad-video toolkit —
+  Vertex-billed, founder-gated; key-art/marketing lane reference if a Google-stack
+  project ever appears.
+- **nolanx-ai/nolanx.ai** (MIT, 1.6k★, young): "agentic director" stretching short-clip
+  generators to 5–60 min films over paid APIs (OpenRouter/FAL/ReelMind) — architecture
+  overlaps our chains+film-editor stack; reference-read for continuity-supervisor,
+  usage founder-gated.
+- **0xsline/StoryGen-Atelier** (real; Gemini+Veo+ffmpeg): its "Interpolation Chain"
+  (sliding-window adjacent-shot pairs) is an independent convergence on our
+  keyframe-first FLF2V chain strategy — third external validation of the chaining
+  doctrine. Vertex-billed, catalog.
+- **anil-matcha/open-generative-ai** (MIT, 25.7k★): hybrid local(sd.cpp)/cloud(Muapi)
+  generation studio — CAUTION: "no content filters" philosophy conflicts with the
+  gate doctrine; if ever touched, it is founder-gated AND compliance-reviewed per use.
+- **hpcaitech/Open-Sora** (Apache): the open Sora-replication line — genai GPU-phase
+  catalog beside LTX-2/Wan.
+- **Google ADK + A2A protocol** (real, open): ADK gets the LangGraph precedent — no
+  second orchestrator, catalogued; A2A watchlisted as the cross-vendor interop seam if
+  this studio ever federates with external agents. Google-hosted MCP servers: real,
+  Google-Cloud-tenant infra we don't run.
+
+**Covered by existing charters:** YouTube transcript/SEO/watchdog skills (seo-packager,
+trend-archaeologist, growth-analyst + the morning brief); skill.md spec (our standard
+since sweep 8); SoraWebui (UI over a paid API we don't hold). **Correction recorded:**
+Manus is a proprietary product, not open-source — listicle error.
