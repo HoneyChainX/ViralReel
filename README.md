@@ -111,6 +111,7 @@ make ralph JOB=platform-install   # let the loop finish the job
 8. [`content/episodes/`](content/episodes/) — the 10-episode launch slate
 9. [`docs/10-platform.md`](docs/10-platform.md) — the studio platform: manifest, adapters, agents, loops
 10. [`docs/11-platform-research.md`](docs/11-platform-research.md) — the research behind every platform choice
+11. [`docs/13-skills-map.md`](docs/13-skills-map.md) — the 215-skill bank mapped to owners, phases, triggers
 
 ## Start
 
