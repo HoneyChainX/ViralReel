@@ -1,0 +1,31 @@
+{
+  "character_id": "KIP_001",
+  "demographics": {
+    "archetype": "stylized 2.5D/3D lighthouse keeper, weathered and kind",
+    "apparent_age": 60,
+    "proportions": "stocky, 3.5 heads tall, rounded silhouette, slight forward lean from years against wind"
+  },
+  "micro_details": {
+    "hair": "white beard, short, squared bottom edge; no visible hair under cap",
+    "skin_texture": "warm ruddy tan (#C98B6B), simplified — no pores at this stylization",
+    "facial_features": "small dot eyes set wide, heavy white eyebrows, round pink nose"
+  },
+  "costume_manifest": {
+    "primary_upper": "mustard-yellow oilskin raincoat (#D9A24E), high collar, three dark toggle buttons",
+    "primary_lower": "charcoal wool trousers (#3A3F4A) tucked into boots",
+    "footwear": "black rubber sea boots with rolled tops",
+    "headwear": "navy knit cap (#2A3358) pulled low"
+  },
+  "voice_ref": "kokoro bm_george at speed 0.9 — the film's narrator IS Kip",
+  "render_syntax": {
+    "style_2p5d": "flat SVG puppet, rounded joints, sway-walk cycle, house palette",
+    "style_3d": "low-poly figure, same palette hexes exactly, silhouette-first readability"
+  },
+  "reference_images": [],
+  "canon_phrases": [
+    "mustard-yellow oilskin raincoat with three dark toggles",
+    "navy knit cap pulled low",
+    "white squared beard",
+    "black sea boots with rolled tops"
+  ]
+}
