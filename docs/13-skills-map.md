@@ -81,3 +81,46 @@ Skills follow module rules: adopted means an agent's charter can name it; declin
 means a recorded reason, not silence; GPU-phase means a trigger, not a vibe. The
 duplicate rule (data-designer) and the canary rule (cuopt) apply to skills exactly as
 they apply to seats and modules.
+
+---
+
+## Ninth sweep (2026-08-05): the creative-production wave — 188 repo-vendored skills
+
+The founder installed 11 skill packs via the skills CLI; they now live **in-repo** at
+`.agents/skills/` (with `.claude/skills/` symlinks), versioned like our own three studio
+skills — every future session loads them natively. 31 MB of markdown, invocable as
+`/<name>`.
+
+### Adopted into lanes (free to run, CPU-fine)
+
+| Pack | Skills | Owner | Why it matters here |
+|---|---|---|---|
+| **Remotion official** (remotion-dev/skills) | 12 | motion-director | docs-grade skills for our primary render engine — best-practices, create, render, captions (that one also serves localization-director), multimedia, upgrade |
+| **Three.js** (cloudai-x) | 10 | 3d-supervisor + motion-director | a SECOND 3D path: three.js inside Remotion (@remotion/three) renders browser-3D on CPU via headless Chromium — complements the bpy/Cycles lane |
+| **GSAP official** (greensock) | 8 | motion-director | timeline/easing craft; also HyperFrames' default runtime |
+| **HyperFrames** (heygen-com) | 25 | motion-director + film-editor | an entire second production lane: HTML/GSAP compositions with a local CLI (init/lint/preview/render). Its motion-doctrine ("a multi-scene video should feel like ONE continuous camera move", the Seam Gate, the ban on idle wobble) independently converges on our chaining/continuity philosophy — continuity-supervisor should read it. embedded-captions + talking-head-recut serve localization-director/post-supervisor |
+| **Genjutsu** (AThevon) | 2 + 15 internal | brand-designer / key-art-director / motion-director | creative-coding orchestrators (/cast for motion, /paint for graphics); sub-skills load automatically, never invoked directly |
+| **design-dna** (zanwei) | 1 | brand-designer | reference images/URLs → structured design-profile JSON → generation from profile |
+| **motion-design** (lottiefiles) | 1 | motion-director | motion principles + Lottie assets in Remotion |
+| **visual-skills** (smixs) | 2 | gen-supervisor | image/video prompt craft reference |
+
+### Paid-generation fleets — installed, founder-gated (D8: paid is per-project, never default)
+
+| Pack | Skills | Notes |
+|---|---|---|
+| **Pexo** (pexoai) | 20 | cloud AI-video service (Seedance/Kling/Veo/Sora routing). EXCEPTION adopted free: seedance-2.0-prompter + veo-3.2-prompter are prompt-craft knowledge → gen-supervisor's reference shelf |
+| **Higgsfield** (higgsfield-ai) | 9 | paid credits (MCP connected). Aligned pairs worth noting when a project buys in: soul-id ↔ gen-supervisor's casting sheets, higgsfield-youtube-thumbnail ↔ key-art-director's lab |
+| **inference.sh** (inference-sh) | 86 | the pack is far larger than its listing — a full cloud-model CLI (FLUX/Veo/GPT-Image/ElevenLabs/music/avatar). Execution skills are founder-gated; the ~20 knowledge-only skills ride free (storyboard-creation → previs-director, youtube-thumbnail-design + og-image-design → key-art-director, character-design-sheet → gen-supervisor, video-ad-specs + prompt-engineering → gen-supervisor, logo-design-guide → brand-designer, data-visualization → motion-director) |
+
+### Honesty notes
+
+- **License hygiene is thin**: only one pack ships a LICENSE file at skill depth. These
+  are published instruction repos and we use them as instructions (low risk), but the
+  gap is recorded — pipeline-td checks licenses before any pack's code/assets (not just
+  prose) enters a deliverable.
+- **Duplicate-routing risk**: the wave brings overlaps (ai-podcast vs ai-podcast-creation,
+  data-visualization vs the environment dataviz skill, three caption skills across
+  packs). Owners disambiguate: the lane's charter names which skill wins per task.
+- **Provenance law unchanged**: none of the generation fleets touch Price Archaeology's
+  archival layer; the gate outranks every skill, and generated imagery in thumbnails
+  stays banned for archival-evidence episodes.
