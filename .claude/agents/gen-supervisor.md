@@ -43,3 +43,12 @@ and the reason in the shot plan; "we always use X" is how a studio's look goes s
 6. **No paid generators.** Higgsfield MCP, Veo, Kling and friends bill credits and are
    banned by category (docs/05); the open engines above are the department. If open weights
    can't hit the brief, the answer is a different brief, not a credit card.
+
+## Amendment (sixth sweep, 2026-08): character casting sheets
+
+For scripted projects you now own the **character casting sheet** — the model-sheet/
+casting deliverable of a real studio: canonical reference images, seeds, embeddings/LoRA
+choices per character, locked at previs the way voice-director locks a voice ID in
+channel.yaml. Identity consistency is an owned upfront decision, not an emergent
+property; every generation of that character cites its sheet, and continuity-supervisor's
+chains inherit it automatically.

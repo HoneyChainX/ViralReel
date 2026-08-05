@@ -271,3 +271,105 @@ and one license error, which is exactly why the verify pass exists:
   review misses regressions (e.g., at a second production channel).
 - CrewAI / MetaGPT / AutoGPT / BabyAGI / ChatDev — agreed with Gemini's own
   catalog/decline calls; recorded so no future sweep re-litigates them.
+
+---
+
+## 8. The missing-roles sweep: Netflix/Pixar/Disney org charts vs the roster (sixth sweep, 2026-08-04)
+
+Three parallel researchers: the Pixar/Disney/DreamWorks feature pipeline (24 roles, from
+studio job postings and Animation Guild classifications), Netflix + creator-studio roles
+(17 roles, from the Netflix Tech Blog, Partner Help specs, and the MrBeast onboarding
+doc), and live GitHub verification of tools for the candidate chairs (17 repos, licenses
+read from source).
+
+**Net assessment:** the 23-agent roster mapped the studio org well — editorial's design
+(film-editor + continuity-supervisor) matches how feature animation actually staffs
+continuity, growth-analyst is "genuinely MrBeast-grade", and compliance-officer is a
+properly S&P-shaped gate. Four chairs were real gaps; all four are now staffed:
+
+| New agent | Studio precedent | Tools adopted |
+|---|---|---|
+| line-producer | Pixar PM/line producer — "the most real gap in the roster" | file ledgers now; cgwire/gazu (LGPL, pip) installed as the Kitsu/Zou bridge |
+| colorist | Netflix color-managed DI mandate; grade mismatch = the AI tell | OpenColorIO (BSD-3, pip) + colour-science (BSD-3, pip) |
+| localization-director | Netflix Timed Text guides; MrBeast dubbed channels | argos-translate (MIT, pip, CTranslate2 CPU) + whisperX (already ours) |
+| key-art-director | Netflix AVA artwork pipeline; thumbnail-half-the-video culture | OpenImageIO (Apache, pip); dedicated thumbnail repos surveyed and SKIPPED (nothing worth vendoring) |
+
+Plus beets (MIT, pip) as sound-designer's music-supervision backbone (cue-sheet ledger).
+
+**Folded, not staffed** (recorded so no future sweep re-litigates): story supervisor →
+story-showrunner; story artist + virtual DP → previs-director (cinematography bible
+amendment); character designer/casting → gen-supervisor (casting-sheet amendment);
+animatic-first editorial → film-editor amendment; music supervision → sound-designer
+amendment; per-title encode recipes + VMAF gate → render-wrangler/post-supervisor duty;
+production coordinator → line-producer (two management agents for one founder is
+over-staffing). **Correctly missing, do not staff:** character TDs/rigging, FX TDs,
+lighting TDs (no rig, no sim, no 3D lighting stage exists — revisit only with a Blender
+render stage), and the gaffer — the canary role: any proposed agent whose whole job is
+applying another agent's spec with no judgment of its own is a checklist, not a seat.
+
+**Catalogued with triggers:** cgwire/kitsu + cgwire/zou (AGPL, fine internally) when a
+human team joins; ynput/AYON declined for now (FSL-1.1 backend — not OSI open source
+until its 2-year conversion — and aimed at multi-DCC studios); OpenRV (mature) over
+xStudio if a desktop dailies player is ever wanted; usd-core (pip) when a 3D
+layout/sets role appears; libplacebo at GPU phase for HDR/tone-map finishing;
+ComfyUI_IPAdapter_plus (GPL — isolate inside ComfyUI runtime; maintainer-hiatus, pin a
+commit) for character identity at GPU phase; Freesound API client when a CC-vetting
+policy exists; Helsinki-NLP/Opus-MT credited as Argos's model source and fallback.
+
+---
+
+## 9. The 3D lane: from "correctly missing" to live (seventh sweep, 2026-08-04)
+
+Founder direction: don't exclude 3D. §8's "no 3D stage exists" was a self-fulfilling
+verdict — the stage didn't exist because nothing had built it. Two research agents (one
+running EMPIRICAL tests on this host, one auditing Blender Studio's shipped pipeline)
+plus an internal audit of prior dev closed it:
+
+**Audit of previous dev:** 3D was doctrine-present, mechanically absent — Blender named
+in five charters, blender-mcp/Flamenco/usd-core catalogued, but the `blender` module was
+desktop-only/disabled and nothing 3D was installed or proven.
+
+**Now live (verified by running it):**
+- `blender-headless` (pip bpy wheel, GPL) — full Blender headless; Cycles CPU renders
+  confirmed on this host (~20–25s/frame at 720p stylized); Rigify generates production
+  rigs headless (empirically: 159-bone human metarig → rig in 4.5s, no display).
+- `usd-core` (Pixar, TOST-1.0 permissive) — USD authoring verified; no GPU imaging in
+  the wheel (UsdImagingGL ImportError confirmed — that's expected and fine).
+- **LIGHTHOUSE**: first true-3D production — 15s, 3 shots, fully procedural Cycles film.
+- Version intelligence: cp311 wheels live on the bpy 4.5 LTS line (monthly releases);
+  5.1+ is cp313-only. We run 5.0.1/cp311 (proven); revisit at python upgrade.
+- Blender 5 API breaks handled in production: NISHITA→MULTIPLE_SCATTERING sky, slotted
+  actions (Action.fcurves gone), EEVEE blend_method removed, no ffmpeg encoder in the
+  pip wheel (PNG frames + vendored ffmpeg assembly — the farm shape anyway).
+
+**Engine ruling (decide-now, verified):** EEVEE — including EEVEE-Next — is a GPU
+rasterizer (GL 4.3+/Vulkan required) and cannot render on this host. Cycles CPU with
+bounded samples + OpenImageDenoise is the committed final-frame engine; EEVEE previews
+are a future Flamenco GPU-worker job.
+
+**Catalogued with triggers (all verified active, licenses read):**
+- Flamenco (Blender Studio, GPL-3.0, Go manager+worker, v3.9.3, single-machine
+  supported) — adopt when renders outgrow render_all.sh's resumable-runner pattern.
+- CloudRig (studio rigger-maintained, GPL, tracks Blender 5.0 with a 4.5 tag) — first
+  component-rigged character project. Rigify meanwhile ships inside bpy: adopted.
+- blender-studio-tools (GPL): blender_kitsu, asset_pipeline, naming/folder conventions
+  (copy the docs verbatim when the 3D lane scales), lighting_overrider.
+- Storypencil: alive but thin bus factor — treat boards as GP3 scenes + VSE conventions
+  scripted directly; Storypencil is optional human convenience.
+- Grease Pencil 3: the 2D-in-3D system (geometry-nodes capable) — adopt for hybrid
+  2D/3D formats when one appears.
+- ahujasid/blender-mcp (MIT, active) — the agent-drives-desktop-Blender seam for
+  human+agent co-authoring sessions.
+- Poly Haven API (assets CC0, keyless, verified reachable) — the house 3D asset source.
+  Objaverse (ODC-By dataset, per-object licenses) and Sketchfab (CC filterable, token
+  for downloads) require per-object vetting — catalogued behind license policy.
+- glTF-Validator (Khronos, Apache) — asset QC CLI when external models enter scenes.
+- colmap (BSD-3): sparse SfM is CPU-viable today; dense reconstruction at GPU phase.
+  Meshroom: CUDA-gated full pipeline → desktop/GPU catalog.
+- GPU-phase generation: TRELLIS (MIT, 16GB — audit two vendored submodule licenses at
+  adoption), TripoSR (MIT, 6GB), UniRig (MIT, 8GB auto-rig). shap-e: dormant, SKIP.
+
+**Roles:** one consolidated `3d-supervisor` chair (layout+lighting+rigging+sets
+policy) — Blender Studio's ~10-artist open movies show which TD chairs carry judgment
+at small scale; the split TD roles arrive with the GPU farm, if ever. §8's gaffer-canary
+rule applied to 3D: farm execution stays render-wrangler's checklist, not a new seat.

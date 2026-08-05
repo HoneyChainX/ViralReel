@@ -1,0 +1,11 @@
+# Film manifest — LIGHTHOUSE, the first true-3D film (Cycles CPU, procedural).
+slug: lighthouse-15s
+title: "LIGHTHOUSE"
+delivery: { width: 1280, height: 720, fps: 24, lufs: -14, fit: crop }
+qc_cut_threshold: 3    # dusk-to-dusk cuts are soft by design; verified no false extras at 3
+scenes:
+  - id: s1-orbit
+    source: out/lighthouse-s1.mp4
+    transition_out: { type: xfade, dur: 0.5 }   # afternoon→sunset: the honest time-jump dissolve
+  - { id: s2-sunset, source: out/lighthouse-s2.mp4 }
+  - { id: s3-lamp,   source: out/lighthouse-s3.mp4 }

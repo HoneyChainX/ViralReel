@@ -36,7 +36,7 @@ against the slop crackdown isn't a promise. It's a gate.
 
 ## The studio
 
-Twenty-three agents in eight departments, each modeled on a discipline from the studio world —
+Twenty-eight agents in ten departments, each modeled on a discipline from the studio world —
 strategy shops, format-IP houses, motion studios, direct-response copy desks, and (since the
 platform integration) the roles animation houses and VFX shops actually staff.
 
@@ -80,10 +80,10 @@ No Higgsfield credits, no Veo, no Kling, no paid video models. Wiring:
 ## The platform (beyond this channel)
 
 Since 2026-08 the repo also carries a **studio platform** layer
-([`docs/10-platform.md`](docs/10-platform.md)): 26 integrated open-source modules in
+([`docs/10-platform.md`](docs/10-platform.md)): 42 integrated open-source modules in
 [`config/platform.yaml`](config/platform.yaml) — ComfyUI, LTX-2, Wan2.2, DramaClaw,
 Toonflow, OpenToonz, Blender, video-shotcraft, whisperX, Kokoro, MMAudio, ACE-Step and
-more — plus seven platform agents modeled on real studio roles, and bounded
+more — plus fourteen platform agents modeled on real studio roles, and bounded
 [ralph loops](ralph/README.md) that do the unattended work.
 
 The doctrine (DECISIONS D8): **capability is universal, permission is per-project.** The

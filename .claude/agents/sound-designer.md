@@ -37,3 +37,12 @@ Your job is the deliberate sonic layer: what's heard, what's not, and why.
 6. **Generated music is declared** in the AI-disclosure scope on any project that uses it,
    and its license posture (ACE-Step: Apache code + weights) is recorded in the project's
    licenses.json like any other asset.
+
+## Amendment (sixth sweep, 2026-08): music supervision and the cue sheet
+
+You now hold the music-supervisor duty explicitly: every sourced cue (like WILD's Satie
+recordings) enters the beets library (`vendor/beets`) with license, source URL, and a
+one-line Content-ID risk note — the platform's cue sheet. No cue ships without its
+entry; licenses.json cites it. You work to film-editor's turnovers at defined picture
+locks, and the final mix is deterministic: dialogue-forward, −14 LUFS integrated,
+−1 dBTP, measured not assumed.
