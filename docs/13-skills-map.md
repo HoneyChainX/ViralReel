@@ -268,3 +268,16 @@ describes a structure this repo already exceeds with six authored skills). New v
 | PKU-YuanGroup/Open-Sora-Plan (Apache) | real, well-known — genai GPU catalog beside hpcaitech/Open-Sora (sweep 13) |
 | Vchitect/Latte (Apache) | real video-DiT research lineage — catalog-note only; its "fine-tune your own model" pitch is off-doctrine (this studio consumes models, never trains) |
 | suno-ai/bark (MIT) | real — CATALOGUED with trigger: nonverbal audio cues ([sighs], [laughs], throat-clears) for scripted character dialogue, the one niche Kokoro/VibeVoice don't cover → voice-director; CPU-slow but offline-job economics |
+
+---
+
+## Sixteenth sweep (2026-08-06): GPU scaling fleet → docs/14
+
+Four-researcher workflow (gen-scaling tech, big-co speed blueprints, RunPod/build.nvidia
+deployment, cost engineering) — full blueprint in **docs/14-gpu-scaling.md**. Headlines:
+the 4090 day-1 speed stack (Lightning 4-step + LTX distilled FP8 + SageAttention2 +
+TeaCache + cascaded upscale + RIFE) takes a 1-min film from ~1.8 GPU-hours to minutes
+and ~$0.11-0.35; RunPod Secure pod + network volume is home base; two aggregator lies
+caught (ParaAttention "open source" — actually no-hosted-service source-available;
+NVFP4 "3x on any RTX" — Blackwell-only, docs/11 corrected); Self-Forcing's realtime
+4090 weights open a previz lane; DGX Cloud/Brev/serverless declined with reasons.
