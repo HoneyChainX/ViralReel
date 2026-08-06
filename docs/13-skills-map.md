@@ -251,3 +251,20 @@ This batch targets our exact constraint ($0, CPU-first). Verified at source:
 | vladmandic/sdnext | real and large, but redundant: a second webui when ComfyUI is already vendored (and has its own --cpu flag) — the duplicate-routing rule applies |
 | freddyjose/ComfyUI-CPU | redundant fork — official ComfyUI --cpu covers it |
 | "GGUF video generation on CPU" (Wan2GP etc.) | OVERSTATED: Wan2GP targets low-VRAM GPUs, not no-GPU; CPU video diffusion runs minutes per frame — the video-generation-is-GPU-phase verdict stands |
+
+---
+
+## Fifteenth sweep (2026-08-06): Gemini "AI-native studio" batch
+
+Mostly re-treads of sweeps 11-14 (digitalsamba toolkit already vendored — the batch's
+"Fixie-AI/digisamba" attribution is garbled; NolanX and the 1-star JossBen MCP carry
+sweep-11/13 verdicts — this batch inflates JossBen to "the official MCP bridge", which
+it is not; OpenSplat/FastSD adopted in sweep 14; the SKILL.md scaffolding advice
+describes a structure this repo already exceeds with six authored skills). New verdicts:
+
+| Item | Verdict |
+|---|---|
+| Fable "Showrunner/Showrunner" repo | NOT open-source — SHOW-1 is a research paper + the commercial showrunner.xyz platform; no code repo exists. Its script/director/asset multi-agent architecture is third-party validation of this roster's design. Correction recorded |
+| PKU-YuanGroup/Open-Sora-Plan (Apache) | real, well-known — genai GPU catalog beside hpcaitech/Open-Sora (sweep 13) |
+| Vchitect/Latte (Apache) | real video-DiT research lineage — catalog-note only; its "fine-tune your own model" pitch is off-doctrine (this studio consumes models, never trains) |
+| suno-ai/bark (MIT) | real — CATALOGUED with trigger: nonverbal audio cues ([sighs], [laughs], throat-clears) for scripted character dialogue, the one niche Kokoro/VibeVoice don't cover → voice-director; CPU-slow but offline-job economics |
