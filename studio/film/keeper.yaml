@@ -1,0 +1,13 @@
+# Film manifest — THE KEEPER, the all-systems capstone (2.5D chains + true-3D finale).
+slug: keeper-60s
+title: "THE KEEPER"
+delivery: { width: 1920, height: 1080, fps: 24, lufs: -14, fit: crop }
+qc_cut_threshold: 1
+scenes:
+  - id: act1-walk
+    source: out/keeper-act1.mp4
+    transition_out: { type: cut, qc: manual }   # matched cut (land→sea, same dusk) — verified by eye, invisible to detectors by design
+  - id: act2-crossing
+    source: out/keeper-act2.mp4
+    transition_out: { type: xfade, dur: 0.5 }   # the lane crossing earns the film's one dissolve
+  - { id: act3-light, source: out/keeper-act3.mp4 }

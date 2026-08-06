@@ -1,0 +1,19 @@
+project: keeper
+status: delivered
+milestones:
+  - { id: script-locked,   due: 2026-08-05, done: true }
+  - { id: picture-locked,  due: 2026-08-06, done: true }
+  - { id: delivered,       due: 2026-08-06, done: true }
+tasks:
+  - { id: casting-sheet,     owner: gen-supervisor,        state: done, blocked_on: null }
+  - { id: cine-bible,        owner: previs-director,       state: done, blocked_on: null }
+  - { id: script-style-gate, owner: script-editor,         state: done, blocked_on: null }
+  - { id: acts12-chains,     owner: continuity-supervisor, state: done, blocked_on: null }
+  - { id: act3-cycles,       owner: 3d-supervisor,         state: done, blocked_on: null }
+  - { id: conform,           owner: film-editor,           state: done, blocked_on: null }
+  - { id: vo-mix,            owner: sound-designer,        state: done, blocked_on: null }
+  - { id: grade-report,      owner: colorist,              state: done, blocked_on: null }
+  - { id: vmaf-delivery,     owner: post-supervisor,       state: done, blocked_on: null }
+  - { id: subtitles-x3,      owner: localization-director, state: done, blocked_on: null }
+  - { id: key-art,           owner: key-art-director,      state: done, blocked_on: null }
+verdict: renew   # the capstone proved every lane; the pipeline is production-ready
