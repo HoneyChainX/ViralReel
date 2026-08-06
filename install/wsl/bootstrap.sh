@@ -1,0 +1,195 @@
+#!/usr/bin/env bash
+# Bring a fresh Ubuntu (normally inside WSL2 on Windows 11) up to a working
+# ViralReel host. Idempotent: safe to re-run after a failure, and safe to re-run
+# when everything is already fine.
+#
+#   bash install/wsl/bootstrap.sh                       # tools + core platform
+#   bash install/wsl/bootstrap.sh --profile none        # tools only, no vendors
+#   bash install/wsl/bootstrap.sh --profile all --with-claude --with-services
+#
+# Run it as the normal user, NOT as root — it calls sudo only where it must, and
+# the services it installs must run as the human who owns the checkout.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+cd "$ROOT"
+
+PROFILE=core
+WITH_CLAUDE=0
+WITH_SERVICES=0
+SKIP_APT=0
+NODE_MAJOR=22            # Remotion and the HyperFrames lane need 22+
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --profile)       PROFILE="$2"; shift ;;
+    --with-claude)   WITH_CLAUDE=1 ;;
+    --with-services) WITH_SERVICES=1 ;;
+    --skip-apt)      SKIP_APT=1 ;;
+    -h|--help)       sed -n '2,12p' "$0"; exit 0 ;;
+    *) echo "unknown flag: $1" >&2; exit 2 ;;
+  esac
+  shift
+done
+
+say()  { printf '\n\033[1m==> %s\033[0m\n' "$1"; }
+ok()   { printf '  \033[32mOK\033[0m    %s\n' "$1"; }
+warn() { printf '  \033[33mWARN\033[0m  %s\n' "$1"; }
+die()  { printf '  \033[31mFAIL\033[0m  %s\n' "$1" >&2; exit 1; }
+
+# ── preconditions ───────────────────────────────────────────────────────────
+
+say "Checking the host"
+[ "$(uname -s)" = "Linux" ] || die "this installs the Linux stack — on Windows run it inside WSL2 (see install/windows/)"
+[ "$(id -u)" -ne 0 ] || die "do not run as root; run as your normal user and let sudo prompt"
+command -v sudo >/dev/null || die "sudo is required"
+
+if grep -qi microsoft /proc/version 2>/dev/null; then
+  ok "WSL detected: ${WSL_DISTRO_NAME:-unknown distro}"
+  # /mnt/c is a 9p mount into Windows; building here is many times slower and
+  # breaks file modes that venvs and git rely on.
+  case "$ROOT" in
+    /mnt/*) die "the repo is on the Windows filesystem ($ROOT). Move it into the Linux filesystem (e.g. ~/ViralReel) — renders and npm installs are dramatically slower on /mnt, and permissions do not survive." ;;
+  esac
+  ok "repo is on the Linux filesystem"
+else
+  ok "native Linux (not WSL) — everything below still applies"
+fi
+
+FREE_GB=$(df -BG --output=avail . | tail -1 | tr -dc '0-9')
+if [ "$PROFILE" != "none" ] && [ "${FREE_GB:-0}" -lt 40 ]; then
+  warn "${FREE_GB}GB free — a full vendor tree is ~26GB plus renders. Consider --profile none for now."
+else
+  ok "${FREE_GB}GB free"
+fi
+
+# ── system packages ─────────────────────────────────────────────────────────
+
+if [ "$SKIP_APT" -eq 0 ]; then
+  say "System packages"
+  sudo apt-get update -qq
+  # python3-yaml comes from apt on purpose: Ubuntu 24.04 marks the system
+  # interpreter externally-managed (PEP 668), so `pip install pyyaml` into it
+  # fails, and our loaders (platform.py, jobd.py) run on system python.
+  sudo apt-get install -y -qq \
+    git curl ca-certificates xz-utils unzip jq \
+    build-essential pkg-config \
+    python3 python3-venv python3-pip python3-yaml \
+    fonts-dejavu-core
+  ok "base packages installed"
+else
+  warn "skipping apt (--skip-apt)"
+fi
+
+say "Node.js"
+CURRENT_NODE=$(node -v 2>/dev/null | tr -dc '0-9.' | cut -d. -f1 || true)
+if [ -n "${CURRENT_NODE:-}" ] && [ "$CURRENT_NODE" -ge "$NODE_MAJOR" ]; then
+  ok "node $(node -v)"
+elif [ "$SKIP_APT" -eq 1 ]; then
+  warn "node ${CURRENT_NODE:-absent} is below $NODE_MAJOR and --skip-apt was given"
+else
+  # Ubuntu ships a node too old for Remotion; NodeSource is the vendor's own repo.
+  curl -fsSL "https://deb.nodesource.com/setup_${NODE_MAJOR}.x" | sudo -E bash - >/dev/null
+  sudo apt-get install -y -qq nodejs
+  ok "node $(node -v)"
+fi
+
+# ── ffmpeg ──────────────────────────────────────────────────────────────────
+
+say "ffmpeg"
+# Deliberately the vendored static build rather than apt's: delivery QC scores
+# VMAF, and a distro ffmpeg without libvmaf would drop that check silently.
+if [ -x vendor/ffbin/bin/ffmpeg ]; then
+  ok "vendored ffmpeg present"
+else
+  bash scripts/get-ffmpeg.sh
+fi
+vendor/ffbin/bin/ffmpeg -version 2>/dev/null | grep -q -- --enable-libvmaf \
+  && ok "libvmaf available (delivery QC can score)" \
+  || warn "vendored ffmpeg has no libvmaf — VMAF scoring will be unavailable"
+
+PROFILE_LINE="export PATH=\"$ROOT/vendor/ffbin/bin:\$PATH\""
+if ! grep -Fqx "$PROFILE_LINE" "$HOME/.profile" 2>/dev/null; then
+  printf '\n# ViralReel: vendored ffmpeg with libvmaf (docs/15)\n%s\n' "$PROFILE_LINE" >> "$HOME/.profile"
+  ok "added vendored ffmpeg to PATH in ~/.profile (new shells)"
+fi
+export PATH="$ROOT/vendor/ffbin/bin:$PATH"
+
+# ── control server ──────────────────────────────────────────────────────────
+
+say "Studio control server"
+# Its own venv, not system python: the MCP SDK pulls pydantic and starlette, and
+# Ubuntu 24.04 refuses pip installs into the system interpreter (PEP 668).
+if [ ! -x server/.venv/bin/python ]; then
+  python3 -m venv server/.venv
+fi
+server/.venv/bin/pip install --quiet --upgrade pip
+if server/.venv/bin/pip install --quiet -r server/requirements.txt; then
+  ok "MCP SDK installed ($(server/.venv/bin/pip show mcp 2>/dev/null | awk '/^Version/{print $2}'))"
+  # Import the module rather than trust the install: a partial wheel still
+  # reports as installed and then fails at session start.
+  if server/.venv/bin/python -c "from mcp.server import MCPServer" 2>/dev/null; then
+    ok "control server imports — .mcp.json will load it in Claude Code"
+  else
+    warn "MCP SDK installed but does not import — re-run: server/.venv/bin/pip install -r server/requirements.txt"
+  fi
+else
+  warn "could not install the MCP SDK — the studio tools will not appear in Claude Code"
+fi
+
+# ── claude code (optional) ──────────────────────────────────────────────────
+
+if [ "$WITH_CLAUDE" -eq 1 ]; then
+  say "Claude Code CLI"
+  if command -v claude >/dev/null 2>&1; then
+    ok "claude $(claude --version 2>/dev/null | head -1)"
+  else
+    curl -fsSL https://claude.ai/install.sh | bash
+    export PATH="$HOME/.local/bin:$PATH"
+    command -v claude >/dev/null && ok "installed $(claude --version 2>/dev/null | head -1)" \
+      || warn "installer finished but 'claude' is not on PATH yet — open a new shell"
+  fi
+  cat <<'EOF'
+
+  Remote Control needs an interactive claude.ai login once — it cannot be
+  scripted, and API keys are rejected. In this directory run:
+
+      claude          # then: /login   (and accept the workspace trust prompt)
+
+EOF
+fi
+
+# ── platform modules ────────────────────────────────────────────────────────
+
+if [ "$PROFILE" != "none" ]; then
+  say "Studio platform modules (profile: $PROFILE)"
+  warn "this clones and builds a lot — expect tens of minutes and ~26GB for 'all'"
+  bash scripts/studio/install.sh --profile "$PROFILE" || warn "some modules failed — see the output above, then re-run"
+else
+  warn "skipping platform modules (--profile none)"
+fi
+
+# ── services ────────────────────────────────────────────────────────────────
+
+if [ "$WITH_SERVICES" -eq 1 ]; then
+  say "Services"
+  if [ -d /run/systemd/system ]; then
+    sudo bash install/services/install-services.sh $([ "$WITH_CLAUDE" -eq 1 ] && echo --with-remote-control)
+  else
+    warn "systemd is not running — enable it first, then re-run with --with-services:"
+    echo "      printf '[boot]\\nsystemd=true\\n' | sudo tee -a /etc/wsl.conf"
+    echo "      # then in Windows PowerShell:  wsl --shutdown    (and reopen the distro)"
+  fi
+fi
+
+# ── verdict ─────────────────────────────────────────────────────────────────
+
+say "Host report"
+python3 scripts/studio/hostinfo.py || true
+
+echo ""
+if python3 scripts/studio/hostinfo.py --assert-ready >/dev/null 2>&1; then
+  printf '\033[32mHost is ready.\033[0m  Next: python3 scripts/studio/jobd.py enqueue doctor\n'
+else
+  printf '\033[33mHost is not fully ready — see the blocking items above.\033[0m\n'
+fi

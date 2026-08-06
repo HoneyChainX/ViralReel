@@ -1,0 +1,50 @@
+# The render worker. Installed by install/services/install-services.sh, which
+# fills __USER__, __GROUP__ and __ROOT__ before copying this into
+# /etc/systemd/system/ — the placeholders are not systemd syntax.
+#
+# This unit is why a render survives the conversation that asked for it: the
+# queue holds the work, and systemd holds the queue.
+
+[Unit]
+Description=ViralReel render worker (studio job queue)
+Documentation=file://__ROOT__/docs/15-windows-host.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__USER__
+Group=__GROUP__
+WorkingDirectory=__ROOT__
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/env python3 __ROOT__/scripts/studio/jobd.py worker
+
+# A worker that dies mid-render must come back and clear the wreckage; jobd's
+# reap() marks the orphan interrupted on start, and chunked renders resume by
+# counting the frames already on disk.
+Restart=always
+RestartSec=5
+
+# Give a render a full two minutes to shut down cleanly on stop. KillMode=mixed
+# sends SIGTERM to the worker only, letting it signal its own child's process
+# group, then SIGKILLs the whole tree if anything is still holding on.
+KillMode=mixed
+TimeoutStopSec=120
+
+# A render job is not allowed to starve the machine it runs on. Nice+idle IO
+# keeps the box usable — and keeps Remote Control responsive — while Cycles
+# saturates every core.
+Nice=5
+IOSchedulingClass=idle
+
+# Defence in depth only — the real boundary is the config/jobs.yaml allowlist.
+# Deliberately NOT ProtectHome: platform-install writes pip and npm caches under
+# $HOME and git-pull may need ~/.ssh, so locking home down would break the very
+# recipes this worker exists to run.
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+ReadWritePaths=__ROOT__
+
+[Install]
+WantedBy=multi-user.target

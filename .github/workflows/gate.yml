@@ -61,12 +61,57 @@ jobs:
 
       - name: Shell syntax
         run: |
-          for f in scripts/*.sh scripts/studio/*.sh ralph/ralph.sh; do bash -n "$f" && echo "ok $f"; done
+          for f in scripts/*.sh scripts/studio/*.sh ralph/ralph.sh \
+                   install/wsl/*.sh install/services/*.sh; do
+            bash -n "$f" && echo "ok $f"
+          done
 
       - name: Python syntax
         run: |
           python3 -m py_compile scripts/gate.py tests/test_gate.py \
-            scripts/studio/platform.py tests/test_platform.py studio/adapters/*.py
+            scripts/studio/platform.py tests/test_platform.py studio/adapters/*.py \
+            scripts/studio/hostinfo.py scripts/studio/jobd.py \
+            tests/test_jobd.py tests/test_hostinfo.py server/studio_mcp.py
+
+      # The host server's job allowlist is a security boundary (docs/15). If it
+      # stops parsing, jobd fails closed — but a silent typo in a pattern would
+      # widen it, so parse it here and let test_jobd.py assert its contents.
+      - name: Job allowlist parses
+        run: |
+          pip install pyyaml -q
+          python3 -c "
+          import sys
+          sys.path.insert(0, 'tests')
+          import importlib.util
+          spec = importlib.util.spec_from_file_location('jobd', 'scripts/studio/jobd.py')
+          m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          r = m.load_recipes()
+          print(f'ok {len(r)} recipes:', ', '.join(sorted(r)))
+          "
+
+      # systemd will happily install a unit with a typo'd directive and then
+      # refuse to start it at 3am. Catch the structural mistakes here.
+      - name: systemd units are well-formed
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+          bad = []
+          for p in sorted(pathlib.Path('install/services').glob('*.service')):
+              text = p.read_text()
+              found = re.findall(r'^\[(\w+)\]', text, re.M)
+              for required in ('Unit', 'Service', 'Install'):
+                  if required not in found:
+                      bad.append(f"{p.name}: missing [{required}] section")
+              if 'ExecStart=' not in text:
+                  bad.append(f"{p.name}: no ExecStart")
+              for i, line in enumerate(text.splitlines(), 1):
+                  s = line.strip()
+                  if s and not s.startswith('#') and not s.startswith('[') and '=' not in s:
+                      bad.append(f"{p.name}:{i}: not a directive: {s!r}")
+          if bad:
+              print("::error::malformed unit\n" + "\n".join(bad)); sys.exit(1)
+          print("ok systemd units")
+          PY
 
       - name: Makefile targets resolve
         run: make help >/dev/null && echo "ok Makefile"

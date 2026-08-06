@@ -55,3 +55,7 @@ content/films/*/*.m4a
 
 # Published deliverables are the one sanctioned home for tracked media
 !releases/*.mp4
+
+# Machine-local runtime state for the host server (docs/15): job database, job
+# logs, minted tokens. Never committed — it describes one machine, not the studio.
+var/

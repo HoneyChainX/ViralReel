@@ -1,0 +1,127 @@
+# The job allowlist — every piece of work the studio will run on request.
+#
+# This file is the security boundary of the remote control surface (docs/15).
+# A remote caller does not send commands; it names a job from this list and
+# fills the parameter slots that job declares. scripts/studio/jobd.py enforces:
+#
+#   * argv is a list, executed WITHOUT a shell — no globbing, no `;`, no pipes
+#   * argv[0] is always literal — the command itself can never be a parameter
+#   * every {slot} must be declared below with a regex, and a value that fails
+#     its regex is rejected before anything runs
+#
+# So a slot pattern is not cosmetic validation: `^[a-z0-9][a-z0-9-]{0,40}$`
+# is what stops `../../etc/passwd` from reaching a file path. Widen one only
+# with that in mind.
+#
+# Nothing here writes to a remote: no push, no publish, no upload. Distribution
+# stays manual-first (DECISIONS D1) and that is unchanged by remote operation.
+
+version: 1
+
+jobs:
+  # ── inspection ────────────────────────────────────────────────────────────
+  - id: host-report
+    role: "Host profile — cores, RAM, disk, GPU, tool versions, service state"
+    argv: ["python3", "scripts/studio/hostinfo.py"]
+    timeout: 120
+
+  - id: doctor
+    role: "Studio doctor — verify the platform for a profile"
+    argv: ["bash", "scripts/studio/doctor.sh", "--profile", "{profile}"]
+    params:
+      - name: profile
+        pattern: "^(core|distribution|genai|animation|voice|audio|all)$"
+        default: core
+        required: false
+    timeout: 900
+
+  - id: gate-tests
+    role: "Run the gate regression suite (the compliance safety net)"
+    argv: ["python3", "-m", "unittest", "discover", "tests"]
+    timeout: 900
+
+  - id: disk-report
+    role: "Where the disk went — largest directories under the repo"
+    argv: ["bash", "scripts/studio/disk-report.sh"]
+    timeout: 300
+
+  # ── film assembly ─────────────────────────────────────────────────────────
+  - id: film-validate
+    role: "Validate a film manifest without rendering (fast, always run first)"
+    argv: ["python3", "scripts/studio/conform.py", "validate", "studio/film/{film}.yaml"]
+    params:
+      - name: film
+        pattern: "^[a-z0-9][a-z0-9._-]{0,40}$"
+    timeout: 300
+
+  - id: film-timeline
+    role: "Write the OTIO interchange timeline for a film"
+    argv: ["python3", "scripts/studio/conform.py", "timeline", "studio/film/{film}.yaml"]
+    params:
+      - name: film
+        pattern: "^[a-z0-9][a-z0-9._-]{0,40}$"
+    timeout: 600
+
+  - id: film-render
+    role: "Conform and render a film to out/<film>.mp4 — the long one"
+    argv: ["python3", "scripts/studio/conform.py", "render", "studio/film/{film}.yaml"]
+    params:
+      - name: film
+        pattern: "^[a-z0-9][a-z0-9._-]{0,40}$"
+    timeout: 43200          # 12h: a multi-scene conform on CPU is not quick
+
+  - id: chain-verify
+    role: "Verify a seamless chain's joins (SSIM boundary contract)"
+    argv: ["python3", "scripts/studio/seamless.py", "verify", "studio/film/{chain}.chain.yaml"]
+    params:
+      - name: chain
+        pattern: "^[a-z0-9][a-z0-9._-]{0,40}$"
+    timeout: 1800
+
+  - id: chain-stitch
+    role: "Stitch a verified chain into one continuous shot"
+    argv: ["python3", "scripts/studio/seamless.py", "stitch", "studio/film/{chain}.chain.yaml"]
+    params:
+      - name: chain
+        pattern: "^[a-z0-9][a-z0-9._-]{0,40}$"
+    timeout: 21600
+
+  # ── render engines ────────────────────────────────────────────────────────
+  # Chunked by design: a chunk that dies is re-runnable because the runner counts
+  # the frames already on disk. That resumability is what makes it safe for the
+  # queue to kill an orphaned render (jobd.reap) instead of trying to adopt it.
+  - id: film-chunk
+    role: "Render the next N frames of a film's 3D lane (resumable chunk)"
+    argv: ["bash", "content/films/{film}/render_chunk.sh", "{frames}"]
+    params:
+      - name: film
+        pattern: "^[a-z0-9][a-z0-9-]{0,40}$"
+      - name: frames
+        pattern: "^[0-9]{1,4}$"
+        default: "9"
+        required: false
+    timeout: 28800
+
+  - id: platform-install
+    role: "Install/refresh studio platform modules for a profile"
+    argv: ["bash", "scripts/studio/install.sh", "--profile", "{profile}"]
+    params:
+      - name: profile
+        pattern: "^(core|distribution|genai|animation|voice|audio|all)$"
+        default: core
+        required: false
+    timeout: 21600
+
+  # ── source control ────────────────────────────────────────────────────────
+  # Read and fast-forward only. There is deliberately no push, no commit, and no
+  # branch switch: a remote caller may bring the host up to date, never author
+  # history on it.
+  - id: git-status
+    role: "Working tree state on the host"
+    argv: ["git", "status", "--short", "--branch"]
+    timeout: 60
+
+  - id: git-pull
+    role: "Fast-forward the current branch from origin"
+    argv: ["git", "pull", "--ff-only"]
+    timeout: 600
