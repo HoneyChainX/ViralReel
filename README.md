@@ -129,6 +129,10 @@ See [`docs/06-runbook.md`](docs/06-runbook.md) before the first run.
 
 ## Running it on a PC, from somewhere else
 
+**Installing on a Windows 11 machine? Start at [`INSTALL.md`](INSTALL.md)** —
+plain steps, no prior knowledge assumed. There is no `.exe`: it is two scripts
+and one reboot.
+
 The studio can live on a Windows 11 machine and be driven from a laptop through
 claude.ai. The short version: WSL2 holds the Linux stack, `claude remote-control`
 puts a session on that machine into claude.ai/code over outbound HTTPS with no
