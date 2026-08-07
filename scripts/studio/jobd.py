@@ -402,7 +402,22 @@ def worker(poll: float = 2.0, once: bool = False) -> int:
             time.sleep(poll)
             continue
         print(f"job {job['id']} start · {job['recipe']}", flush=True)
-        rc = run_job(job, recipes)
+        try:
+            rc = run_job(job, recipes)
+        except Exception as e:
+            # An unattended box runs this under Restart=always, so an exception
+            # escaping here is not one crash — it is a crash loop that also
+            # leaves the job stuck in `running` forever. Record it and carry on;
+            # the operator sees a failed job with a reason instead of silence.
+            print(f"job {job['id']} raised: {e!r}", flush=True)
+            try:
+                with connect() as c:
+                    c.execute(
+                        "UPDATE jobs SET state=?, ended_at=?, note=? WHERE id=?",
+                        (FAILED, now(), f"worker error: {e}"[:500], job["id"]))
+            except Exception as inner:
+                print(f"could not record the failure: {inner!r}", flush=True)
+            rc = -1
         print(f"job {job['id']} end · exit {rc}", flush=True)
         if once:
             return 0
