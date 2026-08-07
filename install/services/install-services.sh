@@ -37,6 +37,11 @@ TARGET_USER="${SUDO_USER:-}"
 [ -n "$TARGET_USER" ] && [ "$TARGET_USER" != "root" ] \
   || die "could not determine the non-root user — run as: sudo bash $0 (not from a root shell)"
 TARGET_GROUP="$(id -gn "$TARGET_USER")"
+# Read the home directory rather than assuming /home/<user>: the Remote Control
+# unit needs HOME to find the claude.ai credentials, and a wrong HOME fails as a
+# login that never loads rather than as an error anyone would recognise.
+TARGET_HOME="$(getent passwd "$TARGET_USER" | cut -d: -f6)"
+[ -n "$TARGET_HOME" ] || die "could not read the home directory for '$TARGET_USER'"
 
 UNITS=(viralreel-jobd.service)
 [ "$WITH_RC" -eq 1 ] && UNITS+=(viralreel-remote-control.service)
@@ -63,6 +68,7 @@ for u in "${UNITS[@]}"; do
   [ -f "$src" ] || die "missing unit template: $src"
   sed -e "s|__USER__|$TARGET_USER|g" \
       -e "s|__GROUP__|$TARGET_GROUP|g" \
+      -e "s|__HOME__|$TARGET_HOME|g" \
       -e "s|__ROOT__|$ROOT|g" \
       -e "s|__NAME__|$NAME|g" \
       "$src" > "$UNIT_DIR/$u"
@@ -88,7 +94,7 @@ if [ "$WITH_RC" -eq 1 ]; then
   say "Remote Control"
   # The login is interactive and cannot be scripted; starting the service before
   # it exists just produces a restart loop, so check first and say so plainly.
-  if sudo -u "$TARGET_USER" test -d "/home/$TARGET_USER/.claude"; then
+  if sudo -u "$TARGET_USER" test -d "$TARGET_HOME/.claude"; then
     systemctl restart viralreel-remote-control.service
     sleep 3
     systemctl is-active --quiet viralreel-remote-control.service \

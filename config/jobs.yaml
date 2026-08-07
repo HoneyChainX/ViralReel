@@ -90,6 +90,11 @@ jobs:
   # Chunked by design: a chunk that dies is re-runnable because the runner counts
   # the frames already on disk. That resumability is what makes it safe for the
   # queue to kill an orphaned render (jobd.reap) instead of trying to adopt it.
+  #
+  # CONVENTION: a film joins this lane by shipping content/films/<film>/render_chunk.sh
+  # that renders the next N frames and is safe to re-run. Films predating this
+  # (keeper ships render_a3_chunk.sh) are not reachable here until renamed —
+  # which is a loud "could not start" in the job log, not a silent no-op.
   - id: film-chunk
     role: "Render the next N frames of a film's 3D lane (resumable chunk)"
     argv: ["bash", "content/films/{film}/render_chunk.sh", "{frames}"]

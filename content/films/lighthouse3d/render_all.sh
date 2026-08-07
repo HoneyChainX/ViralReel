@@ -1,6 +1,8 @@
 #!/bin/bash
 # Resumable farm runner: renders every missing frame of every shot, then stamps DONE.
-cd /home/user/ViralReel
+# Repo root from this script's own location — never a hardcoded path:
+# these run from the job queue on hosts with a different user and checkout.
+cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 BPY=vendor/blender-headless/.venv/bin/python
 declare -A TOTAL=( [s1]=120 [s2]=96 [s3]=144 )
 for shot in s1 s2 s3; do

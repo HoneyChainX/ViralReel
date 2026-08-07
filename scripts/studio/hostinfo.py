@@ -259,6 +259,47 @@ def detect_blender_deep() -> dict:
     return {"present": ok, "version": out if ok else None, "error": None if ok else out[:200]}
 
 
+def detect_render_deps() -> dict:
+    """The three dependencies that fail quietly rather than loudly.
+
+    Each of these produces a wrong result instead of an error: a missing 3.11
+    kills the 3D lane at install time, a missing font substitutes silently mid
+    render, and CUDA wheels on a GPU-less host just eat the disk a render needs.
+    """
+    py311 = os.environ.get("VIRALREEL_PY311") or shutil.which("python3.11")
+    if py311 and not Path(py311).exists():
+        py311 = None
+
+    fonts = _run(["fc-list"], timeout=30)
+    liberation = "liberation" in fonts.lower()
+
+    # Size of CUDA payload sitting in vendor venvs. Meaningless on a GPU host,
+    # which is why readiness() only reports it when there is no GPU.
+    cuda_mb = 0
+    cuda_venvs: list[str] = []
+    vendor = ROOT / "vendor"
+    if vendor.is_dir():
+        for sp in vendor.glob("*/.venv/lib/python*/site-packages"):
+            found = 0
+            for name in ("nvidia", "triton"):
+                d = sp / name
+                if d.is_dir():
+                    found += sum(f.stat().st_size for f in d.rglob("*") if f.is_file())
+            for d in sp.glob("cuda*"):
+                if d.is_dir():
+                    found += sum(f.stat().st_size for f in d.rglob("*") if f.is_file())
+            if found:
+                cuda_mb += found // 1024 // 1024
+                cuda_venvs.append(sp.parents[3].name)
+
+    return {
+        "python311": py311,
+        "fonts_liberation": liberation,
+        "cuda_waste_mb": cuda_mb,
+        "cuda_venvs": cuda_venvs,
+    }
+
+
 def detect_services() -> dict:
     """Whether this host can run our long jobs as supervised services.
 
@@ -319,6 +360,23 @@ def readiness(profile: dict) -> dict:
     if not profile["gpu"]["present"]:
         warnings.append("no NVIDIA GPU visible — the genai profile stays code-level only (docs/14)")
 
+    rd = profile.get("render_deps") or {}
+    if not rd.get("python311"):
+        warnings.append(
+            "no CPython 3.11 — bpy publishes cp311 wheels only, so the 3D lane "
+            "(blender-headless, film-chunk) cannot install. See install/wsl/bootstrap.sh")
+    if rd.get("fonts_liberation") is False:
+        warnings.append(
+            "Liberation fonts missing — every composition asks for Liberation Sans and "
+            "would silently substitute, changing the typeface of a render (DECISIONS D3). "
+            "Fix: sudo apt-get install fonts-liberation")
+    waste = rd.get("cuda_waste_mb") or 0
+    if waste > 200 and not profile["gpu"]["present"]:
+        where = ", ".join(rd.get("cuda_venvs") or [])
+        warnings.append(
+            f"{waste} MB of CUDA packages on a host with no GPU ({where}) — "
+            f"reclaim with: bash scripts/studio/prune-cuda.sh --all")
+
     return {"ready": not blocking, "blocking": blocking, "warnings": warnings}
 
 
@@ -331,6 +389,7 @@ def collect(deep: bool = False) -> dict:
         "disk": detect_disk(),
         "gpu": detect_gpu(),
         "tools": detect_tools(),
+        "render_deps": detect_render_deps(),
         "services": detect_services(),
     }
     if deep:

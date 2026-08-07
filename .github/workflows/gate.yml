@@ -89,6 +89,60 @@ jobs:
           print(f'ok {len(r)} recipes:', ', '.join(sorted(r)))
           "
 
+      # The Windows installers are written on Linux and first RUN on somebody
+      # else's PC, so this is the only place a typo can be caught before it
+      # costs them an evening. GitHub's Ubuntu runners ship PowerShell, so the
+      # same parser Windows uses can check them here.
+      - name: PowerShell parses and lints
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted -ErrorAction SilentlyContinue
+          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force -AcceptLicense
+          $failed = $false
+          foreach ($f in Get-ChildItem -Recurse -Filter *.ps1 -Path install) {
+              $errors = $null; $tokens = $null
+              [System.Management.Automation.Language.Parser]::ParseFile(
+                  $f.FullName, [ref]$tokens, [ref]$errors) | Out-Null
+              if ($errors) {
+                  $failed = $true
+                  $errors | ForEach-Object {
+                      Write-Host "::error file=$($f.FullName),line=$($_.Extent.StartLineNumber)::$($_.Message)"
+                  }
+                  continue
+              }
+              $findings = Invoke-ScriptAnalyzer -Path $f.FullName -Severity Error,Warning
+              if ($findings) {
+                  $failed = $true
+                  $findings | ForEach-Object {
+                      Write-Host "::error file=$($f.FullName),line=$($_.Line)::$($_.RuleName): $($_.Message)"
+                  }
+              } else {
+                  Write-Host "ok $($f.Name)"
+              }
+          }
+          if ($failed) { exit 1 }
+
+      # powershell.exe on Windows 11 is still 5.1, which reads an unmarked UTF-8
+      # file as ANSI. A stray em-dash in a comment is then a mojibake surprise on
+      # the one machine we cannot test on, so the installers stay ASCII.
+      - name: Windows installers are ASCII-only
+        run: |
+          python3 - <<'PY'
+          import pathlib, sys
+          bad = []
+          for p in pathlib.Path('install').rglob('*.ps1'):
+              data = p.read_bytes()
+              for i, b in enumerate(data):
+                  if b > 127:
+                      line = data[:i].count(b"\n") + 1
+                      bad.append(f"{p}:{line}: non-ASCII byte 0x{b:02x}")
+                      break
+          if bad:
+              print("::error::PowerShell must be ASCII (Windows PowerShell 5.1 misreads unmarked UTF-8)")
+              print("\n".join(bad)); sys.exit(1)
+          print("ok all .ps1 are ASCII")
+          PY
+
       # systemd will happily install a unit with a typo'd directive and then
       # refuse to start it at 3am. Catch the structural mistakes here.
       - name: systemd units are well-formed

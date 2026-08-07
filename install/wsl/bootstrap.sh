@@ -75,10 +75,83 @@ if [ "$SKIP_APT" -eq 0 ]; then
     git curl ca-certificates xz-utils unzip jq \
     build-essential pkg-config \
     python3 python3-venv python3-pip python3-yaml \
-    fonts-dejavu-core
+    fonts-dejavu-core fonts-liberation fontconfig \
+    libnss3 libgbm1 libasound2t64 libatk-bridge2.0-0t64 libatk1.0-0t64 \
+    libcups2t64 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 \
+    libxrandr2 libpango-1.0-0 libcairo2 2>/dev/null \
+  || sudo apt-get install -y -qq \
+    git curl ca-certificates xz-utils unzip jq build-essential pkg-config \
+    python3 python3-venv python3-pip python3-yaml \
+    fonts-dejavu-core fonts-liberation fontconfig \
+    libnss3 libgbm1 libasound2 libatk-bridge2.0-0 libatk1.0-0 libcups2 \
+    libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+    libpango-1.0-0 libcairo2
   ok "base packages installed"
+
+  # Every composition in this repo asks for Liberation Sans. A host with only
+  # DejaVu does not fail — it silently substitutes and re-renders in different
+  # metrics, which is precisely the class of error DECISIONS D3 exists to stop
+  # anyone from discovering inside a published video.
+  if fc-list 2>/dev/null | grep -qi liberation; then
+    ok "Liberation fonts present (renders match the reference)"
+  else
+    bad "Liberation fonts still missing after install — renders would substitute silently"
+  fi
 else
   warn "skipping apt (--skip-apt)"
+fi
+
+# ── python 3.11 for the 3D lane ─────────────────────────────────────────────
+
+say "Python 3.11 (required by bpy)"
+# bpy publishes cp311 wheels and nothing else — no 3.10, no 3.12. Ubuntu 24.04
+# ships 3.12, so on a stock host `pip install bpy` fails with "no matching
+# distribution" and the whole 3D lane goes with it. The interpreter is therefore
+# a real dependency, not a preference.
+PY311=""
+if command -v python3.11 >/dev/null 2>&1; then
+  PY311="$(command -v python3.11)"
+  ok "python3.11 already present"
+elif [ "$SKIP_APT" -eq 0 ]; then
+  if sudo apt-get install -y -qq python3.11 python3.11-venv 2>/dev/null \
+     && command -v python3.11 >/dev/null 2>&1; then
+    PY311="$(command -v python3.11)"
+    ok "installed python3.11 from the distro"
+  else
+    warn "python3.11 is not in this distro's archive (Ubuntu 24.04 ships 3.12)"
+    # uv fetches a standalone CPython build without adding a third-party apt
+    # repository, and OpenMontage needs uv anyway.
+    if ! command -v uv >/dev/null 2>&1; then
+      curl -LsSf https://astral.sh/uv/install.sh | sh >/dev/null 2>&1 || true
+      export PATH="$HOME/.local/bin:$PATH"
+    fi
+    if command -v uv >/dev/null 2>&1 && uv python install 3.11 >/dev/null 2>&1; then
+      PY311="$(uv python find 3.11 2>/dev/null || true)"
+      [ -n "$PY311" ] && ok "installed python3.11 via uv ($PY311)"
+    fi
+  fi
+fi
+if [ -n "$PY311" ]; then
+  # The manifest reads this when building the blender venv, so the 3D lane no
+  # longer depends on whatever `python3` happens to mean on this host.
+  export VIRALREEL_PY311="$PY311"
+  grep -q 'VIRALREEL_PY311' "$HOME/.profile" 2>/dev/null || \
+    printf '\n# ViralReel: bpy needs CPython 3.11 (docs/15)\nexport VIRALREEL_PY311=%s\n' \
+      "$PY311" >> "$HOME/.profile"
+else
+  warn "no python3.11 — the 3D lane (blender-headless, film-chunk) will not install"
+  warn "install it manually, then re-run: sudo add-apt-repository ppa:deadsnakes/ppa"
+fi
+
+say "uv"
+# OpenMontage's Makefile prefers uv and pins its own Python; without uv that
+# venv silently becomes whatever python3 is, which is not what was verified.
+if command -v uv >/dev/null 2>&1; then
+  ok "uv $(uv --version 2>/dev/null | awk '{print $2}')"
+else
+  curl -LsSf https://astral.sh/uv/install.sh | sh >/dev/null 2>&1 \
+    && export PATH="$HOME/.local/bin:$PATH" \
+    && ok "uv installed" || warn "uv install failed — OpenMontage may build against the wrong Python"
 fi
 
 say "Node.js"
@@ -165,8 +238,13 @@ if [ "$PROFILE" != "none" ]; then
   say "Studio platform modules (profile: $PROFILE)"
   warn "this clones and builds a lot — expect tens of minutes and ~26GB for 'all'"
   bash scripts/studio/install.sh --profile "$PROFILE" || warn "some modules failed — see the output above, then re-run"
-else
-  warn "skipping platform modules (--profile none)"
+
+  # Measured on this repo: whisperx re-resolved to a CUDA torch and carried
+  # 4.7GB of nvidia wheels, argos-translate held 3.4GB of cuda-toolkit reached
+  # through a dependency torch never touches. On a CPU host that is 8GB that
+  # cannot execute a single kernel. The pruner no-ops on a GPU host.
+  say "Removing CUDA payload from a CPU-only host"
+  bash scripts/studio/prune-cuda.sh --all || warn "prune reported a problem — see above"
 fi
 
 # ── services ────────────────────────────────────────────────────────────────

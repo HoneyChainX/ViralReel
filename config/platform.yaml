@@ -293,7 +293,11 @@ modules:
     gpu: none
     headless: true
     install: script
-    install_cmd: "python3 -m venv .venv && .venv/bin/pip install bpy"
+    install_cmd: "${VIRALREEL_PY311:-python3.11} -m venv .venv && .venv/bin/pip install bpy"
+    # bpy publishes cp311 wheels ONLY — not 3.10, not 3.12. Ubuntu 24.04 ships
+    # 3.12, so building this venv with a bare `python3` fails with "no matching
+    # distribution" and takes the entire 3D lane down. install/wsl/bootstrap.sh
+    # provides the interpreter and exports VIRALREEL_PY311.
     enabled: true
     doctor:
       - { type: cmd, run: "vendor/blender-headless/.venv/bin/python -c 'import bpy; print(bpy.app.version_string)'" }
