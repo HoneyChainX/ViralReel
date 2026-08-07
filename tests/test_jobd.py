@@ -20,9 +20,27 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts" / "studio"))
 
-import jobd  # noqa: E402
+
+def _load(name: str):
+    """Load by path, never via sys.path.
+
+    Putting scripts/studio on sys.path shadows the stdlib `platform` module for
+    everything imported afterwards. In a single-module run that looks harmless;
+    under `unittest discover` it broke pydantic for the tests that load later,
+    which silently SKIPPED the entire OAuth suite instead of failing. A guard
+    that only watched shipped code missed it, so it now watches tests too.
+    """
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        f"t_{name}", ROOT / "scripts" / "studio" / f"{name}.py")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+jobd = _load("jobd")
 
 # Values a hostile caller would try. None may ever satisfy a shipped pattern.
 HOSTILE = [

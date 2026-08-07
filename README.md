@@ -148,5 +148,15 @@ make job JOB=film-render P=film=keeper     # queue work that outlives the sessio
 make jobs
 ```
 
+Two ways in, same queue behind both: **Remote Control** puts a full Claude Code
+session at claude.ai/code, and the **custom connector** puts the studio's tools
+into claude.ai chat and the mobile app behind an OAuth server this repo ships.
+
+```bash
+server/.venv/bin/python server/studio_auth.py set-passphrase
+bash install/tunnel/expose.sh --tailscale
+make connector URL=https://<the-url-it-printed>
+```
+
 [`docs/15-windows-host.md`](docs/15-windows-host.md) has the full guide — including
 §7, the one part of it that can fail quietly.

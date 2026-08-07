@@ -54,6 +54,12 @@ work on request — it **queues** it:
 The session is a steering wheel. The queue is the engine, and it keeps turning
 when the steering wheel disconnects.
 
+There are two steering wheels, and the same queue sits behind both. **Remote
+Control** (§6.1) puts a full Claude Code session at claude.ai/code. The **custom
+connector** (§6.2) puts the studio's tools into claude.ai chat and the mobile
+app, guarded by an OAuth server this repo now ships. Neither opens an inbound
+port on the PC.
+
 ---
 
 ## 2. What the PC needs
@@ -231,23 +237,73 @@ belongs in the queue. And a few commands are terminal-only from the browser
 (`/plugin`, `/resume`); `/model`, `/effort` and friends need their value as an
 argument.
 
-### 6.2 A custom connector in claude.ai chat — possible, but gated
+### 6.2 A custom connector in claude.ai chat
 
-You may want the studio tools in ordinary claude.ai chat, without a Claude Code
-session. It is a real feature, but the auth requirement is the catch: Claude
-supports OAuth (DCR or CIMD) or an entirely authless server, while a plain
-bearer token is a beta you must be granted. Authless is not an option — anyone
-who learned the URL could queue jobs on someone else's PC.
+Remote Control gives you a full Claude Code session at claude.ai/**code**. The
+connector is the other surface: the studio's tools inside ordinary claude.ai
+**chat**, and in the mobile app, with no session to keep alive. Build both — they
+answer different questions. "Fix this scene and re-render it" wants Remote
+Control. "Is the render done?" from a phone wants the connector.
 
-So this path costs you an OAuth 2.1 authorization server in front of the
-endpoint. We have **not** built one. If you want it later, the pieces are: a
-public HTTPS endpoint (Cloudflare Tunnel with a domain, or Tailscale Funnel on
-port 443), Streamable HTTP at `/mcp`, protected-resource metadata per RFC 9728,
-and PKCE S256 with `https://claude.ai/api/mcp/auth_callback` as the redirect.
-Cloudflare Access's Managed OAuth can supply the authorization server.
+Claude accepts exactly two shapes of connector: one that speaks OAuth, or one
+with no authentication at all. Authless is not on the table here — the server
+can start renders on someone else's computer, and the URL is not a secret once
+it exists. So the studio is its own OAuth 2.1 authorization server.
 
-Until then, Remote Control gives you strictly more capability with strictly less
-attack surface, because it opens nothing.
+**Setup, in order.** The passphrase must exist before the service starts, and the
+URL must exist before the service can be told about it:
+
+```bash
+server/.venv/bin/python server/studio_auth.py set-passphrase
+bash install/tunnel/expose.sh --tailscale        # prints https://<machine>.<tailnet>.ts.net
+make connector URL=https://<machine>.<tailnet>.ts.net
+```
+
+Then in Claude: **Settings > Connectors > Add custom connector**, and paste
+`https://<your-url>/mcp`. Claude registers itself, sends you to the studio's own
+consent page, you type the passphrase once, and the tools appear.
+
+**How the login works.** There are no accounts. One passphrase, set at install,
+stored as a scrypt hash, checked in constant time, and locked out for 15 minutes
+after 8 failures. `/authorize` never issues a code — it parks the request and
+redirects to a consent page, so the passphrase is the only thing that can turn
+a connection attempt into a token. Access tokens last an hour; refresh tokens
+rotate on every use, so a stolen one works at most once and shows up as you
+being logged out. Tokens and codes are stored as SHA-256 digests, so a copy of
+`var/auth.db` is a list of what exists, not a set of working credentials.
+
+`tests/test_oauth_flow.py` walks all of this against a live server on every CI
+run — discovery, registration, PKCE, consent, exchange, rotation, revocation —
+and most of its assertions are that the server *refuses*: no token, wrong
+passphrase, wrong PKCE verifier, replayed code, spent refresh token, revoked
+token.
+
+**Two tunnels.** `--tailscale` needs no domain and is the default recommendation;
+Funnel is limited to ports 443/8443/10000 and proxies only to loopback, which is
+exactly how the service is bound. `--cloudflare` needs a domain already on
+Cloudflare but gives you a stable custom hostname and a WAF.
+
+**Operating it:**
+
+```bash
+make connector-status                                    # is it reachable, and how
+server/.venv/bin/python server/studio_auth.py status     # clients, live tokens, lockout
+server/.venv/bin/python server/studio_auth.py revoke-all # panic button
+bash install/tunnel/expose.sh --off                      # unpublish, keep everything else
+```
+
+**Limits designed around, not discovered later.** claude.ai gives a tool 300
+seconds and caps a result near 150k characters; a Cloudflare tunnel gives up at
+125 seconds. Every studio tool returns immediately because the work is queued —
+this is the same constraint from §1, and it is why the connector never needed a
+"wait for the render" tool. Finished films still ship as a GitHub release link
+rather than through the tunnel, both because Cloudflare's terms reserve the
+right to limit free accounts serving video and because a delivery path that
+already works should not start depending on the host being awake.
+
+**If the public URL changes**, the OAuth metadata is stale: re-run
+`make connector URL=...` and re-add the connector in Claude. A Tailscale Funnel
+URL is stable as long as you do not rename the node or the tailnet.
 
 ### 6.3 A terminal, when you need one
 

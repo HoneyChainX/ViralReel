@@ -125,11 +125,25 @@ shell. `argv[0]` must be literal, so the command can never come from a
 parameter. Tests assert this against the shipped file — widening a pattern for
 convenience fails CI.
 
-**No claude.ai custom connector.** It is a real feature, but Claude accepts
-OAuth (DCR/CIMD) or an authless server, and a static bearer token is a beta you
-must be granted. Authless would mean anyone who learned the URL could queue jobs
-on someone else's PC. Remote Control gives more capability with no open port, so
-the connector waits until there is a reason to run an OAuth server.
+**The claude.ai connector is OAuth or nothing.** Claude accepts a connector
+that speaks OAuth or one with no authentication at all; a static bearer token is
+a beta you must be granted. Authless would mean anyone who learned the URL could
+queue jobs on someone else's PC, so the studio runs its own OAuth 2.1
+authorization server (`server/studio_auth.py`).
+
+Single-owner by design: one passphrase set at install, scrypt-hashed, constant-time
+compared, locked out after repeated failures. There are no accounts because a
+second user is not a requirement here, and every account system is one more thing
+to be wrong on an unattended machine. `/authorize` never mints a code — it parks
+the request and redirects to a consent page, so the passphrase is the only thing
+that converts a connection attempt into a token. Refresh tokens rotate; codes and
+tokens are stored as digests, so a stolen database is an inventory rather than a
+key ring.
+
+This is the one place in the repo that answers the public internet, so its tests
+mostly assert refusal — no token, wrong passphrase, wrong PKCE verifier, replayed
+code, spent refresh token, revoked token — and they run against a live server on
+every CI build rather than mocking the flow.
 
 **Delivery does not change.** Films still ship as a commit to `releases/` and a
 GitHub raw link. Cloudflare's terms reserve the right to limit free accounts

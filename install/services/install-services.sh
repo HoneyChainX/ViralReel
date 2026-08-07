@@ -12,12 +12,16 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 UNIT_DIR=/etc/systemd/system
 WITH_RC=0
+WITH_MCP=0
+PUBLIC_URL="${VIRALREEL_PUBLIC_URL:-}"
 UNINSTALL=0
 NAME="${VIRALREEL_HOST_NAME:-viralreel-studio}"
 
 while [ $# -gt 0 ]; do
   case "$1" in
     --with-remote-control) WITH_RC=1 ;;
+    --with-connector)      WITH_MCP=1 ;;
+    --public-url)          PUBLIC_URL="$2"; shift ;;
     --uninstall)           UNINSTALL=1 ;;
     --name)                NAME="$2"; shift ;;
     *) echo "unknown flag: $1" >&2; exit 2 ;;
@@ -45,10 +49,27 @@ TARGET_HOME="$(getent passwd "$TARGET_USER" | cut -d: -f6)"
 
 UNITS=(viralreel-jobd.service)
 [ "$WITH_RC" -eq 1 ] && UNITS+=(viralreel-remote-control.service)
+if [ "$WITH_MCP" -eq 1 ]; then
+  # An unauthenticated server behind a public tunnel is an open door onto
+  # someone's PC, so refuse rather than install something that looks finished.
+  [ -n "$PUBLIC_URL" ] || die "--with-connector needs --public-url https://... (the URL your tunnel publishes)"
+  case "$PUBLIC_URL" in
+    https://*) : ;;
+    *) die "--public-url must be https:// — OAuth over plaintext hands the token to the network" ;;
+  esac
+  [ -x "$ROOT/server/.venv/bin/python" ] || die "no server venv — run install/wsl/bootstrap.sh first"
+  if ! sudo -u "$TARGET_USER" env VIRALREEL_AUTH_DB="$ROOT/var/auth.db" \
+       "$ROOT/server/.venv/bin/python" "$ROOT/server/studio_auth.py" status 2>/dev/null \
+       | grep -q "passphrase set: yes"; then
+    die "no studio passphrase set. Run first:
+      server/.venv/bin/python server/studio_auth.py set-passphrase"
+  fi
+  UNITS+=(viralreel-mcp.service)
+fi
 
 if [ "$UNINSTALL" -eq 1 ]; then
   say "Removing studio services"
-  for u in viralreel-jobd.service viralreel-remote-control.service; do
+  for u in viralreel-jobd.service viralreel-remote-control.service viralreel-mcp.service; do
     systemctl disable --now "$u" 2>/dev/null || true
     rm -f "$UNIT_DIR/$u"
     echo "  removed $u"
@@ -71,6 +92,7 @@ for u in "${UNITS[@]}"; do
       -e "s|__HOME__|$TARGET_HOME|g" \
       -e "s|__ROOT__|$ROOT|g" \
       -e "s|__NAME__|$NAME|g" \
+      -e "s|__PUBLIC_URL__|$PUBLIC_URL|g" \
       "$src" > "$UNIT_DIR/$u"
   chmod 0644 "$UNIT_DIR/$u"
   echo "  installed $u"

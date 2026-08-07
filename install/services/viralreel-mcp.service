@@ -1,0 +1,50 @@
+# The studio connector — the OAuth-protected MCP server claude.ai talks to.
+#
+# Only needed if you want the studio tools inside claude.ai chat and the mobile
+# app. Driving the machine from claude.ai/code needs none of this; that is
+# Remote Control, which opens no port at all.
+#
+# This process listens on LOOPBACK ONLY. Reaching it from the internet is the
+# tunnel's job (install/tunnel/expose.sh) — Tailscale Funnel and Cloudflare both
+# proxy to 127.0.0.1, so the port is never exposed on the LAN either.
+#
+# __PUBLIC_URL__ must be the https origin the tunnel publishes. It is baked into
+# the OAuth metadata, so if the tunnel URL changes this unit has to be
+# reinstalled and the connector re-added in Claude.
+#
+# Placeholders are filled by install/services/install-services.sh.
+
+[Unit]
+Description=ViralReel studio connector (OAuth MCP server)
+Documentation=file://__ROOT__/docs/15-windows-host.md
+After=network-online.target viralreel-jobd.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__USER__
+Group=__GROUP__
+WorkingDirectory=__ROOT__
+Environment=PYTHONUNBUFFERED=1
+Environment=HOME=__HOME__
+
+# --public-url turns on OAuth. Without it the server would still start, but
+# unauthenticated, and a tunnel in front of an unauthenticated server is an open
+# door to somebody's PC — so the URL is not optional here.
+ExecStart=__ROOT__/server/.venv/bin/python __ROOT__/server/studio_mcp.py \
+    --http --host 127.0.0.1 --port 8787 --public-url __PUBLIC_URL__
+
+Restart=always
+RestartSec=10
+TimeoutStopSec=30
+
+# It answers the internet, so it gets the tighter jacket: the queue does the
+# real work under its own service, and this process only needs to read the repo
+# and write var/.
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+ReadWritePaths=__ROOT__/var
+
+[Install]
+WantedBy=multi-user.target

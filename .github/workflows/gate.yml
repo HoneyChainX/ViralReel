@@ -26,8 +26,15 @@ jobs:
           python-version: '3.11'
 
       # test_platform.py validates config/platform.yaml, which needs a YAML parser.
+      # The MCP SDK and httpx back tests/test_oauth_flow.py, which walks the
+      # connector's whole authorization flow. That flow is the one part of this
+      # repo exposed to the public internet, so its tests must actually RUN here
+      # — and because a skip is treated as a failure below, a vanished
+      # dependency shows up as a red build rather than as quiet green.
       - name: Install test dependencies
-        run: pip install pyyaml
+        run: |
+          pip install pyyaml httpx
+          pip install -r server/requirements.txt
 
       # ffprobe backs delivery QC (C9). Without it those checks skip, which
       # would quietly hollow out the suite — so install it explicitly.
@@ -62,7 +69,7 @@ jobs:
       - name: Shell syntax
         run: |
           for f in scripts/*.sh scripts/studio/*.sh ralph/ralph.sh \
-                   install/wsl/*.sh install/services/*.sh; do
+                   install/wsl/*.sh install/services/*.sh install/tunnel/*.sh; do
             bash -n "$f" && echo "ok $f"
           done
 
@@ -71,7 +78,30 @@ jobs:
           python3 -m py_compile scripts/gate.py tests/test_gate.py \
             scripts/studio/platform.py tests/test_platform.py studio/adapters/*.py \
             scripts/studio/hostinfo.py scripts/studio/jobd.py \
-            tests/test_jobd.py tests/test_hostinfo.py server/studio_mcp.py
+            tests/test_jobd.py tests/test_hostinfo.py tests/test_oauth_flow.py \
+            server/studio_mcp.py server/studio_auth.py
+
+      # `bash -n` parses but does not resolve names, so a call to a helper that
+      # was never defined sails through and then aborts the installer at run
+      # time under `set -e` — on the machine we cannot test on. Caught one this
+      # way already.
+      - name: Shell helpers are all defined
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+          bad = []
+          targets = list(pathlib.Path('install').rglob('*.sh')) + \
+                    list(pathlib.Path('scripts').rglob('*.sh'))
+          for f in sorted(targets):
+              text = f.read_text()
+              defined = set(re.findall(r'^(\w+)\s*\(\)', text, re.M))
+              called = set(re.findall(r'^\s*(say|ok|warn|bad|die|note|fail|head)\s+"', text, re.M))
+              for name in sorted(called - defined):
+                  bad.append(f"{f}: calls '{name}' which is never defined")
+          if bad:
+              print("::error::undefined shell helper\n" + "\n".join(bad)); sys.exit(1)
+          print(f"ok {len(targets)} shell scripts, every helper defined")
+          PY
 
       # The host server's job allowlist is a security boundary (docs/15). If it
       # stops parsing, jobd fails closed — but a silent typo in a pattern would
@@ -158,10 +188,13 @@ jobs:
                       bad.append(f"{p.name}: missing [{required}] section")
               if 'ExecStart=' not in text:
                   bad.append(f"{p.name}: no ExecStart")
-              for i, line in enumerate(text.splitlines(), 1):
+              # systemd joins backslash continuations, so fold them before
+              # checking that every logical line is a Key=Value directive.
+              joined = text.replace('\\\n', ' ')
+              for i, line in enumerate(joined.splitlines(), 1):
                   s = line.strip()
                   if s and not s.startswith('#') and not s.startswith('[') and '=' not in s:
-                      bad.append(f"{p.name}:{i}: not a directive: {s!r}")
+                      bad.append(f"{p.name}: not a directive: {s!r}")
           if bad:
               print("::error::malformed unit\n" + "\n".join(bad)); sys.exit(1)
           print("ok systemd units")

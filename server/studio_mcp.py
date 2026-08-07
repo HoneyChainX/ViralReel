@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -48,20 +49,43 @@ def _load(name: str, path: Path):
 hostinfo = _load("hostinfo", ROOT / "scripts" / "studio" / "hostinfo.py")
 jobd = _load("jobd", ROOT / "scripts" / "studio" / "jobd.py")
 
+
+def _auth_module():
+    """Loaded lazily: the OAuth path pulls in starlette and is only needed when
+    the server is actually being exposed."""
+    return _load("studio_auth", ROOT / "server" / "studio_auth.py")
+
 from mcp.server import MCPServer  # noqa: E402
 
-server = MCPServer(
-    name="viralreel-studio",
-    title="ViralReel Studio",
-    version="1.0.0",
-    instructions=(
-        "Operate the ViralReel render host. Renders are long: enqueue work and "
-        "poll it, never wait. Call studio_status first to see whether the host "
-        "is healthy and what is already running. Jobs come from a fixed "
-        "allowlist — use list_recipes to see what can be run and which "
-        "parameters each accepts."
-    ),
+INSTRUCTIONS = (
+    "Operate the ViralReel render host. Renders are long: enqueue work and "
+    "poll it, never wait. Call studio_status first to see whether the host "
+    "is healthy and what is already running. Jobs come from a fixed "
+    "allowlist — use list_recipes to see what can be run and which "
+    "parameters each accepts."
 )
+
+
+class _Registry:
+    """Collects tool definitions so the server can be built later.
+
+    The MCPServer has to be constructed with its auth settings, and those are
+    not known until the command line is parsed — but the tools below read far
+    better as decorators than as a registration list at the bottom of the file.
+    This records them and build_server() replays them.
+    """
+
+    def __init__(self) -> None:
+        self.tools: list[tuple] = []
+
+    def tool(self, **kwargs):
+        def decorate(fn):
+            self.tools.append((fn, kwargs))
+            return fn
+        return decorate
+
+
+server = _Registry()
 
 MAX_CHARS = 100_000     # stay clear of the ~150k client cap, with room for framing
 
@@ -284,6 +308,90 @@ def cancel_job(job_id: int) -> str:
     return f"job #{job_id}: {jobd.cancel(int(job_id))}"
 
 
+def build_server(public_url: str | None = None) -> MCPServer:
+    """Construct the real server, with OAuth when a public URL is given.
+
+    Without `public_url` this is a local server: stdio, or HTTP on loopback for
+    a client on this machine. With one, it becomes its own OAuth authorization
+    server so claude.ai will accept it as a custom connector — that is the only
+    shape claude.ai takes, short of an authless server anyone who learned the
+    URL could drive.
+    """
+    kwargs = dict(name="viralreel-studio", title="ViralReel Studio",
+                  version="1.0.0", instructions=INSTRUCTIONS)
+
+    provider = None
+    if public_url:
+        from mcp.server.auth.settings import AuthSettings, ClientRegistrationOptions
+        auth_mod = _auth_module()
+
+        if not auth_mod.has_passphrase():
+            raise SystemExit(
+                "No studio passphrase is set, so nothing could authorise a connection.\n"
+                "Run:  python3 server/studio_auth.py set-passphrase")
+
+        provider = auth_mod.StudioAuthProvider(public_url)
+        kwargs["auth_server_provider"] = provider
+        kwargs["auth"] = AuthSettings(
+            issuer_url=public_url,
+            resource_server_url=f"{public_url.rstrip('/')}/mcp",
+            # Claude introduces itself by registering dynamically; registration
+            # on its own grants nothing, because the consent step still demands
+            # the owner's passphrase.
+            client_registration_options=ClientRegistrationOptions(enabled=True),
+        )
+
+    srv = MCPServer(**kwargs)
+    for fn, opts in server.tools:
+        srv.add_tool(fn, **opts)
+
+    if provider is not None:
+        _attach_consent_route(srv, provider)
+    return srv
+
+
+def _attach_consent_route(srv: MCPServer, provider) -> None:
+    """The page where a human proves they own this machine."""
+    from starlette.responses import HTMLResponse, RedirectResponse
+    auth_mod = _auth_module()
+
+    @srv.custom_route("/consent", methods=["GET", "POST"])
+    async def consent(request):  # noqa: ANN001
+        if request.method == "GET":
+            req_id = request.query_params.get("req", "")
+            pending = provider.load_pending(req_id)
+            if not pending:
+                return HTMLResponse(
+                    "<h1>This authorization request expired</h1>"
+                    "<p>Start again from Claude's connector settings.</p>", status_code=400)
+            return HTMLResponse(auth_mod.render_consent(pending["client_name"], req_id))
+
+        form = await request.form()
+        req_id = str(form.get("req", ""))
+        pending = provider.load_pending(req_id)
+        if not pending:
+            return HTMLResponse("<h1>This authorization request expired</h1>", status_code=400)
+
+        locked = auth_mod._locked_out()
+        if locked:
+            return HTMLResponse(
+                auth_mod.render_consent(
+                    pending["client_name"], req_id,
+                    f"Too many failed attempts. Try again in {locked} seconds."),
+                status_code=429)
+
+        if not auth_mod.check_passphrase(str(form.get("passphrase", ""))):
+            return HTMLResponse(
+                auth_mod.render_consent(pending["client_name"], req_id,
+                                        "That passphrase is not right."),
+                status_code=401)
+
+        target = provider.complete_consent(req_id)
+        if not target:
+            return HTMLResponse("<h1>This authorization request expired</h1>", status_code=400)
+        return RedirectResponse(target, status_code=302)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -292,23 +400,40 @@ def main() -> int:
     ap.add_argument("--host", default="127.0.0.1",
                     help="bind address (default loopback — see docs/15 before widening)")
     ap.add_argument("--port", type=int, default=8787)
+    ap.add_argument("--public-url", default=os.environ.get("VIRALREEL_PUBLIC_URL"),
+                    help="the public HTTPS origin this server is reachable at, e.g. "
+                         "https://studio.example.com. Turns on OAuth so claude.ai "
+                         "will accept it as a custom connector.")
     a = ap.parse_args()
 
     if not a.http:
-        server.run(transport="stdio")
+        build_server().run(transport="stdio")
         return 0
 
-    # Loopback by default and a loud warning otherwise: this server can start
-    # renders, and in HTTP mode the MCP spec's own advice is that authorization
-    # lives in front of it (a tunnel with access control), not in this process.
-    if a.host not in ("127.0.0.1", "localhost", "::1"):
-        print(f"WARNING: binding {a.host}:{a.port} beyond loopback. Anything that "
-              f"can reach this port can queue jobs on this machine — put an "
-              f"authenticating proxy or tunnel in front of it (docs/15).",
+    if a.public_url:
+        if not a.public_url.startswith("https://"):
+            # OAuth over plaintext hands the token to anyone on the path, and the
+            # MCP spec requires HTTPS for every authorization endpoint.
+            print("--public-url must be https:// — OAuth over http is not acceptable "
+                  "and claude.ai will not accept it either.", file=sys.stderr)
+            return 2
+        a.public_url = a.public_url.rstrip("/")
+
+    srv = build_server(a.public_url)
+
+    if a.public_url:
+        print(f"OAuth enabled. Add this URL as a custom connector in Claude:\n"
+              f"    {a.public_url}/mcp\n"
+              f"Consent page: {a.public_url}/consent", file=sys.stderr)
+    elif a.host not in ("127.0.0.1", "localhost", "::1"):
+        print(f"WARNING: binding {a.host}:{a.port} beyond loopback with NO "
+              f"authentication. Anything that can reach this port can queue jobs "
+              f"on this machine. Pass --public-url to enable OAuth (docs/15).",
               file=sys.stderr)
+
     # host/port are transport kwargs in SDK 2.x — there is no settings.host.
-    server.run(transport="streamable-http", host=a.host, port=a.port,
-               streamable_http_path="/mcp")
+    srv.run(transport="streamable-http", host=a.host, port=a.port,
+            streamable_http_path="/mcp")
     return 0
 
 

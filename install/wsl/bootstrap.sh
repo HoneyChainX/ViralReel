@@ -95,7 +95,7 @@ if [ "$SKIP_APT" -eq 0 ]; then
   if fc-list 2>/dev/null | grep -qi liberation; then
     ok "Liberation fonts present (renders match the reference)"
   else
-    bad "Liberation fonts still missing after install — renders would substitute silently"
+    warn "Liberation fonts still missing after install — renders WILL substitute silently (DECISIONS D3). Fix before rendering: sudo apt-get install fonts-liberation"
   fi
 else
   warn "skipping apt (--skip-apt)"
@@ -271,3 +271,19 @@ if python3 scripts/studio/hostinfo.py --assert-ready >/dev/null 2>&1; then
 else
   printf '\033[33mHost is not fully ready — see the blocking items above.\033[0m\n'
 fi
+
+cat <<'EOF'
+
+Two ways to reach this machine from elsewhere (docs/15):
+
+  claude.ai/code   Remote Control. Nothing to expose; log in once with
+                   `claude` then start viralreel-remote-control.
+
+  claude.ai chat   The custom connector. Needs a public HTTPS URL and a
+                   passphrase, in this order:
+
+                     server/.venv/bin/python server/studio_auth.py set-passphrase
+                     bash install/tunnel/expose.sh --tailscale
+                     make connector URL=https://<the-url-it-printed>
+
+EOF

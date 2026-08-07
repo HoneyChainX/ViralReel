@@ -118,7 +118,12 @@ class ImportHygiene(unittest.TestCase):
         import ast
 
         offenders = []
-        for py in list((ROOT / "server").rglob("*.py")) + list(STUDIO.glob("*.py")):
+        # Tests are NOT exempt. One of ours mutated sys.path, which shadowed
+        # stdlib `platform`, which broke pydantic for every module imported
+        # after it — and the visible symptom was the OAuth suite silently
+        # skipping rather than anything failing.
+        for py in (list((ROOT / "server").rglob("*.py")) + list(STUDIO.glob("*.py"))
+                   + list((ROOT / "tests").glob("*.py"))):
             try:
                 tree = ast.parse(py.read_text(errors="ignore"))
             except SyntaxError as e:
@@ -136,8 +141,8 @@ class ImportHygiene(unittest.TestCase):
                     offenders.append(
                         f"{py.relative_to(ROOT)}:{node.lineno}: mutates sys.path")
         self.assertEqual(offenders, [],
-                         "shipped code must load studio modules by path "
-                         "(importlib), not by mutating sys.path:\n" + "\n".join(offenders))
+                         "load studio modules by path (importlib), never by "
+                         "mutating sys.path:\n" + "\n".join(offenders))
 
     def test_hostinfo_runs_from_inside_its_own_directory(self):
         """The worst case: cwd is scripts/studio, so '' on sys.path shadows
