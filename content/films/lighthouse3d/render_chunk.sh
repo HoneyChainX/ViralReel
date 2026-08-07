@@ -1,7 +1,9 @@
 #!/bin/bash
 # One bounded chunk: render up to $1 (default 20) missing frames, exit cleanly.
 # Prints CHUNK_DONE + counts; prints FILM_RENDER_COMPLETE when every shot is full.
-cd /home/user/ViralReel
+# Repo root from this script's own location — never a hardcoded path:
+# these run from the job queue on hosts with a different user and checkout.
+cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 CHUNK=${1:-20}
 BPY=vendor/blender-headless/.venv/bin/python
 declare -A TOTAL=( [s1]=120 [s2]=96 [s3]=144 )

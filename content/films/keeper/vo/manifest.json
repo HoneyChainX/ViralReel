@@ -1,0 +1,56 @@
+[
+  {
+    "key": "l1",
+    "at_s": 1.5,
+    "duration_s": 3.98,
+    "text": "Every evening, the sea asks the same question."
+  },
+  {
+    "key": "l2",
+    "at_s": 7.0,
+    "duration_s": 4.22,
+    "text": "I put on the coat. I bank the stove. I answer."
+  },
+  {
+    "key": "l3",
+    "at_s": 14.0,
+    "duration_s": 4.6,
+    "text": "My father rowed this water. His father cut these steps."
+  },
+  {
+    "key": "l4",
+    "at_s": 23.5,
+    "duration_s": 4.25,
+    "text": "The crossing is short. It only feels like a life."
+  },
+  {
+    "key": "l5",
+    "at_s": 29.5,
+    "duration_s": 3.77,
+    "text": "Halfway out, the sun lets go of the day."
+  },
+  {
+    "key": "l6",
+    "at_s": 35.0,
+    "duration_s": 4.75,
+    "text": "And the water holds the last of it, the way I hold his name."
+  },
+  {
+    "key": "l7",
+    "at_s": 44.5,
+    "duration_s": 4.25,
+    "text": "The tower waits. It has never once waited badly."
+  },
+  {
+    "key": "l8",
+    "at_s": 50.0,
+    "duration_s": 4.45,
+    "text": "One match. One wick. One turn of the little wheel."
+  },
+  {
+    "key": "l9",
+    "at_s": 55.0,
+    "duration_s": 5.42,
+    "text": "And the light goes out across the water \u2014 so nobody else has to ask."
+  }
+]

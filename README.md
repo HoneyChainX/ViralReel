@@ -111,6 +111,9 @@ make ralph JOB=platform-install   # let the loop finish the job
 8. [`content/episodes/`](content/episodes/) — the 10-episode launch slate
 9. [`docs/10-platform.md`](docs/10-platform.md) — the studio platform: manifest, adapters, agents, loops
 10. [`docs/11-platform-research.md`](docs/11-platform-research.md) — the research behind every platform choice
+11. [`docs/13-skills-map.md`](docs/13-skills-map.md) — the 215-skill bank mapped to owners, phases, triggers
+12. [`docs/14-gpu-scaling.md`](docs/14-gpu-scaling.md) — the GPU path: speed stack, tier ladder, cost
+13. [`docs/15-windows-host.md`](docs/15-windows-host.md) — putting the studio on a Windows 11 PC and driving it remotely
 
 ## Start
 
@@ -123,3 +126,41 @@ make publish SLUG=airpods-159        # only runs if the compliance gate passed
 ```
 
 See [`docs/06-runbook.md`](docs/06-runbook.md) before the first run.
+
+## Running it on a PC, from somewhere else
+
+**Installing on a Windows 11 machine? Start at [`INSTALL.md`](INSTALL.md)** —
+plain steps, no prior knowledge assumed. There is no `.exe`: it is two scripts
+and one reboot.
+
+The studio can live on a Windows 11 machine and be driven from a laptop through
+claude.ai. The short version: WSL2 holds the Linux stack, `claude remote-control`
+puts a session on that machine into claude.ai/code over outbound HTTPS with no
+inbound port, and a queue does the actual work so a twelve-hour render is not
+tied to a connection that will not last twelve hours.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File install\windows\preflight.ps1   # read-only
+powershell -ExecutionPolicy Bypass -File install\windows\bootstrap.ps1   # then reboot, re-run
+```
+
+```bash
+bash install/wsl/bootstrap.sh --profile core --with-claude --with-services
+
+make host                                  # what this machine is, and can it render
+make job JOB=film-render P=film=keeper     # queue work that outlives the session
+make jobs
+```
+
+Two ways in, same queue behind both: **Remote Control** puts a full Claude Code
+session at claude.ai/code, and the **custom connector** puts the studio's tools
+into claude.ai chat and the mobile app behind an OAuth server this repo ships.
+
+```bash
+server/.venv/bin/python server/studio_auth.py set-passphrase
+bash install/tunnel/expose.sh --tailscale
+make connector URL=https://<the-url-it-printed>
+```
+
+[`docs/15-windows-host.md`](docs/15-windows-host.md) has the full guide — including
+§7, the one part of it that can fail quietly.

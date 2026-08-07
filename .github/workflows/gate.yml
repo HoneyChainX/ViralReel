@@ -26,8 +26,15 @@ jobs:
           python-version: '3.11'
 
       # test_platform.py validates config/platform.yaml, which needs a YAML parser.
+      # The MCP SDK and httpx back tests/test_oauth_flow.py, which walks the
+      # connector's whole authorization flow. That flow is the one part of this
+      # repo exposed to the public internet, so its tests must actually RUN here
+      # — and because a skip is treated as a failure below, a vanished
+      # dependency shows up as a red build rather than as quiet green.
       - name: Install test dependencies
-        run: pip install pyyaml
+        run: |
+          pip install pyyaml httpx
+          pip install -r server/requirements.txt
 
       # ffprobe backs delivery QC (C9). Without it those checks skip, which
       # would quietly hollow out the suite — so install it explicitly.
@@ -61,12 +68,137 @@ jobs:
 
       - name: Shell syntax
         run: |
-          for f in scripts/*.sh scripts/studio/*.sh ralph/ralph.sh; do bash -n "$f" && echo "ok $f"; done
+          for f in scripts/*.sh scripts/studio/*.sh ralph/ralph.sh \
+                   install/wsl/*.sh install/services/*.sh install/tunnel/*.sh; do
+            bash -n "$f" && echo "ok $f"
+          done
 
       - name: Python syntax
         run: |
           python3 -m py_compile scripts/gate.py tests/test_gate.py \
-            scripts/studio/platform.py tests/test_platform.py studio/adapters/*.py
+            scripts/studio/platform.py tests/test_platform.py studio/adapters/*.py \
+            scripts/studio/hostinfo.py scripts/studio/jobd.py \
+            tests/test_jobd.py tests/test_hostinfo.py tests/test_oauth_flow.py \
+            server/studio_mcp.py server/studio_auth.py
+
+      # `bash -n` parses but does not resolve names, so a call to a helper that
+      # was never defined sails through and then aborts the installer at run
+      # time under `set -e` — on the machine we cannot test on. Caught one this
+      # way already.
+      - name: Shell helpers are all defined
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+          bad = []
+          targets = list(pathlib.Path('install').rglob('*.sh')) + \
+                    list(pathlib.Path('scripts').rglob('*.sh'))
+          for f in sorted(targets):
+              text = f.read_text()
+              defined = set(re.findall(r'^(\w+)\s*\(\)', text, re.M))
+              called = set(re.findall(r'^\s*(say|ok|warn|bad|die|note|fail|head)\s+"', text, re.M))
+              for name in sorted(called - defined):
+                  bad.append(f"{f}: calls '{name}' which is never defined")
+          if bad:
+              print("::error::undefined shell helper\n" + "\n".join(bad)); sys.exit(1)
+          print(f"ok {len(targets)} shell scripts, every helper defined")
+          PY
+
+      # The host server's job allowlist is a security boundary (docs/15). If it
+      # stops parsing, jobd fails closed — but a silent typo in a pattern would
+      # widen it, so parse it here and let test_jobd.py assert its contents.
+      - name: Job allowlist parses
+        run: |
+          pip install pyyaml -q
+          python3 -c "
+          import sys
+          sys.path.insert(0, 'tests')
+          import importlib.util
+          spec = importlib.util.spec_from_file_location('jobd', 'scripts/studio/jobd.py')
+          m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          r = m.load_recipes()
+          print(f'ok {len(r)} recipes:', ', '.join(sorted(r)))
+          "
+
+      # The Windows installers are written on Linux and first RUN on somebody
+      # else's PC, so this is the only place a typo can be caught before it
+      # costs them an evening. GitHub's Ubuntu runners ship PowerShell, so the
+      # same parser Windows uses can check them here.
+      - name: PowerShell parses and lints
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted -ErrorAction SilentlyContinue
+          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force -AcceptLicense
+          $failed = $false
+          foreach ($f in Get-ChildItem -Recurse -Filter *.ps1 -Path install) {
+              $errors = $null; $tokens = $null
+              [System.Management.Automation.Language.Parser]::ParseFile(
+                  $f.FullName, [ref]$tokens, [ref]$errors) | Out-Null
+              if ($errors) {
+                  $failed = $true
+                  $errors | ForEach-Object {
+                      Write-Host "::error file=$($f.FullName),line=$($_.Extent.StartLineNumber)::$($_.Message)"
+                  }
+                  continue
+              }
+              $findings = Invoke-ScriptAnalyzer -Path $f.FullName -Severity Error,Warning
+              if ($findings) {
+                  $failed = $true
+                  $findings | ForEach-Object {
+                      Write-Host "::error file=$($f.FullName),line=$($_.Line)::$($_.RuleName): $($_.Message)"
+                  }
+              } else {
+                  Write-Host "ok $($f.Name)"
+              }
+          }
+          if ($failed) { exit 1 }
+
+      # powershell.exe on Windows 11 is still 5.1, which reads an unmarked UTF-8
+      # file as ANSI. A stray em-dash in a comment is then a mojibake surprise on
+      # the one machine we cannot test on, so the installers stay ASCII.
+      - name: Windows installers are ASCII-only
+        run: |
+          python3 - <<'PY'
+          import pathlib, sys
+          bad = []
+          for p in pathlib.Path('install').rglob('*.ps1'):
+              data = p.read_bytes()
+              for i, b in enumerate(data):
+                  if b > 127:
+                      line = data[:i].count(b"\n") + 1
+                      bad.append(f"{p}:{line}: non-ASCII byte 0x{b:02x}")
+                      break
+          if bad:
+              print("::error::PowerShell must be ASCII (Windows PowerShell 5.1 misreads unmarked UTF-8)")
+              print("\n".join(bad)); sys.exit(1)
+          print("ok all .ps1 are ASCII")
+          PY
+
+      # systemd will happily install a unit with a typo'd directive and then
+      # refuse to start it at 3am. Catch the structural mistakes here.
+      - name: systemd units are well-formed
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+          bad = []
+          for p in sorted(pathlib.Path('install/services').glob('*.service')):
+              text = p.read_text()
+              found = re.findall(r'^\[(\w+)\]', text, re.M)
+              for required in ('Unit', 'Service', 'Install'):
+                  if required not in found:
+                      bad.append(f"{p.name}: missing [{required}] section")
+              if 'ExecStart=' not in text:
+                  bad.append(f"{p.name}: no ExecStart")
+              # systemd joins backslash continuations, so fold them before
+              # checking that every logical line is a Key=Value directive.
+              joined = text.replace('\\\n', ' ')
+              for i, line in enumerate(joined.splitlines(), 1):
+                  s = line.strip()
+                  if s and not s.startswith('#') and not s.startswith('[') and '=' not in s:
+                      bad.append(f"{p.name}: not a directive: {s!r}")
+          if bad:
+              print("::error::malformed unit\n" + "\n".join(bad)); sys.exit(1)
+          print("ok systemd units")
+          PY
 
       - name: Makefile targets resolve
         run: make help >/dev/null && echo "ok Makefile"
@@ -120,7 +252,9 @@ jobs:
           PLACEHOLDERS = {"your-key", "your-api-key", "xxx", "changeme", "<key>", "..."}
           bad = []
           for p in pathlib.Path('.').rglob('*'):
-              if not p.is_file() or '.git' in p.parts or 'vendor' in p.parts:
+              # .agents = vendored third-party skill packs (docs with example
+              # env lines like FAL_KEY=your_key) — same trust class as vendor/
+              if not p.is_file() or '.git' in p.parts or 'vendor' in p.parts or '.agents' in p.parts:
                   continue
               try:
                   text = p.read_text(errors='ignore')
@@ -134,7 +268,7 @@ jobs:
           # They are gitignored, but a `git add -f` or a moved copy would slip past that.
           for name in ("credentials.json", "tokens.json", "token.json"):
               for hit in pathlib.Path('.').rglob(name):
-                  if '.git' in hit.parts or 'vendor' in hit.parts:
+                  if '.git' in hit.parts or 'vendor' in hit.parts or '.agents' in hit.parts:
                       continue
                   bad.append(f"{hit}: OAuth credential file must never be committed")
           if bad:

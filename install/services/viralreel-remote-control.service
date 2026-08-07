@@ -1,0 +1,58 @@
+# Claude Code Remote Control — the studio's front door.
+#
+# `claude remote-control` registers with the Anthropic API over outbound HTTPS
+# and polls for work; nothing listens on an inbound port. The session then shows
+# up at claude.ai/code and in the mobile app, running against THIS machine's
+# filesystem. That is the whole remote story: no tunnel, no port forward, no
+# public hostname.
+#
+# Restart=always is not boilerplate here. Anthropic's docs are explicit that a
+# session which stays offline for around ten minutes times out and the process
+# exits — so on an unattended box the supervisor is the only thing that brings
+# the door back. Long work must therefore live in the job queue, never inside
+# the session: jobd survives what Remote Control does not.
+#
+# ONE-TIME, INTERACTIVE, BEFORE ENABLING THIS UNIT (it cannot be automated —
+# Remote Control needs a full claude.ai login, and API keys are rejected):
+#     cd __ROOT__ && claude          # then: /login, and accept the trust prompt
+#
+# Placeholders __USER__/__GROUP__/__ROOT__/__NAME__ are filled by
+# install/services/install-services.sh.
+
+[Unit]
+Description=Claude Code Remote Control (drive this studio from claude.ai)
+Documentation=https://code.claude.com/docs/en/remote-control
+After=network-online.target viralreel-jobd.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__USER__
+Group=__GROUP__
+WorkingDirectory=__ROOT__
+# __HOME__ is read from the password database by install-services.sh, not
+# assembled as /home/<user> — that assumption breaks for any account whose home
+# lives elsewhere, and it breaks silently, as a login that never loads.
+Environment=HOME=__HOME__
+Environment=PATH=__HOME__/.local/bin:__ROOT__/vendor/ffbin/bin:/usr/local/bin:/usr/bin:/bin
+
+# Remote Control refuses to start when any of these are set: an API key or a
+# non-Anthropic endpoint puts it on the wrong auth path, and the telemetry
+# opt-outs disable the feature-flag evaluation it depends on. Clearing them in
+# the unit means a stray line in the user's shell profile cannot break the box
+# while nobody is sitting at it.
+Environment=ANTHROPIC_API_KEY=
+Environment=ANTHROPIC_BASE_URL=
+Environment=CLAUDE_CODE_OAUTH_TOKEN=
+Environment=DISABLE_TELEMETRY=
+Environment=DO_NOT_TRACK=
+Environment=CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=
+
+ExecStart=/usr/bin/env claude remote-control --name "__NAME__" --spawn worktree --capacity 8
+
+Restart=always
+RestartSec=15
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

@@ -102,3 +102,56 @@ Archaeology, whose doctrine (docs/04, docs/05) remains project law. Four standin
 **Re-evaluate when:** a second production project actually launches (revisit Kitsu/AYON
 tracking and the disabled farm/distribution modules), or a paid engine is proposed for a
 specific project (that's a per-project decision, logged here as its own entry).
+
+## D9 — Remote operation is a steering wheel, not a work queue.
+
+The studio can now run on a machine you are not sitting at (docs/15). Three
+independent limits decide how: a Claude Code Remote Control session ends after
+~10 minutes offline, a claude.ai tool call is capped at 300 seconds, and a
+Cloudflare tunnel returns 524 at 125. Nothing that takes hours can live inside
+any of them.
+
+So remote callers never execute work — they enqueue it. `scripts/studio/jobd.py`
+holds the queue, systemd holds the worker, and the render survives the session,
+the laptop lid and the network. A job started with `&` does not, which is why
+there is no "just run it" path in the remote surface.
+
+Three consequences worth stating, because each one closed off an easier option:
+
+**The allowlist is the security boundary.** `config/jobs.yaml` is the entire set
+of things the machine will do on request. A caller names a recipe and fills
+declared slots; each slot is regex-checked, and the result runs as argv with no
+shell. `argv[0]` must be literal, so the command can never come from a
+parameter. Tests assert this against the shipped file — widening a pattern for
+convenience fails CI.
+
+**The claude.ai connector is OAuth or nothing.** Claude accepts a connector
+that speaks OAuth or one with no authentication at all; a static bearer token is
+a beta you must be granted. Authless would mean anyone who learned the URL could
+queue jobs on someone else's PC, so the studio runs its own OAuth 2.1
+authorization server (`server/studio_auth.py`).
+
+Single-owner by design: one passphrase set at install, scrypt-hashed, constant-time
+compared, locked out after repeated failures. There are no accounts because a
+second user is not a requirement here, and every account system is one more thing
+to be wrong on an unattended machine. `/authorize` never mints a code — it parks
+the request and redirects to a consent page, so the passphrase is the only thing
+that converts a connection attempt into a token. Refresh tokens rotate; codes and
+tokens are stored as digests, so a stolen database is an inventory rather than a
+key ring.
+
+This is the one place in the repo that answers the public internet, so its tests
+mostly assert refusal — no token, wrong passphrase, wrong PKCE verifier, replayed
+code, spent refresh token, revoked token — and they run against a live server on
+every CI build rather than mocking the flow.
+
+**Delivery does not change.** Films still ship as a commit to `releases/` and a
+GitHub raw link. Cloudflare's terms reserve the right to limit free accounts
+serving video, and more to the point, a delivery path that already works should
+not be replaced by one that depends on the host being awake.
+
+The honest weak point is documented rather than hidden: Microsoft supports no
+way to start a WSL distro at boot with nobody logged in. We use a Task Scheduler
+ONSTART task and `vmIdleTimeout=-1`, neither documented for this purpose, and
+ship `install/windows/verify-host.ps1` to turn "it should come back" into a
+checked answer after a real reboot.

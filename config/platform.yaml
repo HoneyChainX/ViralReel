@@ -293,7 +293,11 @@ modules:
     gpu: none
     headless: true
     install: script
-    install_cmd: "python3 -m venv .venv && .venv/bin/pip install bpy"
+    install_cmd: "${VIRALREEL_PY311:-python3.11} -m venv .venv && .venv/bin/pip install bpy"
+    # bpy publishes cp311 wheels ONLY — not 3.10, not 3.12. Ubuntu 24.04 ships
+    # 3.12, so building this venv with a bare `python3` fails with "no matching
+    # distribution" and takes the entire 3D lane down. install/wsl/bootstrap.sh
+    # provides the interpreter and exports VIRALREEL_PY311.
     enabled: true
     doctor:
       - { type: cmd, run: "vendor/blender-headless/.venv/bin/python -c 'import bpy; print(bpy.app.version_string)'" }
@@ -321,6 +325,51 @@ modules:
       Promoted from catalog (sixth sweep) when the 3D lane activated: USD is what OTIO is
       to editorial — the interchange every 3D tool speaks. No Hydra GPU imaging in the
       pip core; rendering is bpy/Cycles' job.
+
+  - id: cc-video-toolkit
+    repo: https://github.com/digitalsamba/claude-code-video-toolkit
+    ref: 9826feb491cffe18367e85f6f759bffcfb93d3da  # pinned 2026-08-05, verified install
+    profile: core
+    role: "Sibling platform (1.9k★, MIT): Remotion + open-model video patterns, Modal/RunPod cloud-GPU recipes — reference shelf"
+    license: MIT
+    cost: free
+    gpu: none
+    headless: true
+    install: clone-only
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/cc-video-toolkit }
+    notes: >
+      Eleventh sweep (docs/13): independently converged on our architecture (Remotion +
+      LTX + ACE-Step + skills), which makes it the best external reference for
+      motion-director's Remotion patterns and pipeline-td's model-routing recipes. Its
+      Modal path (~$0.23/clip, $30 free tier) is a founder-gated cloud-GPU option that
+      could activate the genai lane before local GPU hardware exists (D8: paid is
+      per-project, never default).
+
+  - id: fastsdcpu
+    repo: https://github.com/rupeshs/fastsdcpu
+    ref: b5e5cab5c2ad369c56f52b34cd61d010efa489f1  # pinned 2026-08-05, verified install
+    profile: genai
+    role: "CPU image generation (MIT, 2.1k★): LCM/SDXS OpenVINO int8 — the genai lane's first CPU-native engine"
+    license: MIT
+    cost: free
+    gpu: none
+    headless: true
+    install: script
+    install_cmd: "python3 -m venv .venv && .venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu && .venv/bin/pip install -r requirements.txt"
+    enabled: true
+    doctor:
+      - { type: dir, path: vendor/fastsdcpu }
+    notes: >
+      Fourteenth sweep (docs/13): breaks the 'generation needs a GPU' assumption for
+      IMAGES — LCM/SDXS at 512px in seconds-to-a-minute on this 4-core host. Owners:
+      gen-supervisor (concept/reference stills, casting-sheet reference images) and
+      key-art-director (art elements). HONESTY: the FLUX-schnell-int4 path needs ~30GB
+      RAM — this host has 15GB, so FLUX stays out of reach here; LCM/SDXS is the lane.
+      Models download on first use (~1GB each). Video generation on CPU remains
+      impractical (minutes per frame) — that verdict stands; provenance-channel bans
+      unchanged.
 
   - id: pinokio
     repo: https://github.com/pinokiocomputer/pinokio

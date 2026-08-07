@@ -1,0 +1,21 @@
+{
+  "_comment": [
+    "Project-scoped MCP servers (docs/15-windows-host.md).",
+    "Any Claude Code session opened in this repo - including a Remote Control",
+    "session being driven from claude.ai - gets the studio's job queue as tools,",
+    "so long renders are enqueued rather than run inside the session. That",
+    "matters because a Remote Control session ends after roughly ten minutes",
+    "offline, while a queued job does not.",
+    "CLAUDE_PROJECT_DIR is set in the server's environment rather than Claude",
+    "Code's own, so a project-scoped entry must supply the :-. default.",
+    "The interpreter comes from install/wsl/bootstrap.sh; until that has run,",
+    "this server shows as failed in /mcp, which is the honest state."
+  ],
+  "mcpServers": {
+    "viralreel-studio": {
+      "type": "stdio",
+      "command": "${CLAUDE_PROJECT_DIR:-.}/server/.venv/bin/python",
+      "args": ["${CLAUDE_PROJECT_DIR:-.}/server/studio_mcp.py"]
+    }
+  }
+}

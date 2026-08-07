@@ -1,0 +1,24 @@
+{
+  "film": "keeper-60s",
+  "output": "out/keeper-60s.mp4",
+  "scenes": [
+    "act1-walk",
+    "act2-crossing",
+    "act3-light"
+  ],
+  "duration_s": 59.5,
+  "expected_s": 59.5,
+  "duration_ok": true,
+  "delivery": "1920x1080@24",
+  "delivery_ok": true,
+  "integrated_lufs": -70.0,
+  "cut_check": {
+    "expected_hard_cuts": [],
+    "manual_cuts": [
+      22.0
+    ],
+    "detected_boundaries": 1,
+    "missed": [],
+    "ok": true
+  }
+}

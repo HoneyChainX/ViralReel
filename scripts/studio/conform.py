@@ -217,10 +217,15 @@ def render(film: dict, film_path: Path) -> int:
         inputs, fc = [], []
         for _, p in norm:
             inputs += ["-i", str(p)]
-        cur_v, cur_a, cur_dur = "[0:v]", "[0:a]", durs[0]
+        # Pin every video input to AVTB (1/1000000) — concat outputs that timebase,
+        # so without this a cut followed by an xfade fails with a timebase mismatch
+        # (found on THE KEEPER: cut act1→2 then dissolve act2→3).
+        for i in range(n):
+            fc.append(f"[{i}:v]settb=AVTB[vin{i}]")
+        cur_v, cur_a, cur_dur = "[vin0]", "[0:a]", durs[0]
         for i in range(n - 1):
             tr = norm[i][0].get("transition_out", {"type": "cut"})
-            nv, na = f"[{i+1}:v]", f"[{i+1}:a]"
+            nv, na = f"[vin{i+1}]", f"[{i+1}:a]"
             ov, oa = f"[vj{i+1}]", f"[aj{i+1}]"
             if tr.get("type") == "xfade":
                 tdur = max(2 / 30, float(tr.get("dur", 0.5)))
@@ -269,13 +274,21 @@ def render(film: dict, film_path: Path) -> int:
     cut_check: dict | None = None
     sd = ROOT / "vendor" / "pyscenedetect" / ".venv" / "bin" / "scenedetect"
     expected_cuts = []
+    manual_cuts = []  # matched cuts: real editorial, invisible to content detection
     acc = 0.0
     for i in range(n - 1):
         tr = norm[i][0].get("transition_out", {"type": "cut"})
         tdur = float(tr.get("dur", 0.5)) if tr.get("type") == "xfade" else 0.0
         acc += durs[i] - tdur
         if tr.get("type", "cut") == "cut":
-            expected_cuts.append(round(acc, 2))
+            # `qc: manual` — a deliberate matched cut (palette/composition continuity
+            # across the boundary) that no content detector can see. It is excluded
+            # from the mechanical assertion but RECORDED, never silently dropped:
+            # the report carries it, and the film-editor's eyes are the named QC.
+            if tr.get("qc") == "manual":
+                manual_cuts.append(round(acc, 2))
+            else:
+                expected_cuts.append(round(acc, 2))
     if sd.exists():
         # Threshold is per-film: stylized/harmonized palettes cut softly and need a
         # lower bar than live footage (delivery.qc_cut_threshold; detector default 27).
@@ -292,6 +305,7 @@ def render(film: dict, film_path: Path) -> int:
         misses = [c for c in expected_cuts
                   if not any(abs(c - dt) < 0.5 for dt in detected)]
         cut_check = {"expected_hard_cuts": expected_cuts,
+                     "manual_cuts": manual_cuts,
                      "detected_boundaries": len(detected),
                      "missed": misses, "ok": not misses}
     report = {

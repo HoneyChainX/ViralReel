@@ -1,7 +1,9 @@
 .PHONY: help setup doctor test episode gate publish published clean-vendor \
-        platform platform-doctor ralph
+        platform platform-doctor ralph \
+        host jobs job logs worker serve services connector connector-status
 
 SHELL := /bin/bash
+comma := ,
 ROOT  := $(shell pwd)
 EP    := $(ROOT)/content/episodes/$(SLUG)
 
@@ -18,6 +20,18 @@ help:
 	@echo "  make platform PROFILE=core        install studio-platform modules (docs/10)"
 	@echo "  make platform-doctor PROFILE=core verify the platform; exit 1 on any red check"
 	@echo "  make ralph JOB=<job>              run a bounded ralph loop (ralph/README.md)"
+	@echo ""
+	@echo "Host server — running this machine remotely (docs/15-windows-host.md)"
+	@echo ""
+	@echo "  make host                   what this machine is and whether it can render"
+	@echo "  make jobs                   recent jobs in the queue"
+	@echo "  make job JOB=<recipe> [P=k=v,k=v]   queue work that outlives your session"
+	@echo "  make logs ID=<n>            tail a job's output"
+	@echo "  make worker                 run the queue in the foreground (systemd does this for you)"
+	@echo "  make serve                  run the MCP control server on stdio"
+	@echo "  make services               install the systemd units (needs sudo)"
+	@echo "  make connector URL=https://... expose the studio to claude.ai as a connector"
+	@echo "  make connector-status       is the connector reachable, and how"
 	@echo ""
 	@echo "Stages 3 (hook selection) and 11 (publish) stop for a human. See docs/06-runbook.md."
 
@@ -89,3 +103,47 @@ ralph:
 
 clean-vendor:
 	rm -rf vendor
+
+# ── host server (docs/15-windows-host.md) ────────────────────────────────────
+# Long work goes through the queue, not through your shell. A render started
+# here survives the session, the ssh drop and the ten-minute Remote Control
+# timeout; a render started with `&` does not.
+
+host:
+	@python3 scripts/studio/hostinfo.py
+
+jobs:
+	@python3 scripts/studio/jobd.py list
+
+# P is a comma-separated k=v list: make job JOB=film-render P=film=keeper
+job:
+	@test -n "$(JOB)" || (echo "usage: make job JOB=<recipe> [P=film=keeper]"; \
+		echo ""; python3 scripts/studio/jobd.py recipes; exit 1)
+	@python3 scripts/studio/jobd.py enqueue $(JOB) \
+		$(foreach kv,$(subst $(comma), ,$(P)),-p $(kv)) --by make
+
+logs:
+	@test -n "$(ID)" || (echo "usage: make logs ID=<job id>"; exit 1)
+	@python3 scripts/studio/jobd.py logs $(ID) --tail $(or $(TAIL),60)
+
+worker:
+	@python3 scripts/studio/jobd.py worker
+
+serve:
+	@test -x server/.venv/bin/python || \
+		(echo "no server venv — run: bash install/wsl/bootstrap.sh"; exit 1)
+	@server/.venv/bin/python server/studio_mcp.py
+
+services:
+	@sudo bash install/services/install-services.sh $(if $(RC),--with-remote-control,)
+
+
+# The claude.ai custom connector (docs/15 SS6.2). URL is the public https origin
+# your tunnel publishes; without one there is nothing for Claude to reach.
+connector:
+	@test -n "$(URL)" || (echo "usage: make connector URL=https://your-host.ts.net"; \
+		echo ""; echo "Get a URL first:  bash install/tunnel/expose.sh --tailscale"; exit 1)
+	@sudo bash install/services/install-services.sh --with-connector --public-url "$(URL)"
+
+connector-status:
+	@bash install/tunnel/expose.sh --status

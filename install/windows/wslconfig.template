@@ -1,0 +1,44 @@
+# %UserProfile%\.wslconfig — global WSL2 tuning for a render host.
+#
+# install\windows\bootstrap.ps1 writes this file with __MEMORY__, __PROCESSORS__
+# and __SWAP__ replaced by values computed from this machine. Apply changes with
+# `wsl --shutdown` — nothing here is live until the VM restarts.
+#
+# Sizes are BYTES unless suffixed MB/GB. Paths need doubled backslashes.
+
+[wsl2]
+# Defaults are 50% of RAM and every logical CPU. We leave Windows a real slice
+# on purpose: a render that starves the host makes the machine unusable for its
+# owner, and this is somebody's actual PC.
+memory=__MEMORY__
+processors=__PROCESSORS__
+swap=__SWAP__
+
+# Mirrored networking makes Windows<->WSL and LAN->WSL behave like one host, so
+# a service bound inside the distro is reachable at localhost from Windows
+# without port-proxy plumbing. Windows 11 22H2+ with WSL 2.0.0+.
+# NOTE: this makes localhostForwarding irrelevant — do not also set it.
+networkingMode=mirrored
+firewall=true
+dnsTunneling=true
+
+# No GUI apps on a render box; the WSLg stack is just memory we would rather
+# give to Cycles.
+guiApplications=false
+
+# The VM is shut down after an idle period by default (60s on Windows 11), which
+# would stop the job worker between renders. -1 disables it.
+# HONESTY: this sentinel is widely used but is not on Microsoft Learn — verify
+# with install\windows\verify-host.ps1 after a reboot rather than assuming it.
+vmIdleTimeout=-1
+
+[experimental]
+# WSL's virtual disk grows on demand and, without this, NEVER returns freed
+# space to Windows. On a box that writes and deletes thousands of PNG frames
+# that difference is measured in hundreds of gigabytes.
+sparseVhd=true
+
+# Deliberately not the default (dropCache): reclaiming requires cgroups v1 to be
+# disabled, which Microsoft documents as breaking a dockerd running under
+# systemd. 'gradual' is the reasonable middle if you want memory back.
+autoMemoryReclaim=disabled

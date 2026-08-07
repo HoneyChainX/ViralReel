@@ -1,0 +1,28 @@
+{
+  "film": "keeper-60s",
+  "per_act_signalstats": {
+    "act1-walk": {
+      "y_avg": 152.5,
+      "u_avg": 121.1,
+      "v_avg": 129.7
+    },
+    "act2-crossing": {
+      "y_avg": 100.4,
+      "u_avg": 139.3,
+      "v_avg": 127.7
+    },
+    "act3-light": {
+      "y_avg": 92.0,
+      "u_avg": 139.4,
+      "v_avg": 124.5
+    }
+  },
+  "luma_spread_across_acts": 60.5,
+  "verdict": "NO LUT \u2014 colorist judgment over threshold: the 60.5 luma spread IS the film (designed gold\u2192dusk falloff across one continuous evening); a unifying LUT would flatten the narrative light. The real grade risk \u2014 the 2.5D\u2192Cycles lane crossing at the act2\u2192act3 dissolve \u2014 measures only 8.4 luma / 3.2 chroma-V delta: cross-engine palette continuity held via the casting-sheet hexes.",
+  "lut_applied": null,
+  "adjacent_deltas": {
+    "act1_to_act2_luma": 52.1,
+    "act2_to_act3_luma": 8.4,
+    "act2_to_act3_chroma_v": 3.2
+  }
+}

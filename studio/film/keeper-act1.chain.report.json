@@ -1,0 +1,45 @@
+{
+  "chain": "keeper-act1",
+  "output": "out/keeper-act1.mp4",
+  "segments": [
+    "a1s1",
+    "a1s2",
+    "a1s3",
+    "a1s4"
+  ],
+  "handoff": {
+    "mode": "exact",
+    "overlap_frames": 1,
+    "ssim_min": 0.97
+  },
+  "joins": [
+    {
+      "join": "a1s1\u2192a1s2",
+      "ssim": 0.9942,
+      "ok": true
+    },
+    {
+      "join": "a1s2\u2192a1s3",
+      "ssim": 0.9949,
+      "ok": true
+    },
+    {
+      "join": "a1s3\u2192a1s4",
+      "ssim": 0.9949,
+      "ok": true
+    }
+  ],
+  "duration_s": 22.0,
+  "expected_s": 22.0,
+  "duration_ok": true,
+  "seam_check": {
+    "join_times": [
+      5.5,
+      11.0,
+      16.5
+    ],
+    "visible_seams": [],
+    "ok": true
+  },
+  "note": "picture only by design \u2014 audio is laid over the continuous shot at film level"
+}

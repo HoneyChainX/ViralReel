@@ -1,0 +1,9 @@
+chain:
+  slug: keeper-act2
+  delivery: { width: 1920, height: 1080, fps: 24 }
+  handoff: { mode: exact, overlap_frames: 1, ssim_min: 0.97 }
+segments:
+  - { id: a2s1, source: out/keeper/k-528-660.mp4 }
+  - { id: a2s2, source: out/keeper/k-660-792.mp4 }
+  - { id: a2s3, source: out/keeper/k-792-924.mp4 }
+  - { id: a2s4, source: out/keeper/k-924-1055.mp4 }

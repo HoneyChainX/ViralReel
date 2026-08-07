@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+# Install the studio's systemd units so the box behaves like a server.
+#
+#   sudo bash install/services/install-services.sh            # jobd only
+#   sudo bash install/services/install-services.sh --with-remote-control
+#   sudo bash install/services/install-services.sh --uninstall
+#
+# Run it with sudo but from the operator's checkout: the units must run as the
+# human who owns the repo and the claude.ai login, never as root.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+UNIT_DIR=/etc/systemd/system
+WITH_RC=0
+WITH_MCP=0
+PUBLIC_URL="${VIRALREEL_PUBLIC_URL:-}"
+UNINSTALL=0
+NAME="${VIRALREEL_HOST_NAME:-viralreel-studio}"
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --with-remote-control) WITH_RC=1 ;;
+    --with-connector)      WITH_MCP=1 ;;
+    --public-url)          PUBLIC_URL="$2"; shift ;;
+    --uninstall)           UNINSTALL=1 ;;
+    --name)                NAME="$2"; shift ;;
+    *) echo "unknown flag: $1" >&2; exit 2 ;;
+  esac
+  shift
+done
+
+say()  { printf '\n\033[1m==> %s\033[0m\n' "$1"; }
+warn() { printf '\033[33m  ! %s\033[0m\n' "$1"; }
+die()  { printf '\033[31m  ✗ %s\033[0m\n' "$1" >&2; exit 1; }
+
+[ "$(id -u)" -eq 0 ] || die "run with sudo — units are installed into $UNIT_DIR"
+
+# SUDO_USER is who called sudo; falling back to root would install services that
+# cannot read the operator's claude.ai credentials.
+TARGET_USER="${SUDO_USER:-}"
+[ -n "$TARGET_USER" ] && [ "$TARGET_USER" != "root" ] \
+  || die "could not determine the non-root user — run as: sudo bash $0 (not from a root shell)"
+TARGET_GROUP="$(id -gn "$TARGET_USER")"
+# Read the home directory rather than assuming /home/<user>: the Remote Control
+# unit needs HOME to find the claude.ai credentials, and a wrong HOME fails as a
+# login that never loads rather than as an error anyone would recognise.
+TARGET_HOME="$(getent passwd "$TARGET_USER" | cut -d: -f6)"
+[ -n "$TARGET_HOME" ] || die "could not read the home directory for '$TARGET_USER'"
+
+UNITS=(viralreel-jobd.service)
+[ "$WITH_RC" -eq 1 ] && UNITS+=(viralreel-remote-control.service)
+if [ "$WITH_MCP" -eq 1 ]; then
+  # An unauthenticated server behind a public tunnel is an open door onto
+  # someone's PC, so refuse rather than install something that looks finished.
+  [ -n "$PUBLIC_URL" ] || die "--with-connector needs --public-url https://... (the URL your tunnel publishes)"
+  case "$PUBLIC_URL" in
+    https://*) : ;;
+    *) die "--public-url must be https:// — OAuth over plaintext hands the token to the network" ;;
+  esac
+  [ -x "$ROOT/server/.venv/bin/python" ] || die "no server venv — run install/wsl/bootstrap.sh first"
+  if ! sudo -u "$TARGET_USER" env VIRALREEL_AUTH_DB="$ROOT/var/auth.db" \
+       "$ROOT/server/.venv/bin/python" "$ROOT/server/studio_auth.py" status 2>/dev/null \
+       | grep -q "passphrase set: yes"; then
+    die "no studio passphrase set. Run first:
+      server/.venv/bin/python server/studio_auth.py set-passphrase"
+  fi
+  UNITS+=(viralreel-mcp.service)
+fi
+
+if [ "$UNINSTALL" -eq 1 ]; then
+  say "Removing studio services"
+  for u in viralreel-jobd.service viralreel-remote-control.service viralreel-mcp.service; do
+    systemctl disable --now "$u" 2>/dev/null || true
+    rm -f "$UNIT_DIR/$u"
+    echo "  removed $u"
+  done
+  systemctl daemon-reload
+  exit 0
+fi
+
+# Without systemd these files are inert. That is the difference between a render
+# that survives a logout and one that does not, so refuse rather than pretend.
+[ -d /run/systemd/system ] || die \
+  "systemd is not running. Under WSL2: put 'systemd=true' under [boot] in /etc/wsl.conf, then run 'wsl --shutdown' from Windows and reopen the distro."
+
+say "Installing units for user '$TARGET_USER' from $ROOT"
+for u in "${UNITS[@]}"; do
+  src="$ROOT/install/services/$u"
+  [ -f "$src" ] || die "missing unit template: $src"
+  sed -e "s|__USER__|$TARGET_USER|g" \
+      -e "s|__GROUP__|$TARGET_GROUP|g" \
+      -e "s|__HOME__|$TARGET_HOME|g" \
+      -e "s|__ROOT__|$ROOT|g" \
+      -e "s|__NAME__|$NAME|g" \
+      -e "s|__PUBLIC_URL__|$PUBLIC_URL|g" \
+      "$src" > "$UNIT_DIR/$u"
+  chmod 0644 "$UNIT_DIR/$u"
+  echo "  installed $u"
+done
+
+systemctl daemon-reload
+for u in "${UNITS[@]}"; do
+  systemctl enable "$u" >/dev/null 2>&1 && echo "  enabled  $u"
+done
+
+say "Starting the job worker"
+systemctl restart viralreel-jobd.service
+sleep 2
+if systemctl is-active --quiet viralreel-jobd.service; then
+  echo "  viralreel-jobd is running"
+else
+  warn "viralreel-jobd did not stay up — journalctl -u viralreel-jobd -n 40"
+fi
+
+if [ "$WITH_RC" -eq 1 ]; then
+  say "Remote Control"
+  # The login is interactive and cannot be scripted; starting the service before
+  # it exists just produces a restart loop, so check first and say so plainly.
+  if sudo -u "$TARGET_USER" test -d "$TARGET_HOME/.claude"; then
+    systemctl restart viralreel-remote-control.service
+    sleep 3
+    systemctl is-active --quiet viralreel-remote-control.service \
+      && echo "  running — find the session at claude.ai/code" \
+      || warn "did not stay up — journalctl -u viralreel-remote-control -n 40"
+  else
+    warn "no ~/.claude for $TARGET_USER yet. Log in first, then start the service:"
+    echo "      cd $ROOT && claude      # then /login, and accept the trust prompt"
+    echo "      sudo systemctl start viralreel-remote-control"
+  fi
+fi
+
+cat <<EOF
+
+Installed. Useful from here:
+
+  systemctl status viralreel-jobd
+  journalctl -u viralreel-jobd -f
+  python3 scripts/studio/jobd.py enqueue doctor
+  python3 scripts/studio/jobd.py list
+
+EOF

@@ -1,0 +1,5 @@
+# The control server's only dependency. Pinned to a floor rather than an exact
+# version because the SDK is moving fast: 2.x replaced FastMCP with MCPServer and
+# moved the HTTP host/port from settings onto the transport call, so anything
+# below 2.0 will not import this server at all.
+mcp>=2.0.0,<3
