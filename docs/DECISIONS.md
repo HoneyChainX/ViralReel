@@ -80,3 +80,33 @@ Measured runway: worst-case ~56, typical ~95–168 episodes on the current 124,9
 balance — one episode costs ~0.6% of the pool. Shipping Piper to "save credits" spends brand
 recognition on a non-scarce resource. A dead key must degrade LOUDLY: fallback is a decision
 recorded in the episode log, not an automatic swap.
+
+## D8 — Reels ops: hybrid pipeline first; paid virality/restyle tools deferred on evidence.
+**Decided:** 2026-08-03 (founder handoff + measured tool state). **Status:** active.
+
+Founder handed over a reels plan naming Higgsfield (`shorts_studio`, `reframe`,
+`virality_predictor`), Adobe video tools, Postiz, Canva, n8n and Adspirer against three gaps:
+volume, cross-post cadence, feedback loop. Measured reality (`docs/11-reels-ops.md`):
+
+- **Higgsfield balance is 0 credits (free plan).** `shorts_studio` 45s = 135 credits; `reframe`
+  to 9:16 @1080p = 419 credits. Nothing executable. Funding it reverses
+  `paid_generators_enabled: false` and the $0.00/video guarantee.
+- **`shorts_studio` is the wrong shape for Gap 1** regardless of funding — it restyles an
+  existing video, it does not build a reel from a script. **`reframe` is redundant**: we render
+  native 1080×1920.
+- **Postiz and Adspirer plugins are enabled but expose no callable surface in this Claude Code
+  session** (they are claude.ai-chat plugins). Founder- or chat-side actions.
+- **Canva is already toggled on in chat; it needs authorization, not a toggle.** **n8n is the one
+  genuinely toggled off.** Both are founder-only settings actions.
+
+**Decision:** close Gap 1 with the **hybrid pipeline** — founder generates the 4 Firefly hero
+clips (their taste, from `adobe-master-prompt.md`), the studio automates assembly, real-data
+overlays, captions, odometer, stamp, loudness, QC and gate. $0. Close Gap 3 with the
+already-built analytics handoff (real retention beats a pre-publish prediction, and costs
+nothing). Defer Higgsfield credits until ~10 published episodes give retention data to validate
+whether `virality_predictor` correlates with our actual curves. Defer Adspirer until a winner
+exists.
+
+**Re-evaluate when:** (a) 10+ episodes published with retention data — then price
+`virality_predictor` against a known signal; (b) founder decides the $0 guarantee is worth
+trading for batch throughput, as an explicit strategy change with the RPM math re-run.
