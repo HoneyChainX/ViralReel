@@ -1,0 +1,149 @@
+{
+  "title": "Entry 55-inch 4K TV \u2014 2016 vs 2026",
+  "description": "Verified price pair from episode four-k-tv. Verdict: STILL CHEAP.",
+  "modelId": "PENDING-MODEL-ID",
+  "parentPath": "/content/dam/price-archaeology/price-pairs",
+  "name": "four-k-tv--entry",
+  "fields": [
+    {
+      "name": "slug",
+      "type": "text",
+      "values": [
+        "four-k-tv"
+      ]
+    },
+    {
+      "name": "productName",
+      "type": "text",
+      "values": [
+        "A 55-inch 4K smart TV, entry/mainstream tier: VIZIO SmartCast 55\" E-Series Ultra HD Home Theater Display (E55u-D0), 2016 \u2014 versus TCL 55Q651G (55\" Q-Series 4K QLED Google TV), 2026"
+      ]
+    },
+    {
+      "name": "category",
+      "type": "text",
+      "values": [
+        "televisions"
+      ]
+    },
+    {
+      "name": "tier",
+      "type": "enumeration",
+      "values": [
+        "entry"
+      ]
+    },
+    {
+      "name": "anchorYear",
+      "type": "number",
+      "values": [
+        2016
+      ]
+    },
+    {
+      "name": "anchorPrice",
+      "type": "number",
+      "values": [
+        699.99
+      ]
+    },
+    {
+      "name": "anchorPriceKind",
+      "type": "enumeration",
+      "values": [
+        "manufacturer-msrp"
+      ]
+    },
+    {
+      "name": "currentYear",
+      "type": "number",
+      "values": [
+        2026
+      ]
+    },
+    {
+      "name": "currentPrice",
+      "type": "number",
+      "values": [
+        319.96
+      ]
+    },
+    {
+      "name": "currentPriceKind",
+      "type": "enumeration",
+      "values": [
+        "retail-listing"
+      ]
+    },
+    {
+      "name": "currency",
+      "type": "text",
+      "values": [
+        "USD"
+      ]
+    },
+    {
+      "name": "nominalChangePct",
+      "type": "number",
+      "values": [
+        -54.3
+      ]
+    },
+    {
+      "name": "verdict",
+      "type": "enumeration",
+      "values": [
+        "STILL CHEAP"
+      ]
+    },
+    {
+      "name": "causeMechanism",
+      "type": "enumeration",
+      "values": [
+        "manufacturing-scale"
+      ]
+    },
+    {
+      "name": "sourcesJson",
+      "type": "multiline-text",
+      "values": [
+        "[\n  {\n    \"url\": \"https://www.prnewswire.com/news-releases/vizio-smartcast-e-series-ultra-hd-home-theater-display-joins-next-generation-smart-entertainment-ecosystem-with-ultra-hd-picture-quality-300253366.html\",\n    \"kind\": \"primary\",\n    \"publisher\": \"VIZIO, Inc. (manufacturer press release, distributed via PR Newswire)\",\n    \"quote\": \"VIZIO SmartCast \\u2122 55\\\" E-Series \\u2122 Ultra HD Home Theater Display \\u2122 (E55u-D0) MSRP $699.99 \\u2014 dateline: \\\"IRVINE, Calif., April 19, 2016 /PRNewswire/ -- VIZIO, Inc. announced today its all-new VIZIO SmartCast \\u2122 E-Series \\u2122 Home Theater Display \\u2122 collection\\\". Same table, one line above: \\\"VIZIO SmartCast \\u2122 55\\\" E-Series \\u2122 HDTV \\u2122 (E55-D0) MSRP $569.99\\\" \\u2014 the 1080p sibling.\",\n    \"accessed\": \"2026-08-03\"\n  },\n  {\n    \"url\": \"https://www.reviewed.com/televisions/news/vizio-debuts-2016-m-series-e-series-tvs-with-smartcast\",\n    \"kind\": \"secondary\",\n    \"publisher\": \"Reviewed.com (contemporaneous journalism)\",\n    \"quote\": \"Here's a full price breakdown for the 2016 E-Series: 1080P: ... \\u2022 55\\\" (E55-D0) \\u2014 MSRP $569.99 / 4K UHD: ... \\u2022 55\\u201d (E55u-D0) \\u2014 MSRP $699.99 (page datePublished 2016-04-19T13:00:00Z)\",\n    \"accessed\": \"2026-08-03\"\n  },\n  {\n    \"url\": \"https://data.bls.gov/timeseries/CUUR0000SA0\",\n    \"kind\": \"primary\",\n    \"publisher\": \"U.S. Bureau of Labor Statistics\",\n    \"quote\": \"Series Title: All items in U.S. city average, all urban consumers, not seasonally adjusted. Base Period: 1982-84=100. 2016 Apr = 239.261; 2026 Jul = 330.724. \\\"Data extracted on: August 2, 2026 (8:48:55 PM)\\\". Deflator used: 330.724 / 239.261 = 1.382273; 699.99 x 1.382273 = 967.58.\",\n    \"accessed\": \"2026-08-03\",\n    \"series_id\": \"CUUR0000SA0\"\n  },\n  {\n    \"url\": \"https://www.pcrichard.com/tcl-55-class-q-series-qled-4k-uhd-smart-google-tv/55Q651G.html\",\n    \"kind\": \"primary\",\n    \"publisher\": \"P.C. Richard & Son (live retail listing)\",\n    \"quote\": \"schema.org Product/Offer embedded in the page: {\\\"priceCurrency\\\":\\\"USD\\\",\\\"price\\\":\\\"319.96\\\",\\\"availability\\\":\\\"http://schema.org/InStock\\\",\\\"seller\\\":{\\\"name\\\":\\\"P.C. Richard & Son\\\"}}. On-page: \\\"TCL - 55\\\\\\\" Class Q-Series QLED 4K UHD Smart Google TV ... Panel Type: QLED \\u00b7 Display Resolution: 4K Ultra HD (2160p) \\u00b7 Screen Size Class: 55 Inch ... $319.96\\\". Analytics payload confirms item_id \\\"55Q651G\\\", price 319.96.\",\n    \"accessed\": \"2026-08-03\"\n  },\n  {\n    \"url\": \"https://us.tcl.com/products/q-class-4k-uhd-hdr-qled-smart-tv-with-google-tv.json\",\n    \"kind\": \"primary\",\n    \"publisher\": \"TCL North America official US store (us.tcl.com)\",\n    \"quote\": \"Product \\\"Q Class 4K UHD HDR QLED Smart TV with Google TV\\\", variant title \\\"55\\\\\\\"\\\", sku \\\"55Q651G\\\", price \\\"319.99\\\", compare_at_price \\\"399.99\\\". Product page: https://us.tcl.com/products/q-class-4k-uhd-hdr-qled-smart-tv-with-google-tv\",\n    \"accessed\": \"2026-08-03\"\n  },\n  {\n    \"url\": \"https://www.newegg.com/p/pl?d=55QD65QF\",\n    \"kind\": \"primary\",\n    \"publisher\": \"Newegg.com (live retail listing, third independent seller, tier corroboration)\",\n    \"quote\": \"\\\"Hisense 55QD65QF 55 inch Class QD6 Series 4K QLED Smart Fire TV \\u2014 Model #: 55QD65QF \\u2014 $299.99\\\" (new, not refurbished). Corroborates that the entry 55-inch 4K tier clears at roughly $300 on the same day.\",\n    \"accessed\": \"2026-08-03\"\n  }\n]"
+      ]
+    },
+    {
+      "name": "anchorPriceAdjusted",
+      "type": "number",
+      "values": [
+        967.58
+      ]
+    },
+    {
+      "name": "realChangePct",
+      "type": "number",
+      "values": [
+        -66.9
+      ]
+    },
+    {
+      "name": "inflationSeriesId",
+      "type": "text",
+      "values": [
+        "BLS CPI-U CUUR0000SA0"
+      ]
+    },
+    {
+      "name": "qualityAdjustedSeriesId",
+      "type": "text",
+      "values": [
+        "BLS CUUR0000SERA01"
+      ]
+    },
+    {
+      "name": "caveat",
+      "type": "multiline-text",
+      "values": [
+        "Like-for-like is held on FOUR axes: 55-inch class \u00b7 3840x2160 (true 4K/UHD, not 1080p) \u00b7 LED-backlit LCD (no OLED on either side) \u00b7 mass-market brand's ENTRY 4K smart-TV line. 2016 anchor = VIZIO E55u-D0, the 55-inch Ultra HD model of VIZIO's cheapest 2016 SmartCast line, MSRP $699.99. 2026 anchor = TCL 55Q651G, the 55-inch model of TCL's cheapest current 4K line, $319.96-$319.99 street. THREE ASTERISKS, stated rather than hidden: (1) The 2016 figure is a manufacturer MSRP at announcement; the 2026 figure is a shelf price. Street prices fell inside 2016 too \u2014 TechRadar's review of the LG 55UH7700 quotes $999 against a $1,799 launch MSRP \u2014 so the true street-to-street fall is smaller than MSRP-to-street. (2) The 2026 set is BETTER, not merely cheaper (QLED, HDR10+/HLG, Google TV, higher brightness), so this understates the per-unit-quality collapse; the BLS constant-quality televisions index fell 67.1% over the same window. (3) TIER TRAP AVOIDED: the well-known Vizio E55-D0 is 1080p, NOT 4K \u2014 the 4K sibling is the E55u-D0 and it cost $130 more ($699.99 vs $569.99). Both figures appear in the same press release and in the artifact screenshot. A tier-matched premium check is carried as claims c3/c4 so the entry-tier headline cannot be read as cherry-picking."
+      ]
+    }
+  ]
+}

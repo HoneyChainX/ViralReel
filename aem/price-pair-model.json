@@ -1,0 +1,62 @@
+{
+  "_comment": [
+    "Content Fragment Model for the Price Archaeology price database (docs/DECISIONS.md D6).",
+    "Field shapes follow the Content Fragment Model contract read from the live AEM spec via",
+    "lookup-api-spec (GET/POST /adobe/sites/cf/models). Create this model FIRST — every fragment",
+    "in price-pairs/ references its returned model id.",
+    "",
+    "Why this model and not a flat table: every price on this channel must carry two independent",
+    "sources with at least one primary (docs/05-compliance.md Rule 2). A structured model enforces",
+    "that at the schema level, so an under-sourced pair cannot be authored at all — the same",
+    "guarantee gate check C2 makes in the video pipeline, extended to the public database."
+  ],
+  "title": "Price Pair",
+  "description": "One verified anchor-year vs current-year price for a single named product, with its sources. The atomic record of the Price Archaeology database.",
+  "status": "DRAFT",
+  "fields": [
+    { "name": "slug", "fieldType": "text", "required": true,
+      "description": "Episode slug this pair aired in, e.g. four-k-tv" },
+    { "name": "productName", "fieldType": "text", "required": true,
+      "description": "The exact named model. Never a category — 'VIZIO SmartCast 55\" E-Series Ultra HD (E55u-D0)', not 'a TV'." },
+    { "name": "category", "fieldType": "text", "required": true,
+      "description": "Grouping for the public index, e.g. televisions" },
+    { "name": "tier", "fieldType": "enumeration", "required": true,
+      "values": ["entry", "mid", "premium", "flagship"],
+      "description": "Tier must match across both years or the comparison is not like-for-like" },
+
+    { "name": "anchorYear", "fieldType": "number", "required": true },
+    { "name": "anchorPrice", "fieldType": "number", "required": true },
+    { "name": "anchorPriceKind", "fieldType": "enumeration", "required": true,
+      "values": ["manufacturer-msrp", "retail-listing", "official-series"],
+      "description": "The MSRP-vs-street asterisk, made structural. Episode 001's anchor is manufacturer-msrp and the video says so out loud." },
+    { "name": "anchorPriceAdjusted", "fieldType": "number", "required": false,
+      "description": "Anchor price in current-year dollars. Deflator series recorded in inflationSeriesId." },
+
+    { "name": "currentYear", "fieldType": "number", "required": true },
+    { "name": "currentPrice", "fieldType": "number", "required": true },
+    { "name": "currentPriceKind", "fieldType": "enumeration", "required": true,
+      "values": ["manufacturer-msrp", "retail-listing", "official-series"] },
+    { "name": "currency", "fieldType": "text", "required": true, "defaultValue": "USD" },
+
+    { "name": "nominalChangePct", "fieldType": "number", "required": true },
+    { "name": "realChangePct", "fieldType": "number", "required": false },
+    { "name": "inflationSeriesId", "fieldType": "text", "required": false,
+      "description": "e.g. BLS CPI-U CUUR0000SA0" },
+    { "name": "qualityAdjustedSeriesId", "fieldType": "text", "required": false,
+      "description": "The independent cross-check, e.g. BLS CUUR0000SERA01" },
+    { "name": "qualityAdjustedChangePct", "fieldType": "number", "required": false },
+
+    { "name": "verdict", "fieldType": "enumeration", "required": true,
+      "values": ["RIPOFF", "FAIR", "STILL CHEAP", "EXTINCT"] },
+    { "name": "causeMechanism", "fieldType": "enumeration", "required": false,
+      "values": ["tariff", "patent-expiry", "supply-chain", "subsidy", "licensing",
+                 "manufacturing-scale", "regulation", "demand-shift", "currency"] },
+
+    { "name": "sourcesJson", "fieldType": "multiline-text", "required": true,
+      "description": "REQUIRED. JSON array of {url, kind, publisher, quote, accessed}. Must contain >= 2 entries with >= 1 kind:'primary' — docs/05-compliance.md Rule 2. An under-sourced pair must never be authored." },
+    { "name": "caveat", "fieldType": "multiline-text", "required": false,
+      "description": "The disclosed asterisk, stated not smoothed. Episode 001: anchor is a launch MSRP, current is a shelf price." },
+    { "name": "airedAt", "fieldType": "date-time", "required": false,
+      "description": "Only aired pairs are published — publishing what already appeared on screen leaks nothing (D6)." }
+  ]
+}
