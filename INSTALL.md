@@ -40,16 +40,6 @@ below tells you if it is not.
 
 ## Step 1 — download and check (2 minutes)
 
-> **Until PR #10 is merged**, this lives on a branch rather than `main`, so the
-> command below returns 404. Either merge the pull request first — after which
-> everything on this page works as written — or set the branch for one run:
->
-> ```powershell
-> $env:VIRALREEL_REF = 'claude/ai-studio-platform-integration-oq5vqt'
-> irm https://raw.githubusercontent.com/HoneyChainX/ViralReel/claude/ai-studio-platform-integration-oq5vqt/install/windows/get.ps1 | iex
-> ```
-
-
 On the PC, click Start, type **PowerShell**, right-click it and choose
 **Run as administrator**. Paste this and press Enter:
 
