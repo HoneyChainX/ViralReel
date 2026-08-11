@@ -119,3 +119,41 @@ boost — revisit after the first 100k-view Short (`docs/01-strategy.md` §6).
 - Publish to TikTok/IG (reverses `docs/DECISIONS.md` D2, and the gate does not audit those
   platforms' rules)
 - Claim a connector works in this session without having called it
+
+---
+
+## Adobe Experience Manager — evaluated, and it cannot run here
+
+The founder proposed AEM for this. It was checked properly rather than dismissed, and the
+instinct is directionally good — but it is **non-functional in this account**.
+
+**`list-aem-environments` returns zero accessible environments.** All 68 AEM skills require an
+`aemUrl` from an accessible environment, so none of them can execute. AEM as a Cloud Service is
+licensed **separately from Creative Cloud** — an enterprise contract, not a CC entitlement.
+Having the connector installed is not the same as owning an instance.
+
+**Where the instinct was right.** Reading AEM's actual capability list, three things map
+genuinely well onto this channel — worth recording so the reasoning survives:
+
+| AEM capability | Would have served |
+|---|---|
+| **Content Fragments (20 skills) + GraphQL delivery API** | **D6, the public price database.** Each verified price pair as a structured fragment with a GraphQL endpoint is the *correct shape* for that asset — better than a hand-rolled site |
+| **Launches & scheduled publishing (14 skills)** | Gap 2 — review branches and scheduled release |
+| **Brand Governance (6 skills)** — evaluate text/images/pages against brand guidelines | Mechanised `brand-designer`: automated checks against the channel bible's locked tokens |
+| **Asset Management (8 skills)** | DAM for reel masters and hero clips |
+
+**Why we still don't pursue it.** Every mapped need is already covered by tooling that is free
+and already connected:
+
+- **Price database (D6)** → **Cloudflare** (already connected): D1 for the pairs, a Worker for
+  the read API, R2 for assets. Free tier, and it is already the recorded D6 plan.
+- **Asset provenance** → the repo already beats a DAM *for our specific purpose*: every asset
+  carries source URL, license and attribution in `licenses.json`, version-controlled, and the
+  gate fails without it. A DAM stores files; we need an audit trail, and we have one.
+- **Brand governance** → the gate plus CI token assertions already enforce the bible
+  mechanically (colours, weights, disclosure, cap, thresholds).
+- **Scheduled publishing** → manual-first (D1), or Postiz/n8n once those toggles are on.
+
+**Re-evaluate if:** the channel ever operates inside an organisation that already licenses AEM.
+Then Content Fragments become the right home for the price database and this decision flips on
+cost grounds alone — the capability was never the objection.
