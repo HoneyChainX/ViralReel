@@ -183,6 +183,7 @@ If not, `docs/15-windows-host.md` §7 has the fallback.
 
 | What you see | What to do |
 |---|---|
+| A red `Remove-Item ... .agents` error while Unpacking | old copy of the downloader; paste the Step 1 line again |
 | A red error mentioning `$IsWindows` | you have an old copy of the downloader; just paste the Step 1 line again |
 | PREFLIGHT FAILED | fix what it names; usually disk space or virtualization in BIOS |
 | WSL2 will not start | enable Intel VT-x / AMD-V in the BIOS |

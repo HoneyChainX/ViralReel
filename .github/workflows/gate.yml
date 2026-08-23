@@ -201,6 +201,38 @@ jobs:
           print("ok no PowerShell 6+ automatic variables in install/*.ps1")
           PY
 
+      # Windows MAX_PATH is 260 and Windows PowerShell 5.1 cannot exceed it.
+      # A single over-long path committed here breaks the installer on every
+      # Windows box, so the depth budget is a checked number, not a hope.
+      - name: Repository paths fit inside Windows MAX_PATH
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, subprocess, sys
+          files = subprocess.run(['git', 'ls-files'], capture_output=True,
+                                 text=True, check=True).stdout.splitlines()
+          longest = max(files, key=len)
+          src = pathlib.Path('install/windows/get.ps1').read_text()
+          m = re.search(r'^\$LongestPathInArchive\s*=\s*(\d+)', src, re.M)
+          if not m:
+              print("::error::get.ps1 no longer declares $LongestPathInArchive")
+              sys.exit(1)
+          declared = int(m.group(1))
+          print(f"longest tracked path: {len(longest)} chars")
+          print(f"  {longest}")
+          print(f"declared budget in get.ps1: {declared}")
+          if len(longest) > declared:
+              print(f"::error::a tracked path is {len(longest)} chars, over the {declared} "
+                    "declared in get.ps1. Windows extraction will fail. Shorten the path, "
+                    "or raise the constant only if 260 minus it still leaves room for a "
+                    "destination like C:\\ViralReel.")
+              sys.exit(1)
+          if declared > 245:
+              print(f"::error::declared budget {declared} leaves under 15 chars for the "
+                    "destination directory before MAX_PATH")
+              sys.exit(1)
+          print("ok repository paths fit MAX_PATH")
+          PY
+
       # systemd will happily install a unit with a typo'd directive and then
       # refuse to start it at 3am. Catch the structural mistakes here.
       - name: systemd units are well-formed

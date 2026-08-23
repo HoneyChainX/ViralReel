@@ -403,6 +403,26 @@ Everything above that line — the attribute block, `Set-StrictMode`, the banner
 the environment-variable settings — is now confirmed working on 5.1, because the
 failure happened after it printed.
 
+**The second real-hardware run found a second one.** With the guard fixed,
+`get.ps1` reached `Unpacking` and `Expand-Archive` failed inside `.agents\`,
+its own rollback then erroring on the folder it had not finished creating. The
+cause was Windows' 260-character `MAX_PATH`: the repository's deepest path is
+173 characters, and the installer extracted into a random `%TEMP%` directory
+(58) beneath the archive's own `ViralReel-<ref>` wrapper folder (55), for 286.
+Note that this was never branch-specific - on `main` the wrapper is shorter but
+the total is still over the limit, so the published installer would have failed
+this way for everyone.
+
+Unpacking now uses `tar.exe` - bsdtar, in Windows since build 17063, far below
+the 19041 this installer requires - with `--strip-components=1`, so files land
+directly at their final depth with no temp copy and no wrapper: 186 characters
+instead of 286. `Expand-Archive` remains a fallback. The gate measures the
+deepest tracked path against a budget declared in `get.ps1`, so committing a
+deeper path fails CI instead of breaking the installer on every Windows box.
+
+Both bugs were in the first twenty lines of real execution, and both were
+invisible to a Linux CI. Treat the rest of section 3 as equally unproven.
+
 Specifically unverified until someone runs it on the box:
 
 - the boot task actually surviving a reboot (§7)
@@ -440,6 +460,7 @@ hostname on every restart, a 200 in-flight request cap, no SLA, and — decisive
 
 | Symptom | First move |
 |---|---|
+| `Expand-Archive` fails under `.agents\` while unpacking | MAX_PATH; fixed by the tar.exe unpack (see &sect;8). Re-run the one-liner |
 | `The variable '$IsWindows' cannot be retrieved` | an old copy of `get.ps1`; re-run the one-liner (fixed after first real-hardware run, see §8) |
 | Session missing from claude.ai/code | `systemctl status viralreel-remote-control`; ~10 min offline ends a session by design |
 | Remote Control refuses to start | check for `ANTHROPIC_API_KEY` / `ANTHROPIC_BASE_URL` / telemetry opt-outs; it needs `/login`, not a key |

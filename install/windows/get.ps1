@@ -32,6 +32,9 @@ $ErrorActionPreference = 'Stop'
 $Repo    = 'HoneyChainX/ViralReel'
 $Ref     = if ($env:VIRALREEL_REF) { $env:VIRALREEL_REF } else { 'main' }
 $Target  = if ($env:VIRALREEL_DIR) { $env:VIRALREEL_DIR } else { 'C:\ViralReel' }
+# Longest path inside the repository archive, measured by CI so this number
+# cannot drift silently. Used to warn before Windows' 260-character limit.
+$LongestPathInArchive = 173
 
 function Say([string]$T)  { Write-Host $T }
 function Head([string]$T) { Write-Host ''; Write-Host "== $T" -ForegroundColor Cyan }
@@ -112,16 +115,43 @@ $sizeMb = [math]::Round((Get-Item $tmpZip).Length / 1MB, 1)
 Ok "downloaded $sizeMb MB"
 
 Head 'Unpacking'
-Expand-Archive -Path $tmpZip -DestinationPath $tmpDir -Force
-# GitHub wraps the tree in <repo>-<ref-with-slashes-as-dashes>; take whatever
-# single directory came out rather than guessing its name.
-$inner = Get-ChildItem -Path $tmpDir -Directory | Select-Object -First 1
-if (-not $inner) { Bad 'the archive did not contain a directory'; exit 1 }
+# The archive contains paths ~230 characters long. Windows' MAX_PATH is 260 and
+# Windows PowerShell 5.1's Expand-Archive cannot go past it, so extracting into
+# %TEMP% under the archive's own wrapper folder overflowed before anything
+# reached the destination: it died part-way through .agents\ and then its own
+# rollback failed on the folder it had not finished creating.
+#
+# tar.exe - bsdtar, shipped in Windows since build 17063, well below the 19041
+# this installer requires - has no such limit, and --strip-components=1 drops
+# the wrapper folder so files land at their final depth in a single pass with
+# no temp copy at all. Expand-Archive stays as a fallback.
+$slack = 260 - $LongestPathInArchive
+if ($Target.Length -gt $slack) {
+    Warn "$Target is deep; some files inside the studio may pass the 260-character Windows path limit"
+    Say  "        A short destination such as C:\ViralReel or G:\ViralReel avoids this."
+}
 
 New-Item -ItemType Directory -Path $Target -Force | Out-Null
-Move-Item -Path (Join-Path $inner.FullName '*') -Destination $Target -Force
+$unpacked = $false
+$tar = Get-Command tar.exe -ErrorAction SilentlyContinue
+if ($tar) {
+    & $tar.Source -xf $tmpZip -C $Target --strip-components=1
+    if ($LASTEXITCODE -eq 0) { $unpacked = $true; Ok "unpacked to $Target" }
+    else { Warn "tar could not unpack it (exit $LASTEXITCODE); falling back to Expand-Archive" }
+} else {
+    Warn 'tar.exe not found; falling back to Expand-Archive (may hit the 260-character path limit)'
+}
+
+if (-not $unpacked) {
+    Expand-Archive -Path $tmpZip -DestinationPath $tmpDir -Force
+    # GitHub wraps the tree in <repo>-<ref-with-slashes-as-dashes>; take whatever
+    # single directory came out rather than guessing its name.
+    $inner = Get-ChildItem -Path $tmpDir -Directory | Select-Object -First 1
+    if (-not $inner) { Bad 'the archive did not contain a directory'; exit 1 }
+    Move-Item -Path (Join-Path $inner.FullName '*') -Destination $Target -Force
+    Ok "unpacked to $Target"
+}
 Remove-Item $tmpZip, $tmpDir -Recurse -Force -ErrorAction SilentlyContinue
-Ok "unpacked to $Target"
 
 if (-not (Test-Path (Join-Path $Target 'install\windows\bootstrap.ps1'))) {
     Bad "this copy has no install\windows\bootstrap.ps1 - the '$Ref' branch predates the installer."
