@@ -51,12 +51,9 @@ This downloads the studio to `C:\ViralReel` and runs a read-only check of the
 machine. It installs nothing yet. If the check says **PREFLIGHT FAILED**, fix
 what it names and run it again — better to find out now than forty minutes in.
 
-To put it somewhere else, set that first:
-
-```powershell
-$env:VIRALREEL_DIR = 'D:\ViralReel'
-irm https://raw.githubusercontent.com/HoneyChainX/ViralReel/main/install/windows/get.ps1 | iex
-```
+Installing on a drive other than C:? Read
+[Putting it on another drive](#putting-it-on-another-drive) first — there
+is a second step there that matters far more than this one.
 
 ---
 
@@ -69,10 +66,16 @@ cd C:\ViralReel
 powershell -ExecutionPolicy Bypass -File install\windows\bootstrap.ps1
 ```
 
+(Use your own folder if you changed it — `cd G:\ViralReel`, and so on.)
+
 It installs WSL2 and Ubuntu, sizes them to this machine, and stops the PC from
 falling asleep mid-render. It will tell you to **reboot**. After the reboot, open
 PowerShell as administrator again and run **the same two lines** — it picks up
 where it left off.
+
+> **Installing on another drive?** Do the one extra command in
+> [Putting it on another drive](#putting-it-on-another-drive) *between* the
+> reboot and re-running these two lines. Afterwards is far more work.
 
 ---
 
@@ -142,6 +145,79 @@ anything on the router.)*
 
 ---
 
+## Putting it on another drive
+
+Most people do this because C: is full. **The obvious step is not the one that
+matters**, so read both.
+
+### The part people expect
+
+```powershell
+$env:VIRALREEL_DIR = 'G:\ViralReel'
+irm https://raw.githubusercontent.com/HoneyChainX/ViralReel/main/install/windows/get.ps1 | iex
+```
+
+That moves about 600 MB. It is *not* where the space goes.
+
+### The part that actually matters
+
+The studio does not run from that folder. It runs inside Ubuntu, and Ubuntu
+lives in a virtual disk that Windows puts on **C: by default** no matter what
+you set above. That virtual disk is the ~26 GB. To move it, install Ubuntu
+yourself, at the point in Step 2 after the reboot and **before** you re-run
+`bootstrap.ps1`:
+
+```powershell
+wsl --install -d Ubuntu --location G:\WSL\Ubuntu
+```
+
+Open **Ubuntu** from the Start menu once, so it can create your username and
+password. Then re-run Step 2's two lines. The bootstrap will say
+`Ubuntu already installed`, skip that part, and carry on — and from then on
+everything, including the clone in Step 3, sits on G:.
+
+### If Ubuntu is already installed on C:
+
+Move it. Do this **before** the long Step 3, never after — moving an empty
+distro takes seconds, moving a finished one moves 26 GB.
+
+```powershell
+wsl --shutdown
+wsl --export Ubuntu G:\WSL\Ubuntu\ext4.vhdx --format vhd
+wsl --unregister Ubuntu
+wsl --import-in-place Ubuntu G:\WSL\Ubuntu\ext4.vhdx
+```
+
+`wsl --unregister` deletes the distro. Only run it once the export above has
+finished without errors.
+
+Importing resets the default user to **root**. Fix it inside Ubuntu:
+
+```bash
+printf '[user]\ndefault=YOUR-USERNAME\n' | sudo tee -a /etc/wsl.conf
+```
+
+then `wsl --shutdown` from Windows once.
+
+### Two things to check about the drive first
+
+- **It must be NTFS.** The virtual disk will not work properly on exFAT or
+  FAT32, which is what many external drives ship with. Right-click the drive >
+  Properties to see the file system.
+- **It should be an internal SSD.** On a USB drive renders crawl and an
+  accidental unplug can corrupt the distro; on a spinning hard disk it works but
+  is noticeably slower.
+
+### One confusing message
+
+The Step 1 check always measures free space on **C:**, because that is where
+Windows would normally put the virtual disk. If it reports **FAIL** only for C:
+free space and you are doing the `--location` step above, that particular
+complaint does not apply to you — `bootstrap.ps1` does not re-run that check.
+Anything else it flags is still real.
+
+---
+
 ## Using it
 
 Renders take hours, so nothing runs "live". You queue work and it keeps going
@@ -183,6 +259,8 @@ If not, `docs/15-windows-host.md` §7 has the fallback.
 
 | What you see | What to do |
 |---|---|
+| A red `Remove-Item ... .agents` error while Unpacking | old copy of the downloader; paste the Step 1 line again |
+| A red error mentioning `$IsWindows` | you have an old copy of the downloader; just paste the Step 1 line again |
 | PREFLIGHT FAILED | fix what it names; usually disk space or virtualization in BIOS |
 | WSL2 will not start | enable Intel VT-x / AMD-V in the BIOS |
 | Ubuntu install stalls | it is downloading engines; give it time, then re-run the same command |
