@@ -173,6 +173,34 @@ jobs:
           print("ok all .ps1 are ASCII")
           PY
 
+      # The installers run under Windows PowerShell 5.1 (powershell.exe), but this
+      # job lints them with pwsh 7 on Linux - where $IsWindows and friends DO
+      # exist. So execution-based linting is structurally blind to this: a 5.1
+      # host under Set-StrictMode treats reading one of these as a terminating
+      # error and the script dies on line 1. That shipped once. Never again.
+      - name: Windows installers avoid PowerShell 6+ automatic variables
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+          # Automatic variables introduced in PowerShell 6 or later; absent from 5.1.
+          PS6PLUS = ("IsWindows", "IsLinux", "IsMacOS", "IsCoreCLR", "PSStyle",
+                     "EnabledExperimentalFeatures",
+                     "PSNativeCommandUseErrorActionPreference")
+          pat = re.compile(r"\$\{?(" + "|".join(PS6PLUS) + r")\b", re.IGNORECASE)
+          bad = []
+          for p in sorted(pathlib.Path('install').rglob('*.ps1')):
+              for n, line in enumerate(p.read_text().splitlines(), 1):
+                  code = line.split('#')[0]          # naming one in a comment is fine
+                  m = pat.search(code)
+                  if m:
+                      bad.append(f"{p}:{n}: ${m.group(1)} does not exist in Windows PowerShell 5.1")
+          if bad:
+              print("::error::PowerShell 6+ automatic variable in a 5.1 installer "
+                    "(use $PSVersionTable, or Get-Variable -ErrorAction SilentlyContinue)")
+              print("\n".join(bad)); sys.exit(1)
+          print("ok no PowerShell 6+ automatic variables in install/*.ps1")
+          PY
+
       # systemd will happily install a unit with a typo'd directive and then
       # refuse to start it at 3am. Catch the structural mistakes here.
       - name: systemd units are well-formed

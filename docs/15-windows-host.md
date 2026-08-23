@@ -376,11 +376,32 @@ absolute paths, so moving the checkout after installing means re-running
 
 ## 8. Untested on real hardware
 
-Written and statically validated in a Linux container, never executed on
-Windows. The PowerShell parses cleanly under PowerShell 7.5 and passes
-PSScriptAnalyzer with no errors or warnings, and is ASCII-only because
-`powershell.exe` on Windows 11 is still 5.1 and misreads unmarked UTF-8. That is
-not the same as having been run.
+Written and statically validated in a Linux container. The PowerShell parses
+cleanly under PowerShell 7.5 and passes PSScriptAnalyzer with no errors or
+warnings, and is ASCII-only because `powershell.exe` on Windows 11 is still 5.1
+and misreads unmarked UTF-8. That is not the same as having been run.
+
+**First contact with a real Windows 11 PC proved the point.** `get.ps1` died on
+its first executable check with `The variable '$IsWindows' cannot be retrieved
+because it has not been set`. `$IsWindows` arrived in PowerShell 6; `powershell.exe`
+is still 5.1, where the variable does not exist, and this file's own
+`Set-StrictMode -Version Latest` turns reading an unset variable into a
+terminating error. The guard meant to detect a non-Windows host was the thing
+that stopped the script on Windows.
+
+The reason CI could not catch it is worth keeping in mind for everything else
+here: **the lint job runs pwsh 7 on Ubuntu, where `$IsWindows` exists and is
+`$true`.** Every static check we had was structurally blind to a 5.1-only
+failure. The gate now bans the PowerShell 6+ automatic variables by name in
+`install/**.ps1` (`$IsWindows`, `$IsLinux`, `$IsMacOS`, `$IsCoreCLR`, `$PSStyle`,
+`$EnabledExperimentalFeatures`, `$PSNativeCommandUseErrorActionPreference`) —
+a text rule, because no amount of running the linter on Linux would do it.
+Version-dependent behaviour goes through `$PSVersionTable`, or
+`Get-Variable -ErrorAction SilentlyContinue`.
+
+Everything above that line — the attribute block, `Set-StrictMode`, the banner,
+the environment-variable settings — is now confirmed working on 5.1, because the
+failure happened after it printed.
 
 Specifically unverified until someone runs it on the box:
 
@@ -419,6 +440,7 @@ hostname on every restart, a 200 in-flight request cap, no SLA, and — decisive
 
 | Symptom | First move |
 |---|---|
+| `The variable '$IsWindows' cannot be retrieved` | an old copy of `get.ps1`; re-run the one-liner (fixed after first real-hardware run, see §8) |
 | Session missing from claude.ai/code | `systemctl status viralreel-remote-control`; ~10 min offline ends a session by design |
 | Remote Control refuses to start | check for `ANTHROPIC_API_KEY` / `ANTHROPIC_BASE_URL` / telemetry opt-outs; it needs `/login`, not a key |
 | Jobs queue but never run | `systemctl status viralreel-jobd`; without systemd there is no worker |

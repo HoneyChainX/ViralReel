@@ -49,7 +49,17 @@ Say '  This downloads files and checks the machine. It installs nothing yet.'
 # --- sanity ------------------------------------------------------------------
 
 Head 'Checking Windows'
-if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
+# Windows PowerShell 5.1 - still what `powershell.exe` is on Windows 11 - has no
+# $IsWindows; that variable arrived in PowerShell 6. Set-StrictMode above turns
+# reading an unset variable into a terminating error, so the name is never
+# written directly: Get-Variable asks the question instead, and its finding
+# nothing on 5.1 is itself proof this is Windows.
+if ($PSVersionTable.PSVersion.Major -lt 6) {
+    $onWindows = $true          # Windows PowerShell only ever ran on Windows.
+} else {
+    $onWindows = [bool](Get-Variable -Name IsWindows -ValueOnly -ErrorAction SilentlyContinue)
+}
+if (-not $onWindows) {
     Bad 'this is the Windows half of the install - run it on the PC that will host the studio'
     exit 1
 }
